@@ -1,4 +1,4 @@
-# tournament-kings
+# tournament-king
 
 Tournament management website built with React.JS
 
