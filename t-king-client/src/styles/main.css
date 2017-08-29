@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+ }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+    width:100%;
+}
+
+/*--------------------APP---------------------*/
+
+main, div {
+    box-sizing: border-box;
+}
+
+.app-wrapper {
+    position:relative;
+    height: 100vh;
+}
+
+.view-wrapper {
+    width:100%;
+    height:calc(100% - 42px);
+}
+
+/*------------------HEADER---------------------*/
+
+.header-shim {
+    width:100%;
+    height:42px;
+}
+
+.header-wrapper {
+    width:100%;
+    height:42px;
+    background:#026AA7;
+    position:fixed;
+}
+
+/*------------------FOOTER---------------------*/
+
+.footer-wrapper {
+    width:100%;
+    height:148px;
+    color:#FFFFFF;
+    background:#292F36;
+    padding:12px 12px;
+}
+
+/*------------------LANDING---------------------*/
+
+.landing-wrapper {
+    height:100%
+}
+
+
