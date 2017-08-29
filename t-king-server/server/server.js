@@ -48,7 +48,6 @@ passport.use(new Auth0Strategy({
                     profile.displayName,
                     profile.emails[0].value,
                     profile.picture,
-                    ''
                 ])
                 .then(user => {
                     let userCurrent = user[0]
