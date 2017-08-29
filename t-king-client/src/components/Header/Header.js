@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {getCurrentUser} from './../../redux/mainReducer';
 
 const checkUser = function(props) {
-    props.userChecked ? null : props.getCurrentUser()
+    return props.userChecked ? null : props.getCurrentUser()
 }
 
 const Header = function(props) {
