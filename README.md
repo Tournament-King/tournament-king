@@ -1,4 +1,6 @@
+
 # tournament-king
+
 
 Tournament management website built with React.JS
 
@@ -16,4 +18,4 @@ Tournament management website built with React.JS
 ## Usage
 
 This is the working directory;
-Development information and important notes
+

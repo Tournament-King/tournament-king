@@ -4,7 +4,7 @@ CREATE TABLE "users" (
 	"email" TEXT NOT NULL UNIQUE,
 	"profile_pic" TEXT NOT NULL,
 	"name" TEXT NOT NULL,
-	"username" TEXT NOT NULL UNIQUE,
+	"username" TEXT UNIQUE,
 	CONSTRAINT users_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
