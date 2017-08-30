@@ -24,8 +24,6 @@ export default function LineCard(props) {
                 </div>
                 <div className="lc-right-bottom">
                 </div>
-                {/* <div className="line-connector-horizontal">
-                </div> */}
             </div>
         </div>
 
