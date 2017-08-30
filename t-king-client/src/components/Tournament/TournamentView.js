@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {getTournament} from './../../redux/mainReducer';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 
@@ -33,19 +34,29 @@ const makeTree = function(data) {
         return tree;
 }
 
+const fetchData = function(props) {
+    let {id} = props.match.params
+    if (!props.tournamentData.id || id * 1 !== props.tournamentData.id) {
+        return props.getTournament(id);
+    } else {
+        return;
+    }
+}
+
 
 
 const TournamentView = function(props) {
-    let width = props.dummyData.rounds.length * 248;
+    fetchData(props);
+    let width = props.tournamentData.rounds.length * 248;
     let setWidth = {
         "width":width
     }
-    let tree = makeTree(props.dummyData)
+    let tree = makeTree(props.tournamentData)
 
     return (
         <main>
             <div className="tournament-top-section">
-                    {props.dummyData.name}
+                    {props.tournamentData.name}
             </div>
             <div className="tournament-divider"></div>
                 <div className="tournament-wrapper">
@@ -61,4 +72,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps)(TournamentView);
+export default connect(mapStateToProps, {getTournament})(TournamentView);
