@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import MatchCard from './MatchCard';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 

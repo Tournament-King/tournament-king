@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Menu, Label, Icon} from 'semantic-ui-react';
+import {Icon} from 'semantic-ui-react';
 
 
 export default class MathCard extends Component {

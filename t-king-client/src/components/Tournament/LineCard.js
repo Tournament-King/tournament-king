@@ -3,8 +3,6 @@ import React from 'react';
 
 export default function LineCard(props) {
 
-    let height = 100 / (props.heightDivisor + 1) + '%'
-    console.log(props.height)
 
 
     let setHeight = {
