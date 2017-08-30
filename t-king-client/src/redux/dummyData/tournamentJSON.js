@@ -295,3 +295,24 @@ export const tournamentJSONnew = {
 		]
 	]
 }
+
+export const dummyMatch = {
+		"id": 1,
+		"tournament_id" : 2,
+		"type" : "ping-pong",
+		"player1" : {
+			"id" : 1,
+			"name" : "YellowBird"
+		},
+		"player2" : {
+			"id" : null,
+			"name" : "GreenMan"
+		},
+		"player1_score": 10,
+		"player2_score": 12,
+		"winner" : {
+			"id" : null,
+			"name" : "GreenMan"
+		},
+		"active" : false
+}

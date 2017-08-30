@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
+import MatchModal from './MatchModal.js';
 
 
 const makeTree = function(data) {
@@ -17,7 +18,8 @@ const makeTree = function(data) {
                 matches={data.rounds[i]}
                 widthDivisor={columnCount}
                 round={i}
-                height={columnHeight}/>
+                height={columnHeight}
+                toggleModal={toggleModal}/>
             )
             if(i !== columnCount - 1) {
                 tree.push(<LineColumn
@@ -32,14 +34,19 @@ const makeTree = function(data) {
     }
         return tree;
 }
+let hiddenOrNah = "none"
+
+function toggleModal(val) {
+    hiddenOrNah = val
+}
 
 
 const TournamentView = function(props) {
-    let width = props.dummyData.rounds.length * 248;
+    let width = props.dummyData2.rounds.length * 248;
     let setWidth = {
         "width":width
     }
-    let tree = makeTree(props.dummyData)
+    let tree = makeTree(props.dummyData2)
 
     return (
         <main>
@@ -48,9 +55,9 @@ const TournamentView = function(props) {
             </div>
             <div className="tournament-divider"></div>
                 <div className="tournament-wrapper">
-                </div>
                 <div className="bracket-container" style={setWidth}>
                     {tree}
+                </div>
                 </div>
         </main>
     )
