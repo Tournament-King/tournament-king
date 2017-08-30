@@ -11,6 +11,7 @@
 body {
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
+    background:#F7F9F9;
     width:100%;
 }
 
@@ -27,7 +28,7 @@ main, div {
 
 .view-wrapper {
     width:100%;
-    height:calc(100% - 42px);
+    min-height:calc(100% - 42px);
 }
 
 /*------------------HEADER---------------------*/
@@ -60,4 +61,105 @@ main, div {
     height:100%
 }
 
+/*------------------TOURNAMENT---------------------*/
 
+.tournament-wrapper {
+    min-height:100%;
+    width:100%;
+    margin:auto;
+    background:#F7F9F9;
+}
+
+.bracket-container {
+    max-width:95%;
+    min-height:80%;
+    height:fit-content;
+    /* background: lightgrey; */
+    margin:auto;
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    overflow:auto;
+}
+
+.round-column {
+    /* width:calc((100% - 20%) / 3); */
+    height: fit-content;
+    height:100%;
+    /* background:#FFFFFF; */
+    /* border:2px solid grey; */
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+}
+
+.line-column {
+    /* width:11%; */
+    height:100%;
+    /* background:lightblue; */
+    /* border:2px solid black; */
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+}
+
+.match-wrapper {
+    width:100%;
+    height:69px;
+    /* background:#026AA7; */
+    border-radius:3px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.match-player {
+    width:100%;
+    height:39%;
+    color:#212121;
+    background:#167EBB;
+    border:1px solid #1078B4;
+    border-radius:2px;
+    box-shadow: 6px 7px 19px -9px rgba(0,0,0,0.75);
+}
+
+.match-data {
+    width:80%;
+    height:22%;
+    background:#FFFFFF;
+    border-left:1px solid #167EBB;
+    border-right:1px solid #167EBB;
+    /* border:1px solid #2BB1FF; */
+    border-radius:2px;
+}
+
+.s-elim-match-connector {
+    width:100%;
+    height:220px;
+    /* background:#FFFFFF; */
+    display:flex;
+}
+
+.line-connector-column-left {
+    width:50%;
+    height:100%;
+    border-right:2px solid black;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.line-connector-column-right {
+    width:50%;
+    height:100%;    
+    border-left:2px solid black;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.line-connector-horizontal {
+    width:100%;
+    height: 4px;
+    background:black;
+}
