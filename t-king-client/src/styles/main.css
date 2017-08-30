@@ -64,6 +64,16 @@ main, div {
 
 /*------------------TOURNAMENT---------------------*/
 
+.matchModal {
+    height: 50%;
+    width: 50%;
+    z-index: 3;
+    background: lightblue;
+    position: fixed;
+    left:25%;
+    top:25%;
+}
+
 .tournament-wrapper {
     height:100%;
     width:100%;

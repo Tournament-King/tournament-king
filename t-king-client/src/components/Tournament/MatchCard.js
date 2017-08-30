@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Icon} from 'semantic-ui-react';
+import {toggleMatchModal} from './../../redux/mainReducer';
 
 
-export default class MathCard extends Component {
+class MatchCard extends Component {
     constructor(props) {
         super(props)
 
@@ -11,11 +13,22 @@ export default class MathCard extends Component {
         }
         
         this.handleItemClick=this.handleItemClick.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
+    toggleModal() {
+        if (!this.props.modalActive) {
+            this.props.toggleMatchModal();
+            console.log('get match: ', this.props.id)
+        } else {
+            console.log('get match: ', this.props.id)
+        }
+    }
+
     render() {
+        console.log(this.props.modalActive);
 
         const scoreAhead = {
             "background":"#95dba5"
@@ -34,8 +47,8 @@ export default class MathCard extends Component {
         }
 
         return (
-        <main className="match-wrapper">
-            <div className="match-player">
+        <main className="match-wrapper" >
+            <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
                     <Icon name='trophy' />
                     {this.props.p1}
@@ -66,3 +79,8 @@ export default class MathCard extends Component {
     }
 } 
 
+function mapStateToProps(state) {
+    return state;
+}
+
+export default connect(mapStateToProps, {toggleMatchModal})(MatchCard);
