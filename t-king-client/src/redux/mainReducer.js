@@ -8,7 +8,9 @@ const initialState = {
     tournamentData: {},
     testProp: 'hello, redux is working',
     dummyData: tournamentJSON,
-    dummyData2: tournamentJSONnew
+    dummyData2: tournamentJSONnew,
+    currentMatch: null,
+    modalActive: false
 }
 
 //----------------------FLAGS---------------------//
@@ -20,6 +22,10 @@ const GET_CURRENT_USER_PENDING = 'GET_CURRENT_USER_PENDING';
 const GET_CURRENT_USER_FULFILLED = 'GET_CURRENT_USER_FULFILLED';
 const GET_CURRENT_USER_REJECTED = 'GET_CURRENT_USER_REJECTED';
 
+//MODAL
+
+const TOGGLE_MATCH_MODAL = 'TOGGLE_MATCH_MODAL';
+
 //----------------------ACTIONS---------------------//
 
 //USER
@@ -28,6 +34,15 @@ export function getCurrentUser() {
     return {
         type: GET_CURRENT_USER,
         payload: axios.get('/api/user')
+    }
+}
+
+//MODAL
+
+export function toggleMatchModal() {
+    return {
+        type: TOGGLE_MATCH_MODAL,
+        payload: null
     }
 }
 
@@ -49,6 +64,12 @@ export default function reducer(state=initialState, action) {
             );
         case GET_CURRENT_USER_REJECTED:
             return state;
+        case TOGGLE_MATCH_MODAL:
+            return Object.assign(
+                {},
+                state,
+                {modalActive: !state.modalActive}
+            )
         default:
             console.log(state);
             return state;
