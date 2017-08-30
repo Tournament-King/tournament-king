@@ -52,7 +52,7 @@ class MatchModal extends Component {
 
         return (
             <main className='matchModal' style={Object.assign({}, 
-                                                this.props.modalActive ? null : hideDisplay, 
+                                                !this.props.modalActive ? null : hideDisplay, 
                                                 this.state.modalHeight, 
                                                 this.state.modalWidth,
                                                 this.state.modalLeft,
@@ -65,6 +65,7 @@ class MatchModal extends Component {
                     </div>
                 </div>
                 <div className='match-modal-lower-half'>
+                    <img src=""/>
 
                 </div>           
             </main>
