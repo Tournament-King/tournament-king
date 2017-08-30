@@ -59,7 +59,22 @@ main, div {
 /*------------------LANDING---------------------*/
 
 .landing-wrapper {
-    height:100%
+    width:100%;
+    height:100%;
+}
+
+.landing-splash {
+    width:100%;
+    height: 256px;
+    background:#101010;
+}
+
+.landing-content {
+    max-width:1280px;
+    width:1280px;
+    height:100px;
+    background:lightgoldenrodyellow;
+    margin:auto;
 }
 
 /*------------------TOURNAMENT---------------------*/

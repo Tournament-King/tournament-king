@@ -6,7 +6,10 @@ const Landing = function(props) {
 
     return (
         <main className="landing-wrapper">
-            {props.testProp}, you have landed
+            <div className="landing-splash">
+            </div>
+            <div className="landing-content">
+            </div>
         </main>
     )
 }
