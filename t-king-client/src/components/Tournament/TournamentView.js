@@ -6,7 +6,7 @@ import LineColumn from './LineColumn';
 
 
 const makeTree = function(data) {
-    let columnHeight = data.rounds[0].length * 108
+    let columnHeight = data.rounds[0].length * 124
     let tree = [];
     let columnCount = data.rounds.length;
     let i1 = columnCount + 1;
@@ -36,18 +36,23 @@ const makeTree = function(data) {
 
 
 const TournamentView = function(props) {
-    let width = props.dummyData2.rounds.length * 248;
+    let width = props.dummyData.rounds.length * 248;
     let setWidth = {
         "width":width
     }
-    let tree = makeTree(props.dummyData2)
+    let tree = makeTree(props.dummyData)
 
     return (
-        <main className="tournament-wrapper">
-            {props.dummyData.name}
-            <div className="bracket-container" style={setWidth}>
-                {tree}
-        </div>
+        <main>
+            <div className="tournament-top-section">
+                    {props.dummyData.name}
+            </div>
+            <div className="tournament-divider"></div>
+                <div className="tournament-wrapper">
+                </div>
+                <div className="bracket-container" style={setWidth}>
+                    {tree}
+                </div>
         </main>
     )
 }

@@ -20,9 +20,7 @@ export default function LineCard(props) {
                 </div>
             </div>
             <div className="line-connector-column-right">
-                <div className="lc-right-top">
-                </div>
-                <div className="lc-right-bottom">
+                <div className="line-connector-horizontal">
                 </div>
             </div>
         </div>

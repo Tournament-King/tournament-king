@@ -18,7 +18,7 @@ function populate(data) {
 }
 
 export default function LineColumn(props) {
-    let width = 30 / props.widthDivisor + '%'
+    let width = 24 / props.widthDivisor + '%'
     let setHeight = {
         "height":props.height,
         "width":width

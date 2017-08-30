@@ -149,8 +149,8 @@ export const tournamentJSONnew = {
 					"user_id": null,
 					"name": "Jenny"
 				},
-				"player1_score": null,
-				"player2_score": null,
+				"player1_score": 14,
+				"player2_score": 21,
 				"active": null
 			},
 			{
@@ -176,8 +176,8 @@ export const tournamentJSONnew = {
 					"user_id": null,
 					"name": "Carrie"
 				},
-				"player1_score": null,
-				"player2_score": null,
+				"player1_score": 26,
+				"player2_score": 25,
 				"active": null
 			},
 			{

@@ -11,7 +11,7 @@
 body {
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
-    background:#F7F9F9;
+    background:#FFFFFF;
     width:100%;
 }
 
@@ -43,6 +43,7 @@ main, div {
     height:42px;
     background:#026AA7;
     position:fixed;
+    z-index: 6;
 }
 
 /*------------------FOOTER---------------------*/
@@ -64,17 +65,30 @@ main, div {
 /*------------------TOURNAMENT---------------------*/
 
 .tournament-wrapper {
-    min-height:100%;
+    height:100%;
     width:100%;
     margin:auto;
-    background:#F7F9F9;
+}
+
+.tournament-top-section {
+    width:90%;
+    margin:auto;
+    height:172px;
+    padding:24px 24px;
+    margin-bottom:24px;
+}
+
+.tournament-divider {
+    width:70%;
+    height: 1px;
+    margin:auto;
+    background:#CFCFCF;
 }
 
 .bracket-container {
     max-width:95%;
     min-height:80%;
     height:fit-content;
-    /* background: lightgrey; */
     margin:auto;
     display: flex;
     justify-content:space-between;
@@ -83,21 +97,17 @@ main, div {
 }
 
 .round-column {
-    /* width:calc((100% - 20%) / 3); */
+
     height: fit-content;
     height:100%;
-    /* background:#FFFFFF; */
-    /* border:2px solid grey; */
     display:flex;
     flex-direction:column;
     justify-content:space-around;
 }
 
 .line-column {
-    /* width:11%; */
+
     height:100%;
-    /* background:lightblue; */
-    /* border:2px solid black; */
     display:flex;
     flex-direction:column;
     justify-content:space-around;
@@ -105,76 +115,100 @@ main, div {
 
 .match-wrapper {
     width:100%;
-    height:69px;
-    /* background:#026AA7; */
+    height:86px;
     border-radius:3px;
     display:flex;
     flex-direction:column;
-    align-items:center;
+    align-items:space-between;
 }
 
+
+
 .match-player {
+    box-sizing:border-box;
     width:100%;
-    height:39%;
-    color:#212121;
-    background:#167EBB;
-    border:1px solid #1078B4;
+    height:44%;
+    color:#333333;
+    font-size:13px;
+    background:#F7F7F7;
+    border:1px solid #DEDEDE;
     border-radius:2px;
-    box-shadow: 3px 3px 8px -3px rgba(0,0,0,0.75);
+    position:relative;
+}
+
+.match-player:hover {
+    background:#f2f2f2;
+    color:#080808
+}
+
+.match-player-info {
+    padding-top:9px;
+    padding-left:6px;
+    width:fit-content;
+    display:inline-block;
+}
+
+.match-player-score {
+    width:22px;
+    height:22px;
+    background:#E6ADAD;
+    border-radius:4px;
+    text-align:center;
+    padding-top:2px;
+    display:inline-block;
+    position:absolute;
+    right:12px;
+    top:7px;
+}
+
+.match-win-lose {
+    height:20px;
+    width:58px;
+    background:#F7F7F7;
+    border-radius:5px;
+    border:1px solid #777777;
+    text-align:center;
+    padding:0px 4px;
+    display:inline-block;
+    position: absolute;
+    top:-10px;
+    right:52px;
+
+    /* transform:rotate(9deg); */
 }
 
 .match-data {
     width:80%;
-    height:22%;
-    background:#FFFFFF;
-    border-left:1px solid #167EBB;
-    border-right:1px solid #167EBB;
-    /* border:1px solid #2BB1FF; */
+    height:12%;
     border-radius:2px;
 }
 
 .s-elim-match-connector {
     width:100%;
     height:220px;
-    /* background:#FFFFFF; */
     display:flex;
-    /* border:1px solid green; */
 }
 
 .line-connector-column-left {
     width:50%;
     height:100%;
-    border-right:2px solid black;
+    border-right:1px solid #DEDEDE;
     display:flex;
     flex-direction:column;
     justify-content:space-between;
-    box-shadow: 3px 3px 8px -3px rgba(0,0,0,0.75);
 }
 
 .line-connector-column-right {
     width:50%;
     height:100%;    
-    border-left:2px solid black;
+    border-left:1px solid #DEDEDE;
     display:flex;
     flex-direction:column;
     justify-content:center;
 }
 
-.lc-right-top {
-    width:100%;
-    height:50%;
-    border-bottom:2px solid black;
-    box-shadow: 0px 6px 8px -5px rgba(0,0,0,0.75);
-}
-
-.lc-right-bottom {
-    width:100%;
-    height:50%;
-    border-top:2px solid black; 
-}
-
 .line-connector-horizontal {
     width:100%;
-    height: 4px;
-    border:2px solid black;
+    height: 2px;
+    background:#DEDEDE;
 }
