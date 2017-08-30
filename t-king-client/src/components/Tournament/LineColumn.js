@@ -9,8 +9,9 @@ function populate(data) {
         let height = 100 / (count + i + augmentor) + '%'
         cards.push(<LineCard 
                     key={i}
-                    height={height}/>
-                    )
+                    height={height}
+                    />
+        )
         augmentor++;
     }
     return cards

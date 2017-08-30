@@ -120,7 +120,7 @@ main, div {
     background:#167EBB;
     border:1px solid #1078B4;
     border-radius:2px;
-    box-shadow: 6px 7px 19px -9px rgba(0,0,0,0.75);
+    box-shadow: 3px 3px 8px -3px rgba(0,0,0,0.75);
 }
 
 .match-data {
@@ -138,6 +138,7 @@ main, div {
     height:220px;
     /* background:#FFFFFF; */
     display:flex;
+    /* border:1px solid green; */
 }
 
 .line-connector-column-left {
@@ -147,6 +148,7 @@ main, div {
     display:flex;
     flex-direction:column;
     justify-content:space-between;
+    box-shadow: 3px 3px 8px -3px rgba(0,0,0,0.75);
 }
 
 .line-connector-column-right {
@@ -158,8 +160,21 @@ main, div {
     justify-content:center;
 }
 
+.lc-right-top {
+    width:100%;
+    height:50%;
+    border-bottom:2px solid black;
+    box-shadow: 0px 6px 8px -5px rgba(0,0,0,0.75);
+}
+
+.lc-right-bottom {
+    width:100%;
+    height:50%;
+    border-top:2px solid black; 
+}
+
 .line-connector-horizontal {
     width:100%;
     height: 4px;
-    background:black;
+    border:2px solid black;
 }

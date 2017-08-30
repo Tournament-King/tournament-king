@@ -36,11 +36,11 @@ const makeTree = function(data) {
 
 
 const TournamentView = function(props) {
-    let width = props.dummyData.rounds.length * 248;
+    let width = props.dummyData2.rounds.length * 248;
     let setWidth = {
         "width":width
     }
-    let tree = makeTree(props.dummyData)
+    let tree = makeTree(props.dummyData2)
 
     return (
         <main className="tournament-wrapper">
