@@ -72,18 +72,14 @@ main, div {
     position: fixed;
     left:25%;
     top:25%;
+    box-shadow: 10px 7px 22px 3px rgba(0,0,0,0.75);
+    border: 1px solid #666;
 }
 
 .match-modal-upper-half {
     width: 100%;
     height: 28%;
-    background: black;
-}
-
-.match-modal-lower-half {
-    width: 100%;
-    height: 72%;
-    background: pink;
+    background: #eee;
 }
 
 .match-modal-close-out {
@@ -98,27 +94,46 @@ main, div {
 .match-modal-close-out-iconX {
     height: 100%;
     width: 33.33%;
-    opacity: .5;
+    opacity: .9;
     text-align: center;
-    background: red;
+    background: #c41d00;
 }
 .match-modal-close-out-icon-minus {
     height: 100%;
     width: 33.33%;
-    opacity: .5;
+    opacity: .9;
     text-align: center;
-    background: yellow;
+    background: #f5ba25;
 }
 .match-modal-close-out-icon-plus {
     height: 100%;
     width: 33.33%;
-    opacity: .5;
+    opacity: .9;
     text-align: center;
-    background: green;
+    background: #138f00;
 }
 
 .match-modal-close-out-iconX:hover, .match-modal-close-out-icon-minus:hover, .match-modal-close-out-icon-plus:hover {
-    opacity: 1;
+    opacity: .5;
+}
+
+.match-modal-lower-half {
+    width: 100%;
+    height: 72%;
+    background: #ddd;
+    position: relative;
+}
+
+.match-modal-background {
+    position: absolute;
+    top: 5%;
+    height: 90%;
+    width: 70%;
+    left: 15%;
+    background-position: center;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    box-shadow: 4px 4px 22px 3px rgba(0,0,0,0.75);
 }
 
 /*------------------TOURNAMENT---------------------*/

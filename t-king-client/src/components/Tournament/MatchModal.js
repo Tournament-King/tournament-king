@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {toggleMatchModal} from './../../redux/mainReducer.js';
+// import pingpongBackground from './img/ping-pongBackground';
 
 
 
@@ -13,7 +14,8 @@ class MatchModal extends Component {
             modalHeight: null,
             modalWidth: null,
             modalLeft: null,
-            modalTop: null
+            modalTop: null,
+            matchType: 'beer-pong'
         }
 
         this.maxModal = this.maxModal.bind(this);
@@ -24,9 +26,9 @@ class MatchModal extends Component {
 
     maxModal() {
         this.setState({
-            modalHeight: {"height":"100%"},
-            modalWidth: {"width":"100%"},
-            modalLeft: {"left":"0%"},
+            modalHeight: {"height":"90%"},
+            modalWidth: {"width":"90%"},
+            modalLeft: {"left":"5%"},
             modalTop: {"top":"42px"}
         })
     }
@@ -49,6 +51,11 @@ class MatchModal extends Component {
         let hideDisplay = {
             "display":"none"
         }
+        let url = `url(http://localhost:3030/public/img/${this.state.matchType}Background.jpg)`
+        console.log(url)
+        let background = {
+            "backgroundImage":url
+        }
 
         return (
             <main className='matchModal' style={Object.assign({}, 
@@ -65,7 +72,9 @@ class MatchModal extends Component {
                     </div>
                 </div>
                 <div className='match-modal-lower-half'>
-                    <img src=""/>
+                    <div className='match-modal-background' style={background}>
+
+                    </div>
 
                 </div>           
             </main>
