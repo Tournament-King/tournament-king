@@ -16,6 +16,12 @@ const express = require('express')
 //-------------------------CONTROLLERS--------------------------//
 
 const userCtrl = require('./controllers/user-controller');
+const matchCtrl = require('./controllers/match-controller');
+const tournamentCtrl = require('./controllers/tournament-controller');
+
+//-------------------------MIDDLEWARE--------------------------//
+
+const authMiddleware = require('./middleware/authorization');
 
 //--------------------------APP SETUP---------------------------//
 
@@ -90,7 +96,15 @@ app.get('/auth/callback',
 
 //------------------------CLIENT ENDPOINTS------------------------//
 
-app.get('/api/user', userCtrl.getUserOnSession)
+app.get('/api/user', userCtrl.getUserOnSession);
+
+app.get('/api/tournament/:id', tournamentCtrl.getTournament);
+app.post('/api/tournament', authMiddleware.addUserToReq, tournamentCtrl.createTournament);
+
+app.get('/api/match/:id', matchCtrl.getMatch);
+app.post('/api/match', matchCtrl.createMatch);
+app.patch('/api/match', matchCtrl.updateMatch);
+
 
 //----------------------------DB/LISTEN---------------------------//
 
