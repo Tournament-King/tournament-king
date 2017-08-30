@@ -48,9 +48,9 @@ const TournamentView = function(props) {
             </div>
             <div className="tournament-divider"></div>
                 <div className="tournament-wrapper">
-                </div>
-                <div className="bracket-container" style={setWidth}>
-                    {tree}
+                    <div className="bracket-container" style={setWidth}>
+                        {tree}
+                    </div>
                 </div>
         </main>
     )
