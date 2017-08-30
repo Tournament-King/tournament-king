@@ -1,16 +1,16 @@
 import axios from 'axios';
-import {tournamentJSON, tournamentJSONnew} from './dummyData/tournamentJSON';
+import {tournamentJSON, redsPool, dummyMatch} from './dummyData/tournamentJSON';
 
 const initialState = {
     currentUser: {},
     userChecked: false,
-    tournamentsList: [],
+    tournamentsList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
     tournamentData: {},
-    testProp: 'hello, redux is working',
     dummyData: tournamentJSON,
-    dummyData2: tournamentJSONnew,
-    currentMatch: null,
-    modalActive: false
+    dummyData2: redsPool,
+    currentMatch: dummyMatch,
+    modalActive: false,
+    testProp: 'hello, redux is working'
 }
 
 //----------------------FLAGS---------------------//
@@ -25,6 +25,13 @@ const GET_CURRENT_USER_REJECTED = 'GET_CURRENT_USER_REJECTED';
 //MODAL
 
 const TOGGLE_MATCH_MODAL = 'TOGGLE_MATCH_MODAL';
+
+//TOURNAMENTS
+
+const GET_TOURNAMENTS = 'GET_TOURNAMENTS';
+const GET_TOURNAMENTS_PENDING = 'GET_TOURNAMENTS_PENDING';
+const GET_TOURNAMENTS_FULFILLED = 'GET_TOURNAMENTS_FULFILLED';
+const GET_TOURNAMENTS_REJECTED = 'GET_TOURNAMENTS_REJECTED';
 
 //----------------------ACTIONS---------------------//
 
@@ -43,6 +50,15 @@ export function toggleMatchModal() {
     return {
         type: TOGGLE_MATCH_MODAL,
         payload: null
+    }
+}
+
+//TOURNAMENTS
+
+export function loadTournaments() {
+    return {
+        type: GET_TOURNAMENTS,
+        payload: axios.get('/api/tournaments')
     }
 }
 
@@ -69,7 +85,16 @@ export default function reducer(state=initialState, action) {
                 {},
                 state,
                 {modalActive: !state.modalActive}
-            )
+            );
+        case GET_TOURNAMENTS_PENDING:
+            console.log('api/tournaments pending');
+            return state;
+        case GET_TOURNAMENTS_FULFILLED:
+            console.log(action.payload);
+            return state;
+        case GET_TOURNAMENTS_REJECTED:
+            console.log('api/tournaments failed');
+            return state;
         default:
             console.log(state);
             return state;
