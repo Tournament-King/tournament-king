@@ -4,7 +4,6 @@ import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 import MatchModal from './MatchModal.js';
 
-
 const makeTree = function(data) {
     let columnHeight = data.rounds[0].length * 124
     let tree = [];
@@ -34,6 +33,7 @@ const makeTree = function(data) {
     }
         return tree;
 }
+
 let hiddenOrNah = "none"
 
 function toggleModal(val) {
