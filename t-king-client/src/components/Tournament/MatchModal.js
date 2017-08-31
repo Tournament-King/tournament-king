@@ -59,12 +59,20 @@ class MatchModal extends Component {
             socket.emit('room', {room: nextProps.currentMatch.id})
             console.log('emit from modal')
         }
-        if (nextProps.currentMatch.creator === this.props.currentUser.id) {
-            socket.emit('authorize user', {match_id: nextProps.currentMatch.id})
+        if (this.props.currentUser) {
+            if (nextProps.currentMatch.creator === this.props.currentUser.id) {
+                socket.emit('authorize user', {match_id: nextProps.currentMatch.id})
+            }
+            return;
         }
+        socket.on('user authorized', () => {
+            console.log('you are authorized')
+        })
+        
     }
-
+    
     render() {
+
 
         let hideDisplay = {
             "display":"none"

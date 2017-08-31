@@ -2,7 +2,7 @@ import axios from 'axios';
 import {tournamentJSON, redsPool, dummyMatch} from './dummyData/tournamentJSON';
 
 const initialState = {
-    currentUser: {},
+    currentUser: null,
     userChecked: false,
     tournamentList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
     tournamentData: {name: 'loading', id: null, rounds: [[],[],[]]},
