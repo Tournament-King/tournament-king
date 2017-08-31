@@ -329,6 +329,68 @@ main, div {
     font-size: 25px;
 }
 
+/*-----------------Admin Controls------------------*/
+
+.admin-controls-main {
+    height: 100%;
+    width: 65%;
+    position: absolute;
+    left: 17.5%;
+    top: 0px;
+    /*background: lightblue;
+    opacity: .5;*/
+}
+
+.score-buttons {
+    height: 17.8%;
+    width: 8.5%;
+    position: absolute;
+    top: 5%;
+    background: #222;
+    box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.75);
+    border: 2px solid #eee;    
+}
+
+.score-buttons-plus {
+    height: 50%;
+    width: 100%;
+    color: #138f00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bolder;
+    border-bottom: 1px solid #eee;
+}
+
+.score-buttons-minus {
+    height: 50%;
+    width: 100%;
+    color: #c41d00; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bolder;  
+    border-top: 1px solid #eee;
+}
+
+.admin-controls-start-match {
+    height: 10%;
+    width: 40%;
+    position: absolute;
+    bottom: 5%;
+    left: 30%;
+    background: #222;
+    box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.75);
+    border: 2px solid #eee;
+    color: white;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /*------------------TOURNAMENT---------------------*/
 
 .tournament-wrapper {
