@@ -1,12 +1,26 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import TournamentSearch from './TournamentSearch';
+import TournamentCard from './TournamentCard';
 
 
 const Landing = function(props) {
 
+    let cardList = props.tournamentsList.map((obj, i) => {
+        return <TournamentCard
+                    key={i}/>
+    })
+
     return (
         <main className="landing-wrapper">
-            {props.testProp}, you have landed
+            <div className="landing-splash">
+            </div>
+            <div className="landing-content">
+                <TournamentSearch />
+                <div className="landing-cards-wrapper">
+                    {cardList}
+                </div>
+            </div>
         </main>
     )
 }

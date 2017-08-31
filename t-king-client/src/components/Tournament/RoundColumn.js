@@ -9,7 +9,6 @@ function populate(data) {
                             p2={match.player2 ? match.player2.name : 'TBA'}
                             p1score={match.player1_score}
                             p2score={match.player2_score}
-                            toggleModal={data.toggleModal}
                 />
     })
 }

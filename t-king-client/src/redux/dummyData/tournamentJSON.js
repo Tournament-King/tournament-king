@@ -296,6 +296,169 @@ export const tournamentJSONnew = {
 	]
 }
 
+export const redsPool = {
+    "id": 5,
+    "name": "Red's Pool Tournament",
+    "type": "pool",
+    "active": false,
+    "creator": 2,
+    "rounds": [
+        [
+            {
+                "id": 2,
+                "player1": {
+                    "id": 9,
+                    "user_id": 1,
+                    "name": null
+                },
+                "player2": {
+                    "id": 10,
+                    "user_id": null,
+                    "name": "Rodney"
+                },
+                "winner": {
+                    "id": 10,
+                    "user_id": null,
+                    "name": "Rodney"
+                },
+                "player1_score": 51,
+                "player2_score": null,
+                "active": null
+            },
+            {
+                "id": 3,
+                "player1": {
+                    "id": 11,
+                    "user_id": null,
+                    "name": "James"
+                },
+                "player2": {
+                    "id": 12,
+                    "user_id": null,
+                    "name": "Jenny"
+                },
+                "winner": {
+                    "id": 12,
+                    "user_id": null,
+                    "name": "Jenny"
+                },
+                "player1_score": null,
+                "player2_score": null,
+                "active": null
+            },
+            {
+                "id": 4,
+                "player1": {
+                    "id": 13,
+                    "user_id": null,
+                    "name": "Carrie"
+                },
+                "player2": {
+                    "id": 14,
+                    "user_id": null,
+                    "name": "Steven"
+                },
+                "winner": {
+                    "id": 13,
+                    "user_id": null,
+                    "name": "Carrie"
+                },
+                "player1_score": null,
+                "player2_score": null,
+                "active": null
+            },
+            {
+                "id": 5,
+                "player1": {
+                    "id": 15,
+                    "user_id": null,
+                    "name": "Jeremy"
+                },
+                "player2": {
+                    "id": 16,
+                    "user_id": null,
+                    "name": "Brian"
+                },
+                "winner": {
+                    "id": 16,
+                    "user_id": null,
+                    "name": "Brian"
+                },
+                "player1_score": null,
+                "player2_score": null,
+                "active": null
+            }
+        ],
+        [
+            {
+                "id": 7,
+                "player1": {
+                    "id": 10,
+                    "user_id": null,
+                    "name": "Rodney"
+                },
+                "player2": {
+                    "id": 12,
+                    "user_id": null,
+                    "name": "Jenny"
+                },
+                "winner": {
+                    "id": 10,
+                    "user_id": null,
+                    "name": "Rodney"
+                },
+                "player1_score": null,
+                "player2_score": null,
+                "active": null
+            },
+            {
+                "id": 6,
+                "player1": {
+                    "id": 13,
+                    "user_id": null,
+                    "name": "Carrie"
+                },
+                "player2": {
+                    "id": 16,
+                    "user_id": null,
+                    "name": "Brian"
+                },
+                "winner": {
+                    "id": 16,
+                    "user_id": null,
+                    "name": "Brian"
+                },
+                "player1_score": null,
+                "player2_score": null,
+                "active": null
+            }
+        ],
+        [
+            {
+                "id": 8,
+                "player1": {
+                    "id": 10,
+                    "user_id": null,
+                    "name": "Rodney"
+                },
+                "player2": {
+                    "id": 16,
+                    "user_id": null,
+                    "name": "Brian"
+                },
+                "winner": {
+                    "id": 10,
+                    "user_id": null,
+                    "name": "Rodney"
+                },
+                "player1_score": null,
+                "player2_score": null,
+                "active": null
+            }
+        ]
+    ]
+}
+
 export const dummyMatch = {
 		"id": 1,
 		"tournament_id" : 2,

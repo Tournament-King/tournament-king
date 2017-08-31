@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {getTournament} from './../../redux/mainReducer';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
-import MatchModal from './MatchModal.js';
 
 
 const makeTree = function(data) {
@@ -18,8 +18,7 @@ const makeTree = function(data) {
                 matches={data.rounds[i]}
                 widthDivisor={columnCount}
                 round={i}
-                height={columnHeight}
-                toggleModal={toggleModal}/>
+                height={columnHeight}/>
             )
             if(i !== columnCount - 1) {
                 tree.push(<LineColumn
@@ -34,24 +33,30 @@ const makeTree = function(data) {
     }
         return tree;
 }
-let hiddenOrNah = "none"
 
-function toggleModal(val) {
-    hiddenOrNah = val
+const fetchData = function(props) {
+    let {id} = props.match.params
+    if (!props.tournamentData.id || id * 1 !== props.tournamentData.id) {
+        return props.getTournament(id);
+    } else {
+        return;
+    }
 }
 
 
+
 const TournamentView = function(props) {
-    let width = props.dummyData2.rounds.length * 248;
+    fetchData(props);
+    let width = props.tournamentData.rounds.length * 248;
     let setWidth = {
         "width":width
     }
-    let tree = makeTree(props.dummyData2)
+    let tree = makeTree(props.tournamentData)
 
     return (
         <main>
             <div className="tournament-top-section">
-                    {props.dummyData.name}
+                    {props.tournamentData.name}
             </div>
             <div className="tournament-divider"></div>
                 <div className="tournament-wrapper">
@@ -67,4 +72,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps)(TournamentView);
+export default connect(mapStateToProps, {getTournament})(TournamentView);
