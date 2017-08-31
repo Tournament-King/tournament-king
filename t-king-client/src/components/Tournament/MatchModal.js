@@ -70,10 +70,21 @@ class MatchModal extends Component {
                         <ul className='match-modal-close-out-icon-minus' onClick={this.minModal}>-</ul>
                         <ul className='match-modal-close-out-icon-plus' onClick={this.maxModal}>+</ul>
                     </div>
+                    <div className='scoreboard'>
+                        <div className='scoreboard-player1'>12</div>
+                        <div className='scoreboard-clock'>7:36</div>
+                        <div className='scoreboard-player2'>17</div>
+                    </div>
                 </div>
                 <div className='match-modal-lower-half'>
                     <div className='match-modal-background' style={background}>
 
+                    </div>
+                    <div className='match-modal-player1'>
+                        Jack
+                    </div>
+                    <div className='match-modal-player2'>
+                        Jill
                     </div>
 
                 </div>           
