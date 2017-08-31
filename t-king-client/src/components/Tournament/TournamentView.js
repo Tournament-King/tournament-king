@@ -4,7 +4,6 @@ import {getTournament} from './../../redux/mainReducer';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 
-
 const makeTree = function(data) {
     let columnHeight = data.rounds[0].length * 124
     let tree = [];

@@ -8,6 +8,7 @@ import MatchModal from './components/Tournament/MatchModal';
 class App extends Component {
 
 
+
   render() {
     return (
       <main className="app-wrapper">
