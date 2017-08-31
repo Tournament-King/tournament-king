@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {toggleMatchModal} from './../../redux/mainReducer.js';
-// import pingpongBackground from './img/ping-pongBackground';
+import AdminControls from './AdminControls';
 
 
 
@@ -15,7 +15,8 @@ class MatchModal extends Component {
             modalWidth: null,
             modalLeft: null,
             modalTop: null,
-            matchType: 'beer-pong'
+            matchType: 'beer-pong',
+            currentUser: 'admin'
         }
 
         this.maxModal = this.maxModal.bind(this);
@@ -57,9 +58,16 @@ class MatchModal extends Component {
             "backgroundImage":url
         }
 
+        let adminControls = null;
+        if (this.state.currentUser === 'admin') {
+            adminControls = <AdminControls />
+        } else {
+            adminControls = null
+        }
+
         return (
             <main className='matchModal' style={Object.assign({}, 
-                                                !this.props.modalActive ? null : hideDisplay, 
+                                                this.props.modalActive ? null : hideDisplay, 
                                                 this.state.modalHeight, 
                                                 this.state.modalWidth,
                                                 this.state.modalLeft,
@@ -87,7 +95,8 @@ class MatchModal extends Component {
                         Jill
                     </div>
 
-                </div>           
+                </div>  
+                {adminControls} 
             </main>
         )
     }
