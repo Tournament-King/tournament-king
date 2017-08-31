@@ -120,7 +120,6 @@ const applyMiddleware = (io) => {
     io.use((socket, next) => {
         if (socket.handshake.session.passport) {
             socket.user = socket.handshake.session.passport.user
-            console.log('socket user: ', socket.user)
         }
         return next();
     })
@@ -148,10 +147,22 @@ const addListeners = (io, db) => {
             db.queries.match.getMatch([data.match_id])
             .then(res => {
                 let {creator} = res[0].json_build_object
-                console.log('database response: ', res)
                 if (socket.user.id === creator) {
                     socket.emit('user authorized')
                 }
+            })
+        })
+
+        socket.on('update score', (data) => {
+            db.matches.update(data)
+            .then(res => {
+                console.log(res)
+                let {id, player1_score, player2_score} = res;
+                io.emit('score update', {
+                    id,
+                    player1_score,
+                    player2_score
+                })
             })
         })
     });
