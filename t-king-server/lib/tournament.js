@@ -1,9 +1,10 @@
 // Helper function to determine if a match from the database contains the same players
 // as the match we are currently processing
-function matchingPlayers(match1, match2) {
-  if (match2.player1 && match2.player2) {
-    var players1 = [match1.player1, match1.player2]
-    var players2 = [match2.player1.id, match2.player2.id]
+
+function matchingPlayers(matchFromDB, matchInstance) {
+  if (matchInstance.player1 && matchInstance.player2) {
+    var players1 = [matchFromDB.player1, matchFromDB.player2]
+    var players2 = [matchInstance.player1.id, matchInstance.player2.id]
     players1.sort()
     players2.sort()
     return players1[0] === players2[0] && players1[1] === players2[1]
@@ -140,7 +141,7 @@ class Bracket {
     var players = this.players;
     rounds.forEach(round => {
       round.forEach(match => {
-        var existingMatch = matches.find(e => matchingPlayers(e, match))
+        var existingMatch = matches.find(matchFromDB => matchingPlayers(matchFromDB, match))
         if (existingMatch) {
           if (existingMatch.winner) {
             var winner = players.find(player => player.id === existingMatch.winner)

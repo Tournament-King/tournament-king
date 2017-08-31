@@ -25,13 +25,21 @@ const createTournament = (req, res) => {
 
 const getTournament = (req, res) => {
   let db = req.app.get('db');
-  db.players.find({tournament_id:req.params.id})
-  .then(players => {
-    db.matches.find({tournament_id:req.params.id})
-    .then(matches => {
-      let bracket = new Bracket(players, matches)
-      res.send(bracket.getJSON())
-    })
+  db.tournaments.findOne({id:req.params.id})
+  .then(tournament => {
+    if (!tournament) {
+      res.status(404).send({"error" : "Tournament not found"})
+    } else {
+      db.queries.players.getPlayers([req.params.id])
+      .then(players => {
+        db.matches.find({tournament_id:req.params.id})
+        .then(matches => {
+          let bracket = new Bracket(players, matches)
+          tournament.rounds = bracket.getJSON()
+          res.send(tournament);
+        })
+      })
+    }
   })
 }
 
