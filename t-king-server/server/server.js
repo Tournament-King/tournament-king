@@ -113,7 +113,17 @@ app.patch('/api/match', matchCtrl.updateMatch);
 //     console.log('a user connected');
 
 const applyMiddleware = (io) => {
+    io.use(sharedSession(session, {
+        autoSave:true
+    }));
 
+    io.use((socket, next) => {
+        if (socket.handshake.session.passport) {
+            socket.user = socket.handshake.session.passport.user
+            console.log('socket user: ', socket.user)
+        }
+        return next();
+    })
 }
 
 const addListeners = (io, db) => {
@@ -137,7 +147,11 @@ const addListeners = (io, db) => {
         socket.on('authorize user', (data) => {
             db.queries.match.getMatch([data.match_id])
             .then(res => {
-                res.creator === socket.user.id
+                let {creator} = res[0].json_build_object
+                console.log('database response: ', res)
+                if (socket.user.id === creator) {
+                    socket.emit('user authorized')
+                }
             })
         })
     });
@@ -149,5 +163,6 @@ massive(dbConfig.connectionString)
     .then(db => {
         app.set('db', db);
         const io = socket(app.listen(port, () => {console.log('listening on port ', port)}));
+        applyMiddleware(io);
         addListeners(io, db)
     })
