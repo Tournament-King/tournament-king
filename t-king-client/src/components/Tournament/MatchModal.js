@@ -72,7 +72,7 @@ class MatchModal extends Component {
                     </div>
                     <div className='scoreboard'>
                         <div className='scoreboard-player1'>12</div>
-                        <div className='scoreboard-clock'>7:36</div>
+                        <div className='scoreboard-clock'>Live!</div>
                         <div className='scoreboard-player2'>17</div>
                     </div>
                 </div>

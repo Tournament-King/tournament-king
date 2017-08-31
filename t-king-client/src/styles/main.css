@@ -149,10 +149,10 @@ main, div {
 
 .scoreboard-clock {
     position: absolute;
-    width: 40%;
+    width: 26%;
     height: 60%;
     top: 8%;
-    left: 30%;
+    left: 37%;
     background: #222;
     box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.75);
     border: 3px solid #eee;
