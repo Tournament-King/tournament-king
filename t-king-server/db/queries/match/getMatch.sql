@@ -2,6 +2,7 @@ select
     json_build_object(
         'id', m.id,
         'type', t.type,
+        'creator', t.creator,
         'player1_score', m.player1_score,
         'player2_score', m.player2_score,
         'active', m.active,
