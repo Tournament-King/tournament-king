@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Icon} from 'semantic-ui-react';
-import {toggleMatchModal} from './../../redux/mainReducer';
+import {toggleMatchModal, getMatchById} from './../../redux/mainReducer';
 
 
 class MatchCard extends Component {
@@ -21,9 +21,9 @@ class MatchCard extends Component {
     toggleModal() {
         if (!this.props.modalActive) {
             this.props.toggleMatchModal();
-            console.log('get match: ', this.props.id)
+            this.props.getMatchById(this.props.id);
         } else {
-            console.log('get match: ', this.props.id)
+            this.props.getMatchById(this.props.id);
         }
     }
 
@@ -83,4 +83,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, {toggleMatchModal})(MatchCard);
+export default connect(mapStateToProps, {toggleMatchModal, getMatchById})(MatchCard);

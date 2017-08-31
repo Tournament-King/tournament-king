@@ -175,6 +175,7 @@ main, div {
     top:25%;
     box-shadow: 10px 7px 22px 3px rgba(0,0,0,0.75);
     border: 1px solid #666;
+    transition:all .2s ease-in-out;
 }
 
 .match-modal-upper-half {

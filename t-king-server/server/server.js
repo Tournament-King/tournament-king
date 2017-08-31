@@ -107,10 +107,47 @@ app.post('/api/match', matchCtrl.createMatch);
 app.patch('/api/match', matchCtrl.updateMatch);
 
 
+//-----------------------------SOCKETS-----------------------------//
+
+// io.on('connection', (socket) => {
+//     console.log('a user connected');
+
+const applyMiddleware = (io) => {
+
+}
+
+const addListeners = (io, db) => {
+    io.on('connect', (socket) => {
+        console.log('user connected', socket.id);
+        
+        socket.on('disconnect', () => {
+            console.log('user disconnected')
+        });
+        
+        socket.on('room', function(data) {
+            socket.join(data.room)
+            console.log('user joined room', data.room)
+        })
+
+        socket.on('leave room', (data) => {
+            socket.leave(data.room)
+            console.log('user left room', data.room)
+        })
+
+        socket.on('authorize user', (data) => {
+            db.queries.match.getMatch([data.match_id])
+            .then(res => {
+                res.creator === socket.user.id
+            })
+        })
+    });
+}
+
 //----------------------------DB/LISTEN---------------------------//
 
 massive(dbConfig.connectionString)
     .then(db => {
         app.set('db', db);
         const io = socket(app.listen(port, () => {console.log('listening on port ', port)}));
+        addListeners(io, db)
     })

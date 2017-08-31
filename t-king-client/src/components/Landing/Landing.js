@@ -6,7 +6,7 @@ import TournamentCard from './TournamentCard';
 
 const Landing = function(props) {
 
-    let cardList = props.tournamentsList.map((obj, i) => {
+    let cardList = props.tournamentList.map((obj, i) => {
         return <TournamentCard
                     key={i}/>
     })

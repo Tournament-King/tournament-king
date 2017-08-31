@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {toggleMatchModal} from './../../redux/mainReducer.js';
-// import pingpongBackground from './img/ping-pongBackground';
+
+const io = require('socket.io-client');
+const socket = io();
 
 
 
@@ -43,7 +45,23 @@ class MatchModal extends Component {
     }
 
     toggleModal() {
+        socket.emit('leave room', {
+            room: this.props.currentMatch.id
+        })        
         this.props.toggleMatchModal()
+    }
+
+    componentDidMount() {
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.modalActive && nextProps.currentMatch.active) {
+            socket.emit('room', {room: nextProps.currentMatch.id})
+            console.log('emit from modal')
+        }
+        if (nextProps.currentMatch.creator === this.props.currentUser.id) {
+            socket.emit('authorize user', {match_id: nextProps.currentMatch.id})
+        }
     }
 
     render() {
@@ -52,14 +70,13 @@ class MatchModal extends Component {
             "display":"none"
         }
         let url = `url(http://localhost:3030/public/img/${this.state.matchType}Background.jpg)`
-        console.log(url)
         let background = {
             "backgroundImage":url
         }
 
         return (
             <main className='matchModal' style={Object.assign({}, 
-                                                !this.props.modalActive ? null : hideDisplay, 
+                                                !this.props.modalActive ? hideDisplay : null, 
                                                 this.state.modalHeight, 
                                                 this.state.modalWidth,
                                                 this.state.modalLeft,
@@ -71,9 +88,17 @@ class MatchModal extends Component {
                         <ul className='match-modal-close-out-icon-plus' onClick={this.maxModal}>+</ul>
                     </div>
                     <div className='scoreboard'>
-                        <div className='scoreboard-player1'>12</div>
+                        <div className='scoreboard-player1'>
+                            {this.props.currentMatch ? 
+                            this.props.currentMatch.player1_score :
+                            '--'}
+                        </div>
                         <div className='scoreboard-clock'>Live!</div>
-                        <div className='scoreboard-player2'>17</div>
+                        <div className='scoreboard-player2'>
+                            {this.props.currentMatch ? 
+                            this.props.currentMatch.player2_score :
+                            '--'}
+                        </div>
                     </div>
                 </div>
                 <div className='match-modal-lower-half'>
@@ -81,10 +106,14 @@ class MatchModal extends Component {
 
                     </div>
                     <div className='match-modal-player1'>
-                        Jack
+                        {this.props.currentMatch ? 
+                        this.props.currentMatch.player1.name :
+                        '--'}
                     </div>
                     <div className='match-modal-player2'>
-                        Jill
+                        {this.props.currentMatch ?
+                        this.props.currentMatch.player2.name :
+                        '--'}
                     </div>
 
                 </div>           
