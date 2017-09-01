@@ -5,6 +5,9 @@ import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 
 
+//makeTree is a function that takes in tournament data from the API tree structure
+//and parses/renders it using dynamic nested components, and passes the components
+//the necessary props
 const makeTree = function(data) {
     let columnHeight = data.rounds[0].length * 124
     let tree = [];
@@ -34,6 +37,9 @@ const makeTree = function(data) {
         return tree;
 }
 
+//fetchData is a function used to fetch the relevant tournament tree relative to the
+//path for rendering, if the desired tournament isn't already present in the redux
+//state
 const fetchData = function(props) {
     let {id} = props.match.params
     if (!props.tournamentData.id || id * 1 !== props.tournamentData.id) {
