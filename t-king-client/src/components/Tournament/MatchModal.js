@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {toggleMatchModal, setMatchFalse, updateMatch} from './../../redux/mainReducer.js';
+import {toggleMatchModal, updateMatch} from './../../redux/mainReducer.js';
 import AdminControls from './AdminControls';
 
 const io = require('socket.io-client');
@@ -16,12 +16,13 @@ class MatchModal extends Component {
             modalLeft: null,
             modalTop: null,
             matchType: 'basketball',
-            currentUser: null
+            currentUser: null,
+            lastRoom: 0
         }
 
         socket.on('score update', (data) => {
             props.updateMatch(data);
-            console.log('update listener')
+            console.log('update listener', data)
         })
 
         socket.on('user authorized', () => {
@@ -59,12 +60,12 @@ class MatchModal extends Component {
         this.setState({
             currentUser: null
         })
-        if (this.props.currentMatch.active) {
+        if (this.props.activeMatch.active) {
             socket.emit('leave room', {
-                room: this.props.currentMatch.id
+                room: 'm' + this.props.activeMatch.id
             })
         }
-        this.props.setMatchFalse();
+        this.setState({lastRoom: this.props.activeMatch.id});        
         this.props.toggleMatchModal();
     }
 
@@ -72,26 +73,31 @@ class MatchModal extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.modalActive &&
-            nextProps.currentMatch.id !== this.props.currentMatch.id &&
-            this.props.currentMatch.active) {
-            socket.emit('leave room', {
-                room: this.props.currentMatch.id
-            })
+        if (!this.props.activeMatch &&
+            nextProps.modalActive &&
+            nextProps.activeMatch.active) {
+                socket.emit('room', {room: 'm' + nextProps.activeMatch.id})
         }
-        if (nextProps.modalActive && nextProps.currentMatch.active) {
-            socket.emit('room', {room: nextProps.currentMatch.id})
-            console.log('emit from modal')
+        if (this.props.activeMatch) {
+            if (nextProps.modalActive && this.props.activeMatch.id !== nextProps.activeMatch.id) {
+                if (this.state.lastRoom !== this.props.activeMatch.id) {
+                    socket.emit('leave room', {room: 'm' + this.props.activeMatch.id})
+                }
+                socket.emit('room', {room: 'm' + nextProps.activeMatch.id});
+                console.log('state ', this.state.lastRoom)
+            }
         }
-        if (this.props.currentUser && nextProps.currentMatch) {
-            if (nextProps.currentMatch.creator === this.props.currentUser.id) {
-                socket.emit('authorize user', {match_id: nextProps.currentMatch.id})
+        if (this.props.currentUser && nextProps.activeMatch) {
+            if (nextProps.tournamentData.creator === this.props.currentUser.id) {
+                socket.emit('authorize user', {match_id: nextProps.activeMatch.id})
             }
             return;
         }
     }
     
     render() { 
+
+        let match = matchData(this.props)
 
         let hideDisplay = {
             "display":"none"
@@ -123,14 +129,14 @@ class MatchModal extends Component {
                     </div>
                     <div className='scoreboard'>
                         <div className='scoreboard-player1'>
-                            {this.props.currentMatch ? 
-                            this.props.currentMatch.player1_score :
+                            {this.props.activeMatch ? 
+                            match.player1_score :
                             '--'}
                         </div>
                         <div className='scoreboard-clock'>Live!</div>
                         <div className='scoreboard-player2'>
-                            {this.props.currentMatch ? 
-                            this.props.currentMatch.player2_score :
+                            {this.props.activeMatch ? 
+                            match.player2_score :
                             '--'}
                         </div>
                     </div>
@@ -140,13 +146,13 @@ class MatchModal extends Component {
 
                     </div>
                     <div className='match-modal-player1'>
-                        {this.props.currentMatch ? 
-                        this.props.currentMatch.player1.name :
+                        {this.props.activeMatch ? 
+                        match.player1.name :
                         '--'}
                     </div>
                     <div className='match-modal-player2'>
-                        {this.props.currentMatch ?
-                        this.props.currentMatch.player2.name :
+                        {this.props.activeMatch ?
+                        match.player2.name :
                         '--'}
                     </div>
 
@@ -161,4 +167,19 @@ function mapStateToProps(state) {
     return state
 }
 
-export default connect(mapStateToProps, {toggleMatchModal, setMatchFalse, updateMatch})(MatchModal);
+export default connect(mapStateToProps,
+    {toggleMatchModal, updateMatch}
+)(MatchModal);
+
+
+const matchData = (props) => {
+    let match;
+    if(props.activeMatch) {
+        let matchID = props.activeMatch.id;
+        let round = props.activeMatch.round;
+        match = props.tournamentData.rounds[round].find(m => {
+            return m.id === matchID
+        })
+    }
+    return match;
+}
