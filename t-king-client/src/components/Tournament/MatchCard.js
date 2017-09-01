@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Icon} from 'semantic-ui-react';
-import {toggleMatchModal, getMatchById} from './../../redux/mainReducer';
+import {toggleMatchModal, getMatchById, setActiveMatch} from './../../redux/mainReducer';
 
 
 class MatchCard extends Component {
@@ -12,39 +12,32 @@ class MatchCard extends Component {
             activeItem: '',
         }
         
-        this.handleItemClick=this.handleItemClick.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
     }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
     toggleModal() {
-        if (!this.props.modalActive) {
-            this.props.toggleMatchModal();
-            this.props.getMatchById(this.props.id);
+        let match = {
+            id: this.props.id,
+            round: this.props.round,
+            active: this.props.active
+        }
+        if (!this.props.active) {
+            return;
         } else {
-            this.props.getMatchById(this.props.id);
+            if (!this.props.modalActive) {
+                this.props.toggleMatchModal();
+                this.props.setActiveMatch(match);
+            }
+            if (this.props.activeMatch) {
+                if (this.props.activeMatch.id !== this.props.id) {
+                    this.props.setActiveMatch(match);
+                }
+            }
         }
     }
 
     render() {
-        console.log(this.props.modalActive);
-
-        const scoreAhead = {
-            "background":"#95dba5"
-        }
-
-        const scoreInactive = {
-            "background":"#DEDEDE"
-        }
-
-        function formatScore(score1, score2) {
-            if (score1 > score2) {
-                return scoreAhead;
-            } else {
-                return null;
-            }
-        }
 
         return (
         <main className="match-wrapper" >
@@ -61,8 +54,9 @@ class MatchCard extends Component {
                     </div> */}
             </div>
             <div className="match-data">
+                {this.props.round + 1}
             </div>
-            <div className="match-player">
+            <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
                     <Icon name='gamepad' />
                     {this.props.p2}
@@ -83,4 +77,27 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, {toggleMatchModal, getMatchById})(MatchCard);
+export default connect(mapStateToProps, 
+    {toggleMatchModal, setActiveMatch, getMatchById}
+)(MatchCard);
+
+
+
+
+
+
+const scoreAhead = {
+    "background":"#95dba5"
+}
+
+const scoreInactive = {
+    "background":"#DEDEDE"
+}
+
+function formatScore(score1, score2) {
+    if (score1 > score2) {
+        return scoreAhead;
+    } else {
+        return null;
+    }
+}

@@ -23,44 +23,52 @@ class AdminControls extends Component {
 
 
     incrementPlayerOne() {
-        let {id, player1_score, player2_score} = this.props.currentMatch;
+        let round = this.props.activeMatch.round; 
+        let {id, player1_score, player2_score} = currentMatch(this.props);
         let update = {
             id: id,
+            round: round,
             player1_score: ++player1_score,
-            player2_score: player2_score
+            player2_score: player2_score           
         }
         this.props.updateMatch(update);
         this.emitUpdate(update);
     }
 
     decrementPlayerOne() {
-        let {id, player1_score, player2_score} = this.props.currentMatch;
+        let round = this.props.activeMatch.round; 
+        let {id, player1_score, player2_score} = currentMatch(this.props);
         let update = {
             id: id,
+            round: round,
             player1_score: --player1_score,
-            player2_score: player2_score
+            player2_score: player2_score           
         }
         this.props.updateMatch(update);
         this.emitUpdate(update);
     }
 
     incrementPlayerTwo() {
-        let {id, player1_score, player2_score} = this.props.currentMatch;
+        let round = this.props.activeMatch.round; 
+        let {id, player1_score, player2_score} = currentMatch(this.props);
         let update = {
             id: id,
+            round: round,
             player1_score: player1_score,
-            player2_score: ++player2_score
+            player2_score: ++player2_score           
         }
         this.props.updateMatch(update);
         this.emitUpdate(update);
     }
 
     decrementPlayerTwo() {
-        let {id, player1_score, player2_score} = this.props.currentMatch;
+        let round = this.props.activeMatch.round; 
+        let {id, player1_score, player2_score} = currentMatch(this.props);
         let update = {
             id: id,
+            round: round,
             player1_score: player1_score,
-            player2_score: --player2_score
+            player2_score: --player2_score           
         }
         this.props.updateMatch(update);
         this.emitUpdate(update);    
@@ -72,6 +80,8 @@ class AdminControls extends Component {
     }
 
     render() {
+
+        console.log(currentMatch(this.props))
 
         return (
             <main className='admin-controls-main'>
@@ -103,4 +113,14 @@ function mapStateToProps(state) {
     return state
 }
 
-export default connect(mapStateToProps, {updateMatch})(AdminControls);
+export default connect(mapStateToProps,
+    {updateMatch}
+)(AdminControls);
+
+
+const currentMatch = (props) => {
+    let {round, id} = props.activeMatch;
+    return props.tournamentData.rounds[round].find(m => {
+        return m.id === id;
+    })
+}

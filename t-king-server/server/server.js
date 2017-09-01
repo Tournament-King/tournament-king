@@ -152,7 +152,7 @@ const addListeners = (io, db) => {
         socket.on('authorize user', (data) => {
             db.queries.match.getMatch([data.match_id])
             .then(res => {
-                let {creator} = res[0].json_build_object
+                let {creator} = res[0]
                 if (socket.user.id === creator) {
                     socket.emit('user authorized')
                 }
@@ -160,11 +160,19 @@ const addListeners = (io, db) => {
         })
 
         socket.on('update score', (data) => {
-            db.matches.update(data)
+            let {round} = data;
+            let query = Object.assign(
+                {},
+                {id: data.id,
+                player1_score: data.player1_score,
+                player2_score: data.player2_score}
+            )
+            db.matches.update(query)
             .then(res => {
                 let {id, player1_score, player2_score} = res;
-                io.to(id).emit('score update', {
+                io.to('m' + id).emit('score update', {
                     id,
+                    round: round,
                     player1_score,
                     player2_score
                 })

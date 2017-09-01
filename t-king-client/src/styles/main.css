@@ -513,6 +513,8 @@ main, div {
     width:80%;
     height:12%;
     border-radius:2px;
+    font-size:xx-small;
+    margin-bottom:8px;
 }
 
 .s-elim-match-connector {

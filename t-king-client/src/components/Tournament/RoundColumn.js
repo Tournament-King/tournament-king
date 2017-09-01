@@ -9,6 +9,8 @@ function populate(data) {
                             p2={match.player2 ? match.player2.name : 'TBA'}
                             p1score={match.player1_score}
                             p2score={match.player2_score}
+                            round={data.round}
+                            active={match.player1 && match.player2 ? match.active : false}
                 />
     })
 }

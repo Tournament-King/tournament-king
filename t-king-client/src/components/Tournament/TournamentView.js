@@ -9,8 +9,8 @@ import LineColumn from './LineColumn';
 //and parses/renders it using dynamic nested components, and passes the components
 //the necessary props
 const makeTree = function(data) {
-    let columnHeight = data.rounds[0].length * 124
     let tree = [];
+    let columnHeight = data.rounds[0].length * 124
     let columnCount = data.rounds.length;
     let i1 = columnCount + 1;
     let i2 = data.rounds[0].length / 2
@@ -19,8 +19,8 @@ const makeTree = function(data) {
                 key={i} 
                 matchCount={data.rounds[i].length}
                 matches={data.rounds[i]}
-                widthDivisor={columnCount}
                 round={i}
+                widthDivisor={columnCount}
                 height={columnHeight}/>
             )
             if(i !== columnCount - 1) {
