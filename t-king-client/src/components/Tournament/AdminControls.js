@@ -33,7 +33,6 @@ class AdminControls extends Component {
             player1_score: ++player1_score,
             player2_score: player2_score           
         }
-        console.log(update)
         this.props.updateMatch(update);
         this.emitUpdate(update);
     }
@@ -80,7 +79,7 @@ class AdminControls extends Component {
             player2_score: --player2_score           
         }
         this.props.updateMatch(update);
-        this.emitUpdate(update);    
+        this.emitUpdate(update);
     }
 
 
@@ -127,6 +126,9 @@ export default connect(mapStateToProps,
 )(AdminControls);
 
 
+
+//function to find and return the current match object from the tournament object
+//in redux
 const currentMatch = (props) => {
     let {round, id} = props.activeMatch;
     return props.tournamentData.rounds[round].find(m => {
