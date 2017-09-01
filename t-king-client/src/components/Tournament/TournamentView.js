@@ -35,8 +35,11 @@ class TournamentView extends Component {
         }
     }
 
+    componentWillUnmount() {
+        socket.emit('leave room', {room: this.state.currentRoom})
+    }
+
     render() {
-        console.log('room: ', this.state.currentRoom)
         fetchData(this.props);
         let width = this.props.tournamentData.rounds.length * 248;
         let setWidth = {

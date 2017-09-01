@@ -89,8 +89,6 @@ class AdminControls extends Component {
 
     render() {
 
-        console.log(currentMatch(this.props))
-
         return (
             <main className='admin-controls-main'>
 

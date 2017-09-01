@@ -145,7 +145,6 @@ export default function reducer(state=initialState, action) {
         case GET_TOURNAMENT_PENDING:
             return state;
         case GET_TOURNAMENT_FULFILLED:
-            console.log(action.payload)
             return Object.assign(
                 {},
                 state,
