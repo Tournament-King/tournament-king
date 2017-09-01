@@ -100,12 +100,72 @@ app.get('/auth/callback',
 app.get('/api/user', userCtrl.getUserOnSession);
 
 app.get('/api/tournament/:id', tournamentCtrl.getTournament);
-app.post('/api/tournament', authMiddleware.addUserToReq, tournamentCtrl.createTournament);
+app.post('/api/tournament', tournamentCtrl.createTournament);
 
 app.get('/api/match/:id', matchCtrl.getMatch);
 app.post('/api/match', matchCtrl.createMatch);
 app.patch('/api/match', matchCtrl.updateMatch);
 
+
+//-----------------------------SOCKETS-----------------------------//
+
+// io.on('connection', (socket) => {
+//     console.log('a user connected');
+
+const applyMiddleware = (io) => {
+    io.use(sharedSession(session, {
+        autoSave:true
+    }));
+
+    io.use((socket, next) => {
+        if (socket.handshake.session.passport) {
+            socket.user = socket.handshake.session.passport.user
+        }
+        return next();
+    })
+}
+
+const addListeners = (io, db) => {
+    io.on('connect', (socket) => {
+        console.log('user connected', socket.id);
+        
+        socket.on('disconnect', () => {
+            console.log('user disconnected')
+        });
+        
+        socket.on('room', function(data) {
+            socket.join(data.room)
+            console.log('user joined room', data.room)
+        })
+
+        socket.on('leave room', (data) => {
+            socket.leave(data.room)
+            console.log('user left room', data.room)
+        })
+
+        socket.on('authorize user', (data) => {
+            db.queries.match.getMatch([data.match_id])
+            .then(res => {
+                let {creator} = res[0].json_build_object
+                if (socket.user.id === creator) {
+                    socket.emit('user authorized')
+                }
+            })
+        })
+
+        socket.on('update score', (data) => {
+            db.matches.update(data)
+            .then(res => {
+                let {id, player1_score, player2_score} = res;
+                io.to(id).emit('score update', {
+                    id,
+                    player1_score,
+                    player2_score
+                })
+            })
+        })
+    });
+}
 
 //----------------------------DB/LISTEN---------------------------//
 
@@ -113,4 +173,6 @@ massive(dbConfig.connectionString)
     .then(db => {
         app.set('db', db);
         const io = socket(app.listen(port, () => {console.log('listening on port ', port)}));
+        applyMiddleware(io);
+        addListeners(io, db)
     })
