@@ -39,8 +39,8 @@ class CreateTournament extends Component {
                 </div>
                 <div className='ct-tournament-info'>
                     <form id="contact" action="" method="post">
-                    <h3>Tournament Info</h3>
-                    <h4>!!!Maybe some cometition quote here?!!!</h4>
+                        <h3>Tournament Info</h3>
+                        <h4>!!!Maybe some cometition quote here?!!!</h4>
                         <br />
 
                         <input placeholder="Tournament Name" type="text" tabIndex="1" required/>
@@ -57,10 +57,12 @@ class CreateTournament extends Component {
                             <option value={128}>128 Competitors... Maybe rethink your tournament...</option>
                             <option value={256}>256 Competitors... Maybe rethink your life...</option>
                         </select>
+                        <div className='ct-matches'>
 
-                        <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+                        </div>
 
-                    </form>
+                        <div className='ct-submit'>Submit</div>
+                   </form>
                 </div>
                 <div className='ct-player-info'>
 
