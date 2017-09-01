@@ -462,7 +462,7 @@ export const redsPool = {
 export const dummyMatch = {
     "id": 5,
     "type": "pool",
-    "creator": 2,
+    "creator": 3,
     "player1_score": 4,
     "player2_score": 7,
     "active": true,

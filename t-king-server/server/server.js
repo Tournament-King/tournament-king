@@ -156,7 +156,6 @@ const addListeners = (io, db) => {
         socket.on('update score', (data) => {
             db.matches.update(data)
             .then(res => {
-                console.log(res)
                 let {id, player1_score, player2_score} = res;
                 io.emit('score update', {
                     id,

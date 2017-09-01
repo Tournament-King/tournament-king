@@ -33,7 +33,7 @@ class MatchModal extends Component {
 
         this.maxModal = this.maxModal.bind(this);
         this.minModal = this.minModal.bind(this);
-        this.toggleModal = this.toggleModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
 
@@ -55,7 +55,7 @@ class MatchModal extends Component {
         })
     }
 
-    toggleModal() {
+    closeModal() {
         this.setState({
             currentUser: null
         })
@@ -117,7 +117,7 @@ class MatchModal extends Component {
                                                 this.state.modalTop)}>
                 <div className='match-modal-upper-half'>
                     <div className='match-modal-close-out'>
-                        <ul className='match-modal-close-out-iconX' onClick={this.toggleModal}>x</ul>
+                        <ul className='match-modal-close-out-iconX' onClick={this.closeModal}>x</ul>
                         <ul className='match-modal-close-out-icon-minus' onClick={this.minModal}>-</ul>
                         <ul className='match-modal-close-out-icon-plus' onClick={this.maxModal}>+</ul>
                     </div>
