@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {tournamentJSON, redsPool, dummyMatch} from './dummyData/tournamentJSON';
+import {tournamentJSON, redsPool} from './dummyData/tournamentJSON';
 
 const initialState = {
     currentUser: null,
