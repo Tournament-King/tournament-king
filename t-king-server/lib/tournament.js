@@ -134,6 +134,10 @@ class Bracket {
         match.player2_score = existingMatch.player2_score
         match.winner = existingMatch.winner
         match.active = existingMatch.active
+        match.ready = false
+        if (!match.active && !match.winner && match.player1 && match.player2) {
+          match.ready = true;
+        }
         if (match.winner) {
           var winner = players.find(p => p.id === match.winner)
           match.setWinner(winner)

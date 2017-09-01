@@ -1,8 +1,9 @@
 CREATE TABLE "tournaments" (
 	"id" serial NOT NULL,
 	"name" TEXT NOT NULL,
+	"description" TEXT,
 	"type" TEXT NOT NULL,
-	"active" BOOLEAN NOT NULL DEFAULT 'false',
+	"active" BOOLEAN NOT NULL DEFAULT 'true',
 	"creator" integer NOT NULL,
 	CONSTRAINT tournaments_pk PRIMARY KEY ("id")
 ) WITH (
@@ -20,6 +21,7 @@ CREATE TABLE "matches" (
 	"player2_score" integer,
 	"winner" integer,
 	"active" BOOLEAN NOT NULL DEFAULT 'false',
+	"ready" BOOLEAN NOT NULL DEFAULT 'false',
 	CONSTRAINT matches_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -59,7 +61,7 @@ CREATE TABLE "comments" (
 	"text" TEXT NOT NULL,
 	"match_id" int NOT NULL,
 	"user_id" int NOT NULL,
-	"timestamp" TIMESTAMP NOT NULL DEFAULT 'CURRENT_TIMESTAMP',
+	"timestamp" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT comments_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
