@@ -127,7 +127,11 @@ class MatchModal extends Component {
                             this.props.currentMatch.player1_score :
                             '--'}
                         </div>
-                        <div className='scoreboard-clock'>Live!</div>
+                        <div className='scoreboard-clock'>
+                            {this.props.currentMatch ?
+                            'Live!' :
+                            '--'}
+                        </div>
                         <div className='scoreboard-player2'>
                             {this.props.currentMatch ? 
                             this.props.currentMatch.player2_score :
