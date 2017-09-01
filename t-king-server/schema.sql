@@ -14,8 +14,8 @@ CREATE TABLE "tournaments" (
 CREATE TABLE "matches" (
 	"id" serial NOT NULL,
 	"tournament_id" integer NOT NULL,
-	"player1" integer NOT NULL,
-	"player2" integer NOT NULL,
+	"player1" integer,
+	"player2" integer,
 	"player1_score" integer,
 	"player2_score" integer,
 	"winner" integer,

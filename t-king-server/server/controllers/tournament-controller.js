@@ -14,12 +14,19 @@ const createTournament = (req, res) => {
     type,
     creator: req.user.id
   }).then(tournament => {
-    var position = 1;
+    var count = 0;
     db.players.insert(players.map(player => {
       player.tournament_id = tournament.id;
-      player.position = position++;
+      player.position = ++count;
       return player;
-    })).then(() => res.send(tournament))
+    })).then(() => {
+      var matches = []
+      while (--count) {
+        matches.push({tournament_id:tournament.id})
+      }
+      db.matches.insert(matches)
+      .then(() => res.send(tournament))
+    })
   })
 }
 
@@ -34,16 +41,22 @@ const getTournament = (req, res) => {
       .then(players => {
         db.matches.find({tournament_id:req.params.id})
         .then(matches => {
-          let bracket = new Bracket(players, matches)
-          tournament.rounds = bracket.getJSON()
-          res.send(tournament);
+          var b1 = new Bracket(players, matches)
+          res.send(b1.getJSON())
         })
       })
     }
   })
 }
 
+const getTournaments = (req, res) => {
+  let db = req.app.get('db');
+  db.tournaments.find()
+  .then(tournaments => res.send(tournaments))
+}
+
 module.exports = {
   createTournament,
-  getTournament
+  getTournament,
+  getTournaments
 }
