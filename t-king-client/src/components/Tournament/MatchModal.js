@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {toggleMatchModal} from './../../redux/mainReducer.js';
+import {toggleMatchModal, setMatchFalse, updateMatch} from './../../redux/mainReducer.js';
 import AdminControls from './AdminControls';
 
 const io = require('socket.io-client');
 const socket = io();
-
-
-
 
 class MatchModal extends Component {
     constructor(props) {
@@ -18,9 +15,21 @@ class MatchModal extends Component {
             modalWidth: null,
             modalLeft: null,
             modalTop: null,
-            matchType: 'beer-pong',
-            currentUser: 'admin'
+            matchType: 'basketball',
+            currentUser: null
         }
+
+        socket.on('score update', (data) => {
+            props.updateMatch(data);
+            console.log('update listener')
+        })
+
+        socket.on('user authorized', () => {
+            this.setState({
+                currentUser: 'admin'
+            })
+            console.log('you are authorized')
+        })
 
         this.maxModal = this.maxModal.bind(this);
         this.minModal = this.minModal.bind(this);
@@ -47,34 +56,42 @@ class MatchModal extends Component {
     }
 
     toggleModal() {
-        socket.emit('leave room', {
-            room: this.props.currentMatch.id
-        })        
-        this.props.toggleMatchModal()
+        this.setState({
+            currentUser: null
+        })
+        if (this.props.currentMatch.active) {
+            socket.emit('leave room', {
+                room: this.props.currentMatch.id
+            })
+        }
+        this.props.setMatchFalse();
+        this.props.toggleMatchModal();
     }
 
     componentDidMount() {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.modalActive &&
+            nextProps.currentMatch.id !== this.props.currentMatch.id &&
+            this.props.currentMatch.active) {
+            socket.emit('leave room', {
+                room: this.props.currentMatch.id
+            })
+        }
         if (nextProps.modalActive && nextProps.currentMatch.active) {
             socket.emit('room', {room: nextProps.currentMatch.id})
             console.log('emit from modal')
         }
-        if (this.props.currentUser) {
+        if (this.props.currentUser && nextProps.currentMatch) {
             if (nextProps.currentMatch.creator === this.props.currentUser.id) {
                 socket.emit('authorize user', {match_id: nextProps.currentMatch.id})
             }
             return;
         }
-        socket.on('user authorized', () => {
-            console.log('you are authorized')
-        })
-        
     }
     
-    render() {
-
+    render() { 
 
         let hideDisplay = {
             "display":"none"
@@ -144,4 +161,4 @@ function mapStateToProps(state) {
     return state
 }
 
-export default connect(mapStateToProps, {toggleMatchModal})(MatchModal);
+export default connect(mapStateToProps, {toggleMatchModal, setMatchFalse, updateMatch})(MatchModal);
