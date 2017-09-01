@@ -8,93 +8,159 @@
 	"id": 2,
 	"name" : "Nick's Tourney",
 	"type" : "ping-pong",
-	"active" : false
+	"active" : false,
+	"creator": 2
 },
 {
 	"id": 4,
 	"name" : "White Owl Pool Tournament",
 	"type" : "pool",
-	"active" : true
+	"active" : true,
+	"creator": 2
 },
 {
 	"id": 5,
 	"name" : "Lebron's Basketball Tournament",
 	"type" : "basketball",
-	"active" : true
+	"active" : true,
+	"creator": 2
 }]
 ```
 ##### GET /api/tournament/:id
 ```javascript
 {
-	"id": 1,
-	"name": "basketball tournament",
-	"type": "basketball",
-	"active" : true,
-	"rounds": [
-		[{
-			"id": 1,
-			"player1": 1,
-			"player2" : 2,
-			"player1_score" : 12,
-			"player2_score" : 25,
-			"active" : false,
-			"winner" : 2
-		},
-		{
-			"id": 2,
-			"player1": 3,
-			"player2" : 4,
-			"player1_score" : 13,
-			"player2_score" : 26,
-			"active" : true,
-			"winner" : null
-		},
-		{
-			"id": null,
-			"player1": 5,
-			"player2" : 6,
-			"player1_score" : null,
-			"player2_score" : null,
-			"active" : false,
-			"winner" : null
-		},
-		{
-			"id": null,
-			"player1": 7,
-			"player2" : 8,
-			"player1_score" : null,
-			"player2_score" : null,
-			"active" : false,
-			"winner" : null
-		}],
-		[{
-			"id": null,
-			"player1": 2,
-			"player2" : null,
-			"player1_score" : null,
-			"player2_score" : null,
-			"active" : false,
-			"winner" : null
-		},
-		{
-			"id": null,
-			"player1": null,
-			"player2" : null,
-			"player1_score" : null,
-			"player2_score" : null,
-			"active" : false,
-			"winner" : null
-		}],
-		[{
-			"id": null,
-			"player1": null,
-			"player2" : null,
-			"player1_score" : null,
-			"player2_score" : null,
-			"active" : false,
-			"winner" : null
-		}]
-	]
+    "id": 22,
+    "name": "Bob's Tournament",
+    "type": "pool",
+    "active": true,
+    "creator": 2,
+    "description": null,
+    "rounds": [
+        [
+            {
+                "id": 18,
+                "player1": {
+                    "id": 145,
+                    "user_id": null,
+                    "name": "bob"
+                },
+                "player2": {
+                    "id": 146,
+                    "user_id": null,
+                    "name": "bob"
+                },
+                "player1_score": 55,
+                "player2_score": 55,
+                "winner": {
+                    "id": 146,
+                    "user_id": null,
+                    "name": "bob"
+                },
+                "active": false,
+                "ready": false
+            },
+            {
+                "id": 19,
+                "player1": {
+                    "id": 147,
+                    "user_id": null,
+                    "name": "James"
+                },
+                "player2": {
+                    "id": 148,
+                    "user_id": null,
+                    "name": "Jenny"
+                },
+                "player1_score": 55,
+                "player2_score": 55,
+                "winner": {
+                    "id": 148,
+                    "user_id": null,
+                    "name": "Jenny"
+                },
+                "active": false,
+                "ready": false
+            },
+            {
+                "id": 20,
+                "player1": {
+                    "id": 149,
+                    "user_id": null,
+                    "name": "bob"
+                },
+                "player2": {
+                    "id": 150,
+                    "user_id": null,
+                    "name": "bob"
+                },
+                "player1_score": null,
+                "player2_score": null,
+                "winner": null,
+                "active": false,
+                "ready": true
+            },
+            {
+                "id": 21,
+                "player1": {
+                    "id": 151,
+                    "user_id": null,
+                    "name": "Jeremy"
+                },
+                "player2": {
+                    "id": 152,
+                    "user_id": null,
+                    "name": "Brian"
+                },
+                "player1_score": null,
+                "player2_score": null,
+                "winner": null,
+                "active": false,
+                "ready": true
+            }
+        ],
+        [
+            {
+                "id": 22,
+                "player1": {
+                    "id": 146,
+                    "user_id": null,
+                    "name": "bob"
+                },
+                "player2": {
+                    "id": 148,
+                    "user_id": null,
+                    "name": "Jenny"
+                },
+                "player1_score": null,
+                "player2_score": null,
+                "winner": null,
+                "active": false,
+                "ready": true
+            },
+            {
+                "id": 23,
+                "player1": null,
+                "player2": null,
+                "player1_score": null,
+                "player2_score": null,
+                "winner": null,
+                "active": false,
+                "ready": false
+            }
+        ],
+        [
+            {
+                "id": 24,
+                "player1": null,
+                "player2": null,
+                "player1_score": null,
+                "player2_score": null,
+                "winner": null,
+                "active": false,
+                "ready": false
+            }
+        ]
+    ]
 }
 ```
 ##### POST /api/tournament
@@ -102,6 +168,7 @@
 {
   "name" : "Red's Pool Tournament",
   "type" : "pool",
+	"description" : "Awesome pool tournament",
   "players" :
   [{
     "user_id" : 1,
@@ -138,112 +205,50 @@
 }
 ```
 #### Search
-###### GET /api/search?keywords=basketball
+###### GET /api/search/users?name='clayton'
 ```javascript
-[{
-	"id": 2,
-	"name" : "Nick's Tourney",
-	"type" : "basketball",
-	"active" : false
-},
-{
-	"id": 4,
-	"name" : "The Backyard",
-	"type" : "basketball",
-	"active" : true
-},
-{
-	"id": 5,
-	"name" : "Grandma's Basketball Tournament",
-	"type" : "basketball",
-	"active" : true
-}]
+[
+    {
+        "id": 1,
+        "auth0_id": "google-oauth2|11454545453472115",
+        "email": "clayton@gmail.com",
+        "profile_pic": "https://lh3.googleusercontent.com/-JjWi8k4-76g/AAAAAAAAAAI/AAAAAAAAAtU/yFrbzDnIaCE/photo.jpg",
+        "name": "Clayton",
+        "username": null
+    }
+]
 ```
-#### Users
-###### GET /api/user/:id
-```javascript
-{
-  "id" : 1,
-  "auth0_id" : "auth0|5993ce2c15c5c05d1b5de9e1",
-  "email" : "yellowbird@gmail.com",
-  "profile_pic" : "http://i.imgur.com/8hV3Gmu.jpg",
-  "name": "Yellow Bird",
-  "username" : "YellowBird"
-}
-```
-###### POST /api/user
-```javascript
-{
-  "auth0_id" : "auth0|5993ce2c15c5c05d1b5de9e1",
-  "email" : "yellowbird@gmail.com",
-  "profile_pic" : "http://i.imgur.com/8hV3Gmu.jpg",
-  "name": "Yellow Bird",
-  "username" : "YellowBird"
-}
-```
+
 #### Matches
 ###### GET /api/match/:id
 ```javascript
 {
-  "id": 1,
-  "tournament_id" : 2,
-	"type" : "ping-pong",
-  "player1" : {
-    "id" : 1,
-    "name" : "YellowBird"
-  },
-  "player2" : {
-    "id" : null,
-    "name" : "GreenMan"
-  },
-  "player1_score": 10,
-  "player2_score": 12,
-  "winner" : {
-    "id" : null,
-    "name" : "GreenMan"
-  },
-  "active" : false
-}
-```
-###### POST /api/match
-```javascript
-{
-  "tournament_id" : 1,
-  "player1" : 3,
-  "player2" : 4
-}
-```
-###### PATCH /api/match/:id
-```javascript
-{
-  "winner" : 3
+    "id": 18,
+    "creator": 2
 }
 ```
 #### Comments
 ###### GET /api/comments/:match_id
 ```javascript
 [{
-  "id" : 3,
-  "text" : "Great match!",
-  "timestamp" : "2017-08-16 04:09:20.617719",
-  "user_id" : 4
+    "id": 2,
+    "text": "Hello",
+    "match_id": 18,
+    "user_id": 2,
+    "timestamp": "2017-09-01T12:03:57.355Z"
 },
 {
-  "id" : 4,
-  "text" : "What an awesome match!",
-  "timestamp" : "2017-08-16 04:09:20.617719",
-  "user_id" : 4
-},
-{
-  "id" : 5,
-  "text" : "Player1 Rules!",
-  "timestamp" : "2017-08-16 04:09:20.617719",
-  "user_id" : 4
+    "id": 3,
+    "text": "HelloThere",
+    "match_id": 18,
+    "user_id": 2,
+    "timestamp": "2017-09-01T12:03:57.355Z"
 }]
 ```
-###### POST /api/comments/:match_id
+###### POST /api/comments
 ```javascript
 {
+	"match_id" : 3,
   "text" : "Great match!"
 }
 ```
