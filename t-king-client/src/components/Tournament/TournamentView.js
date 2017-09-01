@@ -1,8 +1,71 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getTournament} from './../../redux/mainReducer';
+import {getTournament, updateMatch} from './../../redux/mainReducer';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
+
+const io = require('socket.io-client');
+const socket = io();
+
+class TournamentView extends Component {
+    constructor(props) {
+        super(props)
+        this.state= {
+            currentRoom: 0
+        }
+
+        socket.on('score update', (data) => {
+            props.updateMatch(data);
+            console.log('update listener', data)
+        })
+
+    }
+
+    componentDidMount() {
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let nextID = 't' + nextProps.tournamentData.id;
+        if (nextID !== 't' + null && nextID !== this.state.currentRoom) {
+            let roomID = 't' + nextProps.tournamentData.id;
+            socket.emit('room', {room: roomID})
+            this.setState({
+                currentRoom: roomID
+            })
+        }
+    }
+
+    render() {
+        console.log('room: ', this.state.currentRoom)
+        fetchData(this.props);
+        let width = this.props.tournamentData.rounds.length * 248;
+        let setWidth = {
+            "width":width
+        }
+        let tree = makeTree(this.props.tournamentData)
+        return (
+            <main>
+                <div className="tournament-top-section">
+                        {this.props.tournamentData.name}
+                </div>
+                <div className="tournament-divider"></div>
+                    <div className="tournament-wrapper">
+                    <div className="bracket-container" style={setWidth}>
+                        {tree}
+                    </div>
+                    </div>
+            </main>
+        )
+    }
+}
+
+function mapStateToProps(state) {
+    return state;
+}
+
+export default connect(mapStateToProps,
+    {getTournament, updateMatch}
+)(TournamentView);
 
 
 //makeTree is a function that takes in tournament data from the API tree structure
@@ -48,34 +111,3 @@ const fetchData = function(props) {
         return;
     }
 }
-
-
-
-const TournamentView = function(props) {
-    fetchData(props);
-    let width = props.tournamentData.rounds.length * 248;
-    let setWidth = {
-        "width":width
-    }
-    let tree = makeTree(props.tournamentData)
-
-    return (
-        <main>
-            <div className="tournament-top-section">
-                    {props.tournamentData.name}
-            </div>
-            <div className="tournament-divider"></div>
-                <div className="tournament-wrapper">
-                <div className="bracket-container" style={setWidth}>
-                    {tree}
-                </div>
-                </div>
-        </main>
-    )
-}
-
-function mapStateToProps(state) {
-    return state;
-}
-
-export default connect(mapStateToProps, {getTournament})(TournamentView);

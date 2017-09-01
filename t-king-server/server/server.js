@@ -160,7 +160,7 @@ const addListeners = (io, db) => {
         })
 
         socket.on('update score', (data) => {
-            let {round} = data;
+            let {round, tournament} = data;
             let query = Object.assign(
                 {},
                 {id: data.id,
@@ -170,7 +170,7 @@ const addListeners = (io, db) => {
             db.matches.update(query)
             .then(res => {
                 let {id, player1_score, player2_score} = res;
-                io.to('m' + id).emit('score update', {
+                io.to('t' + tournament).emit('score update', {
                     id,
                     round: round,
                     player1_score,

@@ -23,23 +23,28 @@ class AdminControls extends Component {
 
 
     incrementPlayerOne() {
-        let round = this.props.activeMatch.round; 
+        let {round} = this.props.activeMatch;
+        let tournament = this.props.tournamentData.id;
         let {id, player1_score, player2_score} = currentMatch(this.props);
         let update = {
             id: id,
+            tournament: tournament,
             round: round,
             player1_score: ++player1_score,
             player2_score: player2_score           
         }
+        console.log(update)
         this.props.updateMatch(update);
         this.emitUpdate(update);
     }
 
     decrementPlayerOne() {
         let round = this.props.activeMatch.round; 
+        let tournament = this.props.tournamentData.id;
         let {id, player1_score, player2_score} = currentMatch(this.props);
         let update = {
             id: id,
+            tournament: tournament,
             round: round,
             player1_score: --player1_score,
             player2_score: player2_score           
@@ -50,9 +55,11 @@ class AdminControls extends Component {
 
     incrementPlayerTwo() {
         let round = this.props.activeMatch.round; 
+        let tournament = this.props.tournamentData.id;
         let {id, player1_score, player2_score} = currentMatch(this.props);
         let update = {
             id: id,
+            tournament: tournament,
             round: round,
             player1_score: player1_score,
             player2_score: ++player2_score           
@@ -63,9 +70,11 @@ class AdminControls extends Component {
 
     decrementPlayerTwo() {
         let round = this.props.activeMatch.round; 
+        let tournament = this.props.tournamentData.id;
         let {id, player1_score, player2_score} = currentMatch(this.props);
         let update = {
             id: id,
+            tournament: tournament,
             round: round,
             player1_score: player1_score,
             player2_score: --player2_score           

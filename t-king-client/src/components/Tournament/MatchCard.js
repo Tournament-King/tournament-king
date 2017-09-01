@@ -20,7 +20,8 @@ class MatchCard extends Component {
         let match = {
             id: this.props.id,
             round: this.props.round,
-            active: this.props.active
+            active: this.props.active,
+            tournament: this.props.tournamentData.id
         }
         if (!this.props.active) {
             return;
