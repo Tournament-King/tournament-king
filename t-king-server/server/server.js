@@ -157,7 +157,7 @@ const addListeners = (io, db) => {
             db.matches.update(data)
             .then(res => {
                 let {id, player1_score, player2_score} = res;
-                io.emit('score update', {
+                io.to(id).emit('score update', {
                     id,
                     player1_score,
                     player2_score
