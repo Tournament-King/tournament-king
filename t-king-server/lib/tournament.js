@@ -1,18 +1,3 @@
-// Helper function to determine if a match from the database contains the same players
-// as the match we are currently processing
-
-function matchingPlayers(matchFromDB, matchInstance) {
-  if (matchInstance.player1 && matchInstance.player2) {
-    var players1 = [matchFromDB.player1, matchFromDB.player2]
-    var players2 = [matchInstance.player1.id, matchInstance.player2.id]
-    players1.sort()
-    players2.sort()
-    return players1[0] === players2[0] && players1[1] === players2[1]
-  } else {
-    return false;
-  }
-}
-
 /**
 * Creates a new Player
 * @class
@@ -29,21 +14,18 @@ class Player {
 /**
 * Creates a new Match
 * @class
+  @param {integer} id - The id of the match.
 * @param {object} left - A reference to the left child.
 * @param {object} right - A reference to the right child.
 */
 class Match {
-  constructor(left, right) {
-    this.id = null
+  constructor(id, left, right) {
+    this.id = id
     this.left = left
     this.right = right
     this.parent = null
     this.player1 = null
     this.player2 = null
-    this.winner = null
-    this.player1_score = null
-    this.player2_score = null
-    this.active = null
   }
   setParent(parent) {
     this.parent = parent
@@ -83,13 +65,19 @@ class Bracket {
   // winner has been declared for any given match
   buildTree() {
     var tree = this.players.slice()
+
     if (!tree.length || !tree.length & tree.length-1 === 0) {
       throw new Error("Number of players in the tournament must be a power of 2")
     }
+
+
+    var matchIDs = this.matches.map(m => m.id)
+
     while (tree.length > 1) {
       var a = tree.shift()
       var b = tree.shift()
-      var match = new Match(a, b)
+      var matchID = matchIDs.shift()
+      var match = new Match(matchID, a, b)
       if (a instanceof Match) {
         a.setParent(match)
       } else {
@@ -141,27 +129,29 @@ class Bracket {
     var players = this.players;
     rounds.forEach(round => {
       round.forEach(match => {
-        var existingMatch = matches.find(matchFromDB => matchingPlayers(matchFromDB, match))
-        if (existingMatch) {
-          if (existingMatch.winner) {
-            var winner = players.find(player => player.id === existingMatch.winner)
-            match.setWinner(winner)
-          }
-          match.id = existingMatch.id || null
-          match.player1_score = existingMatch.player1_score || null
-          match.player2_score = existingMatch.player2_score || null
-          match.active = existingMatch.active || null
+        var existingMatch = matches.shift()
+        match.player1_score = existingMatch.player1_score
+        match.player2_score = existingMatch.player2_score
+        match.winner = existingMatch.winner
+        match.active = existingMatch.active
+        match.ready = false
+        if (!match.active && !match.winner && match.player1 && match.player2) {
+          match.ready = true;
         }
-        delete match.left;
-        delete match.right;
-        delete match.parent;
+        if (match.winner) {
+          var winner = players.find(p => p.id === match.winner)
+          match.setWinner(winner)
+        }
+        delete match.left
+        delete match.right
+        delete match.parent
       })
     })
     return rounds
   }
 
   getJSON() {
-    return this.getTree()
+    return this.getTree();
   }
 }
 

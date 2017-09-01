@@ -19,6 +19,8 @@ const express = require('express')
 const userCtrl = require('./controllers/user-controller');
 const matchCtrl = require('./controllers/match-controller');
 const tournamentCtrl = require('./controllers/tournament-controller');
+const searchCtrl = require('./controllers/search-controller');
+const commentCtrl = require('./controllers/comment-controller');
 
 //-------------------------MIDDLEWARE--------------------------//
 
@@ -100,11 +102,15 @@ app.get('/auth/callback',
 app.get('/api/user', userCtrl.getUserOnSession);
 
 app.get('/api/tournament/:id', tournamentCtrl.getTournament);
-app.post('/api/tournament', tournamentCtrl.createTournament);
+app.get('/api/tournaments', tournamentCtrl.getTournaments);
+app.post('/api/tournament', authMiddleware.addUserToReq, tournamentCtrl.createTournament);
 
 app.get('/api/match/:id', matchCtrl.getMatch);
-app.post('/api/match', matchCtrl.createMatch);
-app.patch('/api/match', matchCtrl.updateMatch);
+
+app.get('/api/comments/:match_id', commentCtrl.getComments);
+app.post('/api/comment', authMiddleware.addUserToReq, commentCtrl.createComment);
+
+app.get('/api/search/users', searchCtrl.users);
 
 
 //-----------------------------SOCKETS-----------------------------//
@@ -128,11 +134,11 @@ const applyMiddleware = (io) => {
 const addListeners = (io, db) => {
     io.on('connect', (socket) => {
         console.log('user connected', socket.id);
-        
+
         socket.on('disconnect', () => {
             console.log('user disconnected')
         });
-        
+
         socket.on('room', function(data) {
             socket.join(data.room)
             console.log('user joined room', data.room)
