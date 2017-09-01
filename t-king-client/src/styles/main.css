@@ -571,7 +571,8 @@ main, div {
 }
 
 .ct-tournament-info {
-    height: 120vh;
+    /*height: fit-content;*/
+    min-height: 120vh;
     width: 50%;
     left: 25%;
     position: absolute;
@@ -585,7 +586,45 @@ main, div {
     left: 5%;
     background: #eee;
     border: 1px solid lightgrey;
-    /*overflow: scroll;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+.ct-matches-header {
+    width: 80%;
+    height: 100px;
+    /*border: 1px solid lightgrey;*/
+}
+
+.ct-match {
+    width: 90%;
+    height: 15vh;
+    background: #FFF;
+    margin-bottom: 10px;
+    border: 1px solid #aaa;
+    position: relative;
+}
+
+.ct-match-player1 {
+    color: black;
+    font-size: 30px;
+    width: 40%;
+    /*height: 35%;*/
+    position: absolute;
+    left: 0px;
+    top: 10px;
+}
+
+.ct-match-player2 {
+    color: black;
+    font-size: 30px;
+    width: 40%;
+    /*height: 35%;*/
+    position: absolute;
+    right: 0px;
+    top: 10px;
 }
 
 .ct-player-info {
@@ -647,6 +686,16 @@ fieldset {
 	height:100px;
 	max-width:100%;
   resize:none;
+}
+
+#contact button {
+    border: 1px solid lightgrey;
+    width: 30px;
+    height: 20px;
+}
+
+#contact button:hover {
+    background: black;
 }
 
 .ct-submit {
