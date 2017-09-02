@@ -1,3 +1,15 @@
+const getMatchStatus = (match) => {
+  if (match.winner) {
+    return 'complete'
+  } else if (match.player1_score !== null) {
+    return 'active'
+  } else if (match.player1 && match.player2) {
+    return 'ready'
+  } else {
+    return 'waiting'
+  }
+}
+
 /**
 * Creates a new Player
 * @class
@@ -133,11 +145,7 @@ class Bracket {
         match.player1_score = existingMatch.player1_score
         match.player2_score = existingMatch.player2_score
         match.winner = existingMatch.winner
-        match.active = existingMatch.active
-        match.ready = false
-        if (!match.active && !match.winner && match.player1 && match.player2) {
-          match.ready = true;
-        }
+        match.status = getMatchStatus(match)
         if (match.winner) {
           var winner = players.find(p => p.id === match.winner)
           match.setWinner(winner)
