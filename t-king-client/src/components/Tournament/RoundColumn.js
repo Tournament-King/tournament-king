@@ -10,9 +10,7 @@ function populate(data) {
                             p1score={match.player1_score}
                             p2score={match.player2_score}
                             round={data.round}
-                            active={match.active}
-                            ready={match.ready}
-                            winner={match.winner}
+                            status={match.status}
                 />
     })
 }

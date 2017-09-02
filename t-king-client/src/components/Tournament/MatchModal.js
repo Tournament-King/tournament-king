@@ -57,14 +57,7 @@ class MatchModal extends Component {
     }
 
     closeModal() {
-        this.setState({
-            currentUser: null
-        })
-        if (this.props.activeMatch.active) {
-            socket.emit('leave room', {
-                room: 'm' + this.props.activeMatch.id
-            })
-        }
+        socket.emit('leave room', {room: 'm' + this.props.activeMatch.id})
         this.setState({lastRoom: this.props.activeMatch.id});        
         this.props.toggleMatchModal();
     }
@@ -80,12 +73,14 @@ class MatchModal extends Component {
             })
         }
         if (!this.props.activeMatch &&
-            nextProps.modalActive &&
-            nextProps.activeMatch.active) {
+            nextProps.modalActive) {
+                if (nextProps.activeMatch.status === 'ready' || 
+                    nextProps.activeMatch.status === 'active')
                 socket.emit('room', {room: 'm' + nextProps.activeMatch.id})
         }
         if (this.props.activeMatch) {
-            if (nextProps.modalActive && this.props.activeMatch.id !== nextProps.activeMatch.id) {
+            if (nextProps.modalActive &&
+                this.props.activeMatch.id !== nextProps.activeMatch.id) {
                 if (this.state.lastRoom !== this.props.activeMatch.id) {
                     socket.emit('leave room', {room: 'm' + this.props.activeMatch.id})
                 }

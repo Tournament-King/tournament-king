@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import {tournamentJSON, redsPool} from './dummyData/tournamentJSON';
 
 const initialState = {
     currentUser: null,
@@ -9,8 +8,7 @@ const initialState = {
     tRoom: 0,
     activeMatch: null,
     modalActive: false,
-    // dummyData: tournamentJSON,
-    // dummyData2: redsPool,
+    requestCount: 0,
     testProp: 'hello, redux is working'
 }
 
@@ -111,11 +109,17 @@ export function setActiveMatch(match) {
     }
 }
 
+//----------------------REDUCER---------------------//
 
 
 export default function reducer(state=initialState, action) {
-    console.log(action.type);
+
+
     switch (action.type) {
+
+        //USERS
+
+
         case GET_CURRENT_USER_PENDING:
             return state;
         case GET_CURRENT_USER_FULFILLED:
@@ -129,12 +133,18 @@ export default function reducer(state=initialState, action) {
             );
         case GET_CURRENT_USER_REJECTED:
             return state;
+
+
         case TOGGLE_MATCH_MODAL:
             return Object.assign(
                 {},
                 state,
                 {modalActive: !state.modalActive}
             );
+
+        //TOURNAMENTS
+
+
         case GET_TOURNAMENTS_PENDING:
             return state;
         case GET_TOURNAMENTS_FULFILLED:
@@ -142,6 +152,8 @@ export default function reducer(state=initialState, action) {
             return state;
         case GET_TOURNAMENTS_REJECTED:
             return state;
+
+
         case GET_TOURNAMENT_PENDING:
             return state;
         case GET_TOURNAMENT_FULFILLED:
@@ -152,6 +164,10 @@ export default function reducer(state=initialState, action) {
             );
         case GET_TOURNAMENT_REJECTED:
             return state;
+
+        //MATCHES
+
+
         case GET_MATCH_BY_ID_PENDING:
             return(state);
         case GET_MATCH_BY_ID_FULFILLED:
@@ -162,30 +178,44 @@ export default function reducer(state=initialState, action) {
             );
         case GET_MATCH_BY_ID_REJECTED:
             return state;
+
+
         case UPDATE_CURRENT_MATCH:
-            // if (!action.payload.round) {
-            //     return;
-            // } else {
-                let {id, round} = action.payload;
+            let makeUpdate = (payload) => {
+                let {id, round} = payload;
                 let newTourn = Object.assign({}, state.tournamentData)
                 let match = newTourn.rounds[round].find(m => {
                     return m.id === id
                 })
-                match.player1_score = action.payload.player1_score;
-                match.player2_score = action.payload.player2_score;
-                // console.log(newTourn, match)
+                match.player1_score = payload.player1_score;
+                match.player2_score = payload.player2_score;
                 return Object.assign(
                     {},
                     state,
-                    {tournamentData: newTourn}
+                        {tournamentData: newTourn}
                 );
-            // }
+            }
+            let incrementCount = () => {
+                return Object.assign({}, state, {requestCount: ++state.requestCount});
+            }
+            if (action.payload.tournament) {
+                incrementCount();
+                return makeUpdate(action.payload);
+            } else if (state.requestCount === 0) {
+                return makeUpdate(action.payload);
+            } else {
+                return Object.assign({}, state, {requestCount: --state.requestCount});
+            }
+
+
         case SET_ACTIVE_MATCH:
             return Object.assign(
                 {},
                 state,
                 {activeMatch: action.payload}
-            )
+            );
+
+
         default:
             return state;
     }
