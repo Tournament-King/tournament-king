@@ -59,7 +59,7 @@ class MatchCard extends Component {
                     </div> */}
             </div>
             <div className="match-data">
-                {this.props.id + ' -Round ' + (this.props.round + 1) + ' - ' + status }
+                {this.props.index + '-' + this.props.round + '-' + this.props.id + ' - ' + status }
             </div>
             <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">

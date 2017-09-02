@@ -103,7 +103,7 @@ app.get('/api/user', userCtrl.getUserOnSession);
 
 app.get('/api/tournament/:id', tournamentCtrl.getTournament);
 app.get('/api/tournaments', tournamentCtrl.getTournaments);
-app.post('/api/tournament', authMiddleware.addUserToReq, tournamentCtrl.createTournament);
+app.post('/api/tournament', tournamentCtrl.createTournament);
 
 app.get('/api/match/:id', matchCtrl.getMatch);
 

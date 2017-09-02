@@ -4,6 +4,7 @@ import MatchCard from './MatchCard';
 function populate(data) {
     return data.matches.map((match, i, arr) => {
         return <MatchCard key={i}
+                            index={i}
                             id={match.id}
                             p1={match.player1 ? match.player1.name : 'TBA'}
                             p2={match.player2 ? match.player2.name : 'TBA'}
