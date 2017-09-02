@@ -70,9 +70,15 @@ class MatchModal extends Component {
     }
 
     componentDidMount() {
+
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.state.matchType !== nextProps.tournamentData.type) {
+            this.setState({
+                matchType: this.props.tournamentData.type
+            })
+        }
         if (!this.props.activeMatch &&
             nextProps.modalActive &&
             nextProps.activeMatch.active) {
