@@ -14,14 +14,12 @@ const createTournament = (req, res) => {
     type,
     creator: req.user.id
   }).then(tournament => {
-    var count = 0;
     db.players.insert(players.map(player => {
       player.tournament_id = tournament.id;
-      player.position = ++count;
       return player;
     })).then(() => {
       var matches = []
-      while (--count) {
+      while (matches.length < players.length-1) {
         matches.push({tournament_id:tournament.id})
       }
       db.matches.insert(matches)
