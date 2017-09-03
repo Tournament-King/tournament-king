@@ -16,7 +16,7 @@ class MatchModal extends Component {
             modalLeft: null,
             modalTop: null,
             matchType: 'basketball',
-            currentUser: null,
+            currentUser: 'admin',
             lastRoom: 0
         }
 

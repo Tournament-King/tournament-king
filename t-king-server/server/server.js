@@ -115,9 +115,6 @@ app.get('/api/search/users', searchCtrl.users);
 
 //-----------------------------SOCKETS-----------------------------//
 
-// io.on('connection', (socket) => {
-//     console.log('a user connected');
-
 const applyMiddleware = (io) => {
     io.use(sharedSession(session, {
         autoSave:true

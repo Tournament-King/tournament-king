@@ -21,6 +21,9 @@ class AdminControls extends Component {
 
     }
 
+    startMatch() {
+        
+    }
 
     incrementPlayerOne() {
         let {round} = this.props.activeMatch;
