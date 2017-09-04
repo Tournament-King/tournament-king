@@ -546,3 +546,215 @@ main, div {
     height: 2px;
     background:#DEDEDE;
 }
+
+/*---------CreateTournament-----------*/
+/*  ct === create-tournament */
+
+.ct-main {
+    width: 100%;
+    height: 1669px;
+    min-height: 100vh;
+    /*height: fit-content;*/
+    background: #eee;
+    position: relative;
+    /*margin-bottom: 20px;*/
+}
+
+.ct-header {
+    width: 100%;
+    height: 270px;
+    background: #2A67A4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ct-header h1 {
+    text-shadow: 1px 1px white;
+}
+
+.ct-tournament-info {
+    /*height: fit-content;*/
+    height: 1220px;
+    width: 50%;
+    left: 25%;
+    position: absolute;
+    background: #222;
+}
+
+.ct-matches {
+    height: 1000px;
+    width: 90%;
+    position: absolute;
+    left: 5%;
+    background: #eee;
+    border: 1px solid lightgrey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+.ct-matches-list {
+    height: 78%;
+    width: 90%;
+    position: absolute;
+    left: 5%;
+    background: #eee;
+    border: 1px solid lightgrey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+.ct-matches-header {
+    width: 80%;
+    height: 100px;
+    /*border: 1px solid lightgrey;*/
+}
+
+.ct-match {
+    width: 90%;
+    height: 50px;
+    background: #FFF;
+    /*margin-bottom: 10px;*/
+    margin-top: 10px;
+    border: 1px solid #aaa;
+    position: relative;
+    display: table;
+}
+
+.ct-match h1 {
+    margin-top: 10px;
+}
+
+.ct-match-matchNumber {
+    width: 70px;
+    height: 10px;
+    display: inline-block;
+    color: #069;
+}
+
+.ct-match-player1 {
+    color: black;
+    font-size: 24px;
+    width: 40%;
+    margin-right: 10px;
+    /*height: 35%;*/
+    /*position: absolute;
+    left: 0px;
+    top: 10px;*/
+    display: inline-block;
+}
+
+.ct-match-player2 {
+    color: black;
+    font-size: 24px;
+    width: 40%;
+    margin-left: 10px;
+    /*height: 35%;*/
+    /*position: absolute;
+    right: 0px;
+    top: 10px;*/
+    display: inline-block;
+}
+
+.ct-player-info {
+    width: 50%;
+    left: 25%;
+    position: absolute;
+    height: fit-content;
+    background: pink;
+}
+
+/*#contact { font:400 12px/16px "Open Sans", Helvetica, Arial, sans-serif; }*/
+
+#contact {
+    /*background: blue;*/
+	background:#222;
+	padding:25px;
+	margin:0px 0;
+    text-align: center;
+    height: 1400px;
+}
+
+#contact h3 {
+	color: #0CF;
+	display: block;
+	font-size: 30px;
+	font-weight: 400;
+}
+
+#contact h4 {
+	margin:5px 0 15px;
+	display:block;
+	font-size:13px;
+}
+
+/*fieldset {
+	border: medium none !important;
+	margin: 0 0 10px;
+	min-width: 100%;
+	padding: 0;
+	width: 100%;
+}*/
+
+#contact input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea {
+	width:100%;
+	border:1px solid #CCC;
+	background:#FFF;
+	margin:0 0 5px;
+	padding:10px;
+}
+
+#contact input[type="text"]:hover, #contact input[type="email"]:hover, #contact input[type="tel"]:hover, #contact input[type="url"]:hover, #contact textarea:hover {
+	-webkit-transition:border-color 0.3s ease-in-out;
+	-moz-transition:border-color 0.3s ease-in-out;
+	transition:border-color 0.3s ease-in-out;
+	border:1px solid #AAA;
+}
+
+#contact textarea {
+	height:100px;
+	max-width:100%;
+  resize:none;
+}
+
+#contact button {
+    border: 1px solid lightgrey;
+    width: 30px;
+    height: 20px;
+}
+
+#contact button:hover {
+    background: black;
+}
+
+.ct-submit {
+	cursor:pointer;
+	width:40%;
+    left: 30%;
+	border:none;
+	background: #09c;
+	color: white;
+	margin:0 0 5px;
+	padding:10px;
+	font-size:15px;
+    position: absolute;
+    bottom: -70px;
+}
+
+.ct-submit:hover {
+	background:#069;
+	transition:background-color 0.1s ease-in-out;
+    /*padding: 15px;*/
+}
+
+#contact select {
+    background: white;
+    border: 1px solid lightgrey;
+    /*padding: 15px;*/
+    margin-bottom: 10px;
+}
