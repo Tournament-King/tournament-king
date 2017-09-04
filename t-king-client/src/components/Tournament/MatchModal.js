@@ -96,7 +96,7 @@ class MatchModal extends Component {
         }
     }
     
-    render() { 
+    render() {
 
         let match = matchData(this.props)
 
