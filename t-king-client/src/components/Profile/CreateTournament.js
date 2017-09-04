@@ -340,7 +340,7 @@ class CreateTournament extends Component {
         return (
             <main className='ct-main'>
                 <div className='ct-header'>
-                    <h1 className="">Create Your Tournament</h1>
+                    <h1 className="" style={{"fontSize":"50px"}}>Create Your Tournament</h1>
                     <br/>
                     <p>You're two quick and simple steps away from having your tournament</p>
                     <p>live and updating in real time. Let everyone know the name of your tournament</p>
@@ -348,9 +348,9 @@ class CreateTournament extends Component {
                     <p>each match for the fans to see.</p>
                 </div>
                 <div className='ct-tournament-info'>
-                    <div id="contact" action="">
+                    <div id="contact" action="" >
                         <h3>Tournament Info</h3>
-                        <h4>!!!Maybe some competition quote here?!!!</h4>
+                        <h4 style={{"color":"white"}}>!!!Maybe some competition quote here?!!!</h4>
                         <br />
 
                         <input placeholder="Tournament Name" type="text" required/>
@@ -390,7 +390,9 @@ class CreateTournament extends Component {
                                 <button tabIndex='3' type='submit' style={{"margin":"10px"}} onClick={this.addPlayers}>Add</button>
                             </div>
                             <br />
-                            {matches}
+                            <div className='ct-matches-list'>   
+                                {matches}
+                            </div>
                         </div>
 
                         <div className='ct-submit'>Finalize</div>
