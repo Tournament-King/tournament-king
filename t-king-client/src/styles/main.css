@@ -47,14 +47,66 @@ main, div {
     color:#F7F7F7;
     position:fixed;
     z-index: 6;
-    padding:6px 7px;
+    padding:0 7px;
+    display: flex;
+    justify-content:space-between;
 }
 
-.header-wrapper button {
-    color:#F7F7F7;
-    display:inline-block;
-    float: right;
+.header-logo {
+    padding:3px 6px;
+    height:42px;
+    box-sizing:border-box;
+    color:#4286f4;
+    display: flex;
+}
 
+.header-logo p {
+    margin-top:10px;
+    margin-left:8px;
+}
+
+.header-right {
+    height:42px;
+    display:flex;
+    align-items:center;
+    padding-right:24px;
+}
+
+.header-anchor {
+    font-size:12px;
+    height:32px;
+    padding-top: 6px;
+    padding-right:16px;
+    color:#F7F7F7;
+    border-right:1px solid #494949;
+    transition:all .2s ease-in-out;
+}
+
+.header-anchor:hover {
+    color:#4286f4;
+    transition:all .2s ease-in-out;
+}
+
+.header-login {
+    height:32px;
+    padding: 7px 5px;
+    margin-left:16px;
+    background:#14AA14;
+    color:#F7F7F7;
+    border-radius:2px;
+    transition:all .2s ease-in-out;
+}
+
+.header-login:hover {
+    background:#0F930F;
+    color:#FFFFFF;
+    transition:all .2s ease-in-out;
+}
+
+@media screen and (max-width: 672px) {
+    .header-right {
+        padding-right: 24px;
+    }
 }
 
 /*------------------FOOTER---------------------*/
@@ -125,7 +177,7 @@ main, div {
 .tournament-card-wrapper {
     height: 112px;
     width:49%;
-    background:#2A67A4;
+    background:#4286f4;
     border-radius:3px;
     margin-bottom:24px;
     text-align:center;

@@ -44,6 +44,8 @@ const GET_MATCH_BY_ID_PENDING = 'GET_MATCH_BY_ID_PENDING';
 const GET_MATCH_BY_ID_FULFILLED = 'GET_MATCH_BY_ID_FULFILLED';
 const GET_MATCH_BY_ID_REJECTED = 'GET_MATCH_BY_ID_REJECTED';
 
+const SET_MATCH_WINNER = 'SET_MATCH_WINNER';
+
 const UPDATE_CURRENT_MATCH = 'UPDATE_CURRENT_MATCH';
 
 const SET_ACTIVE_MATCH = 'SET_ACTIVE_MATCH';
@@ -92,6 +94,13 @@ export function getMatchById(match_id) {
     return {
         type: GET_MATCH_BY_ID,
         payload: axios.get(`/api/match/${match_id}`)
+    }
+}
+
+export function setWinner(match) {
+    return {
+        type: SET_MATCH_WINNER,
+        payload: match
     }
 }
 
@@ -189,10 +198,18 @@ export default function reducer(state=initialState, action) {
                 })
                 match.player1_score = payload.player1_score;
                 match.player2_score = payload.player2_score;
+                if (payload.player1_score === 0 && payload.player2_score === 0) {
+                    match.status = 'active';
+                    return Object.assign(
+                        {},
+                        state,
+                        {tournamentData: newTourn}
+                    );
+                }
                 return Object.assign(
                     {},
                     state,
-                        {tournamentData: newTourn}
+                    {tournamentData: newTourn}
                 );
             }
             let incrementCount = () => {

@@ -10,10 +10,17 @@ const Header = function(props) {
     checkUser(props)
     return (
         <main className="header-wrapper">
-            {props.testProp}, the current user is: {props.currentUser ? props.currentUser.name : 'no user'}
-            <a href="http://localhost:3030/auth">
-                <button><strong>LOGIN</strong></button>
-            </a>
+            <div className="header-logo">
+                <h1>TK</h1>
+            </div>
+            <div className="header-right">
+                <a href="http://localhost:3030/auth" className="header-anchor">
+                    <h6>NEW BRACKET</h6>
+                </a>
+                <a href="http://localhost:3030/auth" className="header-login">
+                    <strong>LOGIN</strong>
+                </a>
+            </div>
         </main>
     )
 }

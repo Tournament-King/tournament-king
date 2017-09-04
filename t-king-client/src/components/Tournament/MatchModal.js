@@ -16,7 +16,7 @@ class MatchModal extends Component {
             modalLeft: null,
             modalTop: null,
             matchType: 'basketball',
-            currentUser: 'admin',
+            currentUser: null,
             lastRoom: 0
         }
 
@@ -130,15 +130,17 @@ class MatchModal extends Component {
                     </div>
                     <div className='scoreboard'>
                         <div className='scoreboard-player1'>
-                            {this.props.activeMatch ? 
+                            {match ? match.status === 'active' ?
                             match.player1_score :
-                            '--'}
+                            '--' : '--'}
                         </div>
-                        <div className='scoreboard-clock'>Live!</div>
+                        <div className='scoreboard-clock'>
+                            {match ? match.status : '--'}
+                            </div>
                         <div className='scoreboard-player2'>
-                            {this.props.activeMatch ? 
+                            {match ? match.status === 'active' ?
                             match.player2_score :
-                            '--'}
+                            '--' : '--'}
                         </div>
                     </div>
                 </div>

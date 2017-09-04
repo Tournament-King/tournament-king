@@ -14,7 +14,7 @@ class TournamentView extends Component {
             currentRoom: 0
         }
 
-        socket.on('score update', (data) => {
+        socket.on('match update', (data) => {
             props.updateMatch(data);
             console.log('update listener', data)
         })
