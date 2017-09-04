@@ -1,16 +1,16 @@
 import axios from 'axios';
-import {tournamentJSON, redsPool} from './dummyData/tournamentJSON';
+// import {tournamentJSON, redsPool} from './dummyData/tournamentJSON';
 
 const initialState = {
     currentUser: null,
     userChecked: false,
     tournamentList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
     tournamentData: {name: 'loading', id: null, rounds: [[],[],[]]},
-    matchList: [{},{},{},{},{},{},{}],
-    currentMatch: false,
+    tRoom: 0,
+    activeMatch: null,
     modalActive: false,
-    dummyData: tournamentJSON,
-    dummyData2: redsPool,
+    // dummyData: tournamentJSON,
+    // dummyData2: redsPool,
     testProp: 'hello, redux is working'
 }
 
@@ -46,9 +46,9 @@ const GET_MATCH_BY_ID_PENDING = 'GET_MATCH_BY_ID_PENDING';
 const GET_MATCH_BY_ID_FULFILLED = 'GET_MATCH_BY_ID_FULFILLED';
 const GET_MATCH_BY_ID_REJECTED = 'GET_MATCH_BY_ID_REJECTED';
 
-const SET_MATCH_FALSE = 'SET_MATCH_FALSE';
-
 const UPDATE_CURRENT_MATCH = 'UPDATE_CURRENT_MATCH';
+
+const SET_ACTIVE_MATCH = 'SET_ACTIVE_MATCH';
 
 
 //----------------------ACTIONS---------------------//
@@ -89,12 +89,6 @@ export function getTournament(id) {
 
 //MATCHES
 
-export function setMatchFalse() {
-    return {
-        type: SET_MATCH_FALSE,
-        payload: null
-    }
-}
 
 export function getMatchById(match_id) {
     return {
@@ -107,6 +101,13 @@ export function updateMatch(update) {
     return {
         type: UPDATE_CURRENT_MATCH,
         payload: update
+    }
+}
+
+export function setActiveMatch(match) {
+    return {
+        type: SET_ACTIVE_MATCH,
+        payload: match
     }
 }
 
@@ -154,12 +155,6 @@ export default function reducer(state=initialState, action) {
             return state;
         case GET_MATCH_BY_ID_PENDING:
             return(state);
-        case SET_MATCH_FALSE:
-            return Object.assign(
-                {},
-                state,
-                {currentMatch: false}
-            );
         case GET_MATCH_BY_ID_FULFILLED:
             return Object.assign(
                 {},
@@ -169,15 +164,28 @@ export default function reducer(state=initialState, action) {
         case GET_MATCH_BY_ID_REJECTED:
             return state;
         case UPDATE_CURRENT_MATCH:
-            console.log(action.payload)
+            // if (!action.payload.round) {
+            //     return;
+            // } else {
+                let {id, round} = action.payload;
+                let newTourn = Object.assign({}, state.tournamentData)
+                let match = newTourn.rounds[round].find(m => {
+                    return m.id === id
+                })
+                match.player1_score = action.payload.player1_score;
+                match.player2_score = action.payload.player2_score;
+                // console.log(newTourn, match)
+                return Object.assign(
+                    {},
+                    state,
+                    {tournamentData: newTourn}
+                );
+            // }
+        case SET_ACTIVE_MATCH:
             return Object.assign(
                 {},
                 state,
-                {currentMatch: Object.assign(
-                    {},
-                    state.currentMatch,
-                    action.payload
-                )}
+                {activeMatch: action.payload}
             )
         default:
             return state;

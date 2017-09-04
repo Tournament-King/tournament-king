@@ -1,8 +1,9 @@
 CREATE TABLE "tournaments" (
 	"id" serial NOT NULL,
 	"name" TEXT NOT NULL,
+	"description" TEXT,
 	"type" TEXT NOT NULL,
-	"active" BOOLEAN NOT NULL DEFAULT 'false',
+	"active" BOOLEAN NOT NULL DEFAULT 'true',
 	"creator" integer NOT NULL,
 	CONSTRAINT tournaments_pk PRIMARY KEY ("id")
 ) WITH (
@@ -14,12 +15,9 @@ CREATE TABLE "tournaments" (
 CREATE TABLE "matches" (
 	"id" serial NOT NULL,
 	"tournament_id" integer NOT NULL,
-	"player1" integer NOT NULL,
-	"player2" integer NOT NULL,
 	"player1_score" integer,
 	"player2_score" integer,
 	"winner" integer,
-	"active" BOOLEAN NOT NULL DEFAULT 'false',
 	CONSTRAINT matches_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -30,7 +28,6 @@ CREATE TABLE "matches" (
 CREATE TABLE "players" (
 	"id" serial NOT NULL,
 	"tournament_id" integer NOT NULL,
-	"position" integer NOT NULL,
 	"user_id" integer,
 	"name" TEXT,
 	CONSTRAINT players_pk PRIMARY KEY ("id")
@@ -59,7 +56,7 @@ CREATE TABLE "comments" (
 	"text" TEXT NOT NULL,
 	"match_id" int NOT NULL,
 	"user_id" int NOT NULL,
-	"timestamp" TIMESTAMP NOT NULL DEFAULT 'CURRENT_TIMESTAMP',
+	"timestamp" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT comments_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -70,8 +67,6 @@ CREATE TABLE "comments" (
 ALTER TABLE "tournaments" ADD CONSTRAINT "tournaments_fk0" FOREIGN KEY ("creator") REFERENCES "users"("id");
 
 ALTER TABLE "matches" ADD CONSTRAINT "matches_fk0" FOREIGN KEY ("tournament_id") REFERENCES "tournaments"("id");
-ALTER TABLE "matches" ADD CONSTRAINT "matches_fk1" FOREIGN KEY ("player1") REFERENCES "players"("id");
-ALTER TABLE "matches" ADD CONSTRAINT "matches_fk2" FOREIGN KEY ("player2") REFERENCES "players"("id");
 ALTER TABLE "matches" ADD CONSTRAINT "matches_fk3" FOREIGN KEY ("winner") REFERENCES "players"("id");
 
 ALTER TABLE "players" ADD CONSTRAINT "players_fk0" FOREIGN KEY ("tournament_id") REFERENCES "tournaments"("id");
