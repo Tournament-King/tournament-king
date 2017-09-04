@@ -28,7 +28,7 @@ const authMiddleware = require('./middleware/authorization');
 
 //--------------------------APP SETUP---------------------------//
 
-var session = require('express-session')({
+const session = require('express-session')({
   secret:authConfig.sessionSecret,
   resave:false,
   saveUninitialized:false
@@ -80,11 +80,13 @@ passport.use(new Auth0Strategy({
 ));
 
 passport.serializeUser((userA, done) => {
+    console.log('serialize: ', userA)
     let userB = userA;
     done(null, userB);
 });
 
 passport.deserializeUser((userB, done) => {
+    console.log('deserialize: ', userB)
     let userC = userB;
     done(null, userC);
 });
@@ -92,9 +94,7 @@ passport.deserializeUser((userB, done) => {
 app.get('/auth', passport.authenticate('auth0'));
 
 app.get('/auth/callback',
-    passport.authenticate('auth0', {successRedirect: `${appURL}/`}),
-    (req, res) => {send(req.user)
-});
+    passport.authenticate('auth0', {successRedirect: `${appURL}/`}));
 
 
 //------------------------CLIENT ENDPOINTS------------------------//
