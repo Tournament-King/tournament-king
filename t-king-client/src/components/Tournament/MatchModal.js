@@ -99,6 +99,8 @@ class MatchModal extends Component {
 
         let match = matchData(this.props)
 
+        let match = matchData(this.props)
+
         let hideDisplay = {
             "display":"none"
         }
@@ -136,6 +138,7 @@ class MatchModal extends Component {
                         <div className='scoreboard-clock'>
                             {this.props.currentMatch ?
                             'Live!' :
+
                             '--'}
                         </div>
                         <div className='scoreboard-player2'>
