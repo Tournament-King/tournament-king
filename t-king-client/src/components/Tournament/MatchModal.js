@@ -99,8 +99,6 @@ class MatchModal extends Component {
 
         let match = matchData(this.props)
 
-        let match = matchData(this.props)
-
         let hideDisplay = {
             "display":"none"
         }
