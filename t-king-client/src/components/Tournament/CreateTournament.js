@@ -1,7 +1,39 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import Autocomplete from 'react-autocomplete';
+import { Redirect } from 'react-router-dom';
 
+import { searchUsers } from '../../services/user';
+import { createTournament } from '../../services/tournament';
 
+const userData = [
+    {
+        "id": 1,
+        "auth0_id": "google-oauth2|114485428686719472115",
+        "email": "claytonpabst@gmail.com",
+        "profile_pic": "https://lh3.googleusercontent.com/-JjWi8k4-76g/AAAAAAAAAAI/AAAAAAAAAtU/yFrbzDnIaCE/photo.jpg",
+        "name": "Clayton Pabst",
+        "username": null,
+        "location": null
+    },
+    {
+        "id": 2,
+        "auth0_id": "facebook|1016497821826298",
+        "email": "thevjm@gmx.com",
+        "profile_pic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/18194801_956216294521118_7387746207472594409_n.jpg?oh=10c5acbca176636cdb33fef3fbeca04c&oe=5A58F94B",
+        "name": "Victor Matonis",
+        "username": null,
+        "location": null
+    },
+    {
+        "id": 3,
+        "auth0_id": "google-oauth2|115018160791477878008",
+        "email": "spcbrn1@gmail.com",
+        "profile_pic": "https://lh4.googleusercontent.com/-qIKmrkbVVD0/AAAAAAAAAAI/AAAAAAAAAAg/celq0JoDIuA/photo.jpg",
+        "name": "Christopher Lemke",
+        "username": null,
+        "location": null
+    }
+];
 
 class CreateTournament extends Component {
     constructor(props) {
@@ -9,8 +41,18 @@ class CreateTournament extends Component {
 
         this.state = {
             handleNumberOfPlayersInput: 2,
-            player1Input: '',
-            player2Input: '',
+            id:null,
+            name:'',
+            description:'',
+            type:'',
+            player1Input: {
+              id: null,
+              name:''
+            },
+            player2Input: {
+              id: null,
+              name: ''
+            },
             editPlayer1Input: '',
             editPlayer2Input: '',
             player1ToUpdateIndex: null,
@@ -278,15 +320,20 @@ class CreateTournament extends Component {
         }
 
         this.handleNumberOfPlayers = this.handleNumberOfPlayers.bind(this);
-        this.handlePlayer1Input = this.handlePlayer1Input.bind(this);
-        this.handlePlayer2Input = this.handlePlayer2Input.bind(this);
         this.handleEditPlayer1Input = this.handleEditPlayer1Input.bind(this);
         this.handleEditPlayer2Input = this.handleEditPlayer2Input.bind(this);
         this.addPlayers = this.addPlayers.bind(this);
         this.editPlayers = this.editPlayers.bind(this);
         this.updateNames = this.updateNames.bind(this);
         this.cancelUpdateNames = this.cancelUpdateNames.bind(this);
-        //bind
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePlayer1Select = this.handlePlayer1Select.bind(this);
+        this.handlePlayer2Select = this.handlePlayer2Select.bind(this);
+        this.handlePlayer1Change = this.handlePlayer1Change.bind(this);
+        this.handlePlayer2Change = this.handlePlayer2Change.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleDescChange = this.handleDescChange.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
     }
 
     handleNumberOfPlayers(e) {
@@ -297,35 +344,96 @@ class CreateTournament extends Component {
         })
     }
 
-    handlePlayer1Input(e) {
-        this.setState({
-            player1Input: e.target.value
-        })
+    handlePlayer1Select(value, user) {
+      this.setState({
+        player1Input:{
+          id:user.id,
+          name:user.name
+        }
+      })
     }
 
-    handlePlayer2Input(e) {
+    handlePlayer2Select(value, user) {
+      this.setState({
+        player2Input:{
+          id:user.id,
+          name:user.name
+        }
+      })
+    }
+
+    handlePlayer1Change(event, value) {
+      this.setState({
+        player1Input:{
+          id: null,
+          name:value
+        }
+      })
+    }
+
+    handlePlayer2Change(event, value) {
+      this.setState({
+        player2Input:{
+          id: null,
+          name:value
+        }
+      })
+    }
+
+    handleNameChange(e) {
+      this.setState({
+        name:e.target.value
+      })
+    }
+
+    handleDescChange(e) {
+      this.setState({
+        description:e.target.value
+      })
+    }
+
+    handleTypeChange(e) {
+      this.setState({
+        type:e.target.value
+      })
+    }
+
+    handleSubmit() {
+      var data = {
+        name:this.state.name,
+        description:this.state.description,
+        type:this.state.type,
+        players:this.state.players.slice(0,this.state.handleNumberOfPlayersInput)
+      }
+      var promise = createTournament(data)
+      promise.then(res => {
         this.setState({
-            player2Input: e.target.value
+          id:res.data.id
         })
+      })
     }
 
     addPlayers() {
-        console.log(this.state.numberOfMatches *2)
         for(let i = 0; i < this.state.numberOfMatches * 2; i+=2) {
-            console.log(i)
             if (this.state.players[i].name === 'player' && this.state.players[i+1].name ==='player') {
                 console.log('hit', i)
                 let newPlayers = [...this.state.players]
-                newPlayers[i].name = this.state.player1Input
-                newPlayers[i+1].name = this.state.player2Input
+                newPlayers[i] = this.state.player1Input
+                newPlayers[i+1] = this.state.player2Input
                 this.setState({
                     players: newPlayers,
-                    player1Input: '',
-                    player2Input: ''
+                    player1Input: {
+                      id:null,
+                      name:''
+                    },
+                    player2Input: {
+                      id:null,
+                      name:''
+                    }
                 })
                 return
             }
-        }    
+        }
     }
 
     handleEditPlayer1Input(e) {
@@ -373,7 +481,6 @@ class CreateTournament extends Component {
 
 
     render() {
-        console.log(this.state)
 
         let editMatchZIndex = {"zIndex":this.state.editMatchZIndex}
         let matches = []
@@ -389,22 +496,30 @@ class CreateTournament extends Component {
             )
         }
 
-        
+
         return (
+          <div>
+            {
+              this.state.id
+              ?
+              <Redirect to={`/tournament/${this.state.id}`}/>
+              :
+              null
+            }
             <main className='ct-main'>
                 <div style={editMatchZIndex} className="ct-edit-match-names">
                     <div>Player 1</div>
-                    <input  onChange={this.handleEditPlayer1Input} 
-                            value={this.state.editPlayer1Input} 
-                            style={{"border":"1px solid grey"}} 
+                    <input  onChange={this.handleEditPlayer1Input}
+                            value={this.state.editPlayer1Input}
+                            style={{"border":"1px solid grey"}}
                             type="text"
                             />
                     <br />
                     <br />
                     <div>Player 1</div>
-                    <input  onChange={this.handleEditPlayer2Input} 
-                            value={this.state.editPlayer2Input} 
-                            style={{"border":"1px solid grey"}} 
+                    <input  onChange={this.handleEditPlayer2Input}
+                            value={this.state.editPlayer2Input}
+                            style={{"border":"1px solid grey"}}
                             type="text"
                             />
                     <br />
@@ -426,9 +541,17 @@ class CreateTournament extends Component {
                         <h4 style={{"color":"white"}}>!!!Maybe some competition quote here?!!!</h4>
                         <br />
 
-                        <input placeholder="Tournament Name" type="text" required/>
+                        <input onChange={this.handleNameChange} placeholder="Tournament Name" type="text" required/>
 
-                        <textarea placeholder="Tournament Description (optional)"></textarea>
+                        <select value={this.state.type} onChange={this.handleTypeChange}>
+                          <option value={'Basketball'}>Basketball</option>
+                          <option value={'Pool'}>Pool</option>
+                          <option value={'Bowling'}>Bowling</option>
+                          <option value={'Ping-Pong'}>Ping-Pong</option>
+                          <option value={'Soccer'}>Soccer</option>
+                        </select>
+
+                        <textarea onChange={this.handleDescChange} placeholder="Tournament Description (optional)"></textarea>
 
                         <select value={this.state.handleNumberOfPlayersInput} onChange={this.handleNumberOfPlayers}>
                             <option value={2}>2 Competitors</option>
@@ -444,43 +567,61 @@ class CreateTournament extends Component {
                             <br />
                             <div className='ct-matches-header'>
                                 <h1>1st Round Matches</h1>
-                                {/*<br/>*/}
-                                <input  style={{"width":"35%"}} 
-                                        type="text" 
-                                        placeholder='Competitor' 
-                                        value={this.state.player1Input}
-                                        onChange={this.handlePlayer1Input}
-                                        tabIndex='1'
-                                        />
+                                <PlayerAutocomplete
+                                  value={ this.state.player1Input.name }
+                                  items={ userData }
+                                  onSelect={ this.handlePlayer1Select }
+                                  onChange={ this.handlePlayer1Change }
+                                />
                                 <span> vs </span>
-                                <input  style={{"width":"35%"}} 
-                                        type="text" 
-                                        placeholder='Competitor' 
-                                        value={this.state.player2Input}
-                                        onChange={this.handlePlayer2Input}                                        
-                                        tabIndex='2'
-                                        />
+                                <PlayerAutocomplete
+                                  value={ this.state.player2Input.name }
+                                  items={ userData }
+                                  onSelect={ this.handlePlayer2Select }
+                                  onChange={ this.handlePlayer2Change }
+                                />
                                 <button tabIndex='3' type='submit' style={{"margin":"10px"}} onClick={this.addPlayers}>Add</button>
                             </div>
                             <br />
-                            <div className='ct-matches-list'>   
+                            <div className='ct-matches-list'>
                                 {matches}
                             </div>
                         </div>
 
-                        <div className='ct-submit'>Finalize</div>
+                        <div onClick={ this.handleSubmit } className='ct-submit'>Finalize</div>
                    </div>
                 </div>
                 <div className='ct-player-info'>
 
                 </div>
             </main>
+          </div>
+
         )
     }
 }
 
-function mapStateToProps(state) {
-    return state
+function PlayerAutocomplete({ value, items, onSelect, onChange }) {
+  return (
+    <Autocomplete
+      getItemValue={(user) => user.name}
+      value={ value }
+      items={ items }
+      onSelect={onSelect}
+      onChange={onChange}
+      renderMenu={children => (
+        <div className="menu">
+          {children}
+        </div>
+      )}
+      renderItem={(item, isHighlighted) => (
+      <div
+        className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+        key={item.abbr}
+      >{item.name}</div>
+      )}
+    />
+  )
 }
 
-export default connect(mapStateToProps)(CreateTournament);
+export default CreateTournament;
