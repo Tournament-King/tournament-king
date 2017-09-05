@@ -7,7 +7,7 @@ from (
   description,
   creator,
   active,
-  get_matches(37) as rounds
+  get_matches($1) as rounds
   from tournaments
-  where id = 37
+  where id = $1
 ) t;

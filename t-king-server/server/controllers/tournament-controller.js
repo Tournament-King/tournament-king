@@ -54,7 +54,7 @@ const getTournament = (req, res) => {
   db.queries.tournament.getTournament([req.params.id])
   .then(tournament => {
     var tournament = tournament[0].row_to_json
-    var matches = tournament.rounds;
+    var matches = tournament.rounds
     var rounds = []
     while (matches.length) {
       var nextRound = []
@@ -63,7 +63,7 @@ const getTournament = (req, res) => {
       }
       rounds.push(nextRound)
     }
-    tournament.rounds = rounds;
+    tournament.rounds = rounds
     res.send(tournament)
   })
 }
