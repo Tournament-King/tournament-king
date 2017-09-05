@@ -1,8 +1,3 @@
-const { Bracket } = require('../../lib/tournament')
-
-// Create a tournament and insert players and matches into the database.
-// Number of players in tournament must be a power of two.
-// Players will be assigned a position in the tournament, starting at 1.
 const createTournament = (req, res) => {
   let db = req.app.get('db');
   const { name, type, players } = req.body;
@@ -17,37 +12,57 @@ const createTournament = (req, res) => {
     db.players.insert(players.map(player => {
       player.tournament_id = tournament.id;
       return player;
-    })).then(() => {
-      var matches = []
-      while (matches.length < players.length-1) {
-        matches.push({tournament_id:tournament.id})
+    })).then(players => {
+      var matchCount = players.length-1
+      var matchNum = 1
+      var matchesToInsert = []
+      while (players.length) {
+        matchesToInsert.push({
+          match_num:matchNum,
+          p_match_num:matchNum + Math.ceil(((matchCount+1)-matchNum)/2),
+          player1:players.shift().id,
+          player2:players.shift().id,
+          tournament_id:tournament.id
+        })
+        matchNum++;
       }
-      db.matches.insert(matches)
-      .then(() => res.send(tournament))
+      while (matchNum < matchCount) {
+        matchesToInsert.push({
+          match_num:matchNum,
+          p_match_num:matchNum + Math.ceil(((matchCount+1)-matchNum)/2),
+          player1:null,
+          player2:null,
+          tournament_id:tournament.id
+        })
+        matchNum++;
+      }
+      matchesToInsert.push({
+        match_num:matchNum,
+        p_match_num:null,
+        player1:null,
+        player2:null,
+        tournament_id:tournament.id
+      })
+      db.matches.insert(matchesToInsert)
+      .then(() => res.send(tournament));
     })
   })
 }
 
-// Before we can get our tournament grouped by rounds (in a multidimensional array)
-// we first need to get the players and matches in the tournament.
-// When we have this, we can create a new Bracket instance, and send the tournament data in the response.
 const getTournament = (req, res) => {
   let db = req.app.get('db');
-  db.tournaments.findOne({id:req.params.id})
+  db.queries.tournament.getTournament([req.params.id])
   .then(tournament => {
-    if (!tournament) {
-      res.status(404).send({"error" : "Tournament not found"})
-    } else {
-      db.queries.players.getPlayers([req.params.id])
-      .then(players => {
-        db.matches.find({tournament_id:req.params.id}, {order:'id'})
-        .then(matches => {
-          var b1 = new Bracket(players, matches)
-          tournament.rounds = b1.getJSON()
-          res.send(tournament)
-        })
-      })
+    var results = tournament.map(m => m.row_to_json)
+    var rounds = []
+    while (results.length) {
+      var nextRound = []
+      while (nextRound.length < results.length) {
+        nextRound.push(results.shift())
+      }
+      rounds.push(nextRound)
     }
+    res.send(rounds)
   })
 }
 

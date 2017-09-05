@@ -14,10 +14,14 @@ CREATE TABLE "tournaments" (
 
 CREATE TABLE "matches" (
 	"id" serial NOT NULL,
-	"tournament_id" integer NOT NULL,
-	"player1_score" integer,
-	"player2_score" integer,
-	"winner" integer,
+	"tournament_id" INTEGER NOT NULL,
+	"player1" INTEGER,
+	"player2" INTEGER,
+	"player1_score" INTEGER,
+	"player2_score" INTEGER,
+	"winner" INTEGER,
+	"match_num" INTEGER NOT NULL,
+	"p_match_num" INTEGER,
 	CONSTRAINT matches_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -67,11 +71,12 @@ CREATE TABLE "comments" (
 ALTER TABLE "tournaments" ADD CONSTRAINT "tournaments_fk0" FOREIGN KEY ("creator") REFERENCES "users"("id");
 
 ALTER TABLE "matches" ADD CONSTRAINT "matches_fk0" FOREIGN KEY ("tournament_id") REFERENCES "tournaments"("id");
+ALTER TABLE "matches" ADD CONSTRAINT "matches_fk1" FOREIGN KEY ("player1") REFERENCES "players"("id");
+ALTER TABLE "matches" ADD CONSTRAINT "matches_fk2" FOREIGN KEY ("player2") REFERENCES "players"("id");
 ALTER TABLE "matches" ADD CONSTRAINT "matches_fk3" FOREIGN KEY ("winner") REFERENCES "players"("id");
 
 ALTER TABLE "players" ADD CONSTRAINT "players_fk0" FOREIGN KEY ("tournament_id") REFERENCES "tournaments"("id");
 ALTER TABLE "players" ADD CONSTRAINT "players_fk1" FOREIGN KEY ("user_id") REFERENCES "users"("id");
-
 
 ALTER TABLE "comments" ADD CONSTRAINT "comments_fk0" FOREIGN KEY ("match_id") REFERENCES "matches"("id");
 ALTER TABLE "comments" ADD CONSTRAINT "comments_fk1" FOREIGN KEY ("user_id") REFERENCES "users"("id");
