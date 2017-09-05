@@ -136,6 +136,7 @@ class MatchModal extends Component {
                         <div className='scoreboard-clock'>
                             {this.props.currentMatch ?
                             'Live!' :
+
                             '--'}
                         </div>
                         <div className='scoreboard-player2'>
