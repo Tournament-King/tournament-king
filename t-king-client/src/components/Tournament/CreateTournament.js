@@ -11,7 +11,12 @@ class CreateTournament extends Component {
             handleNumberOfPlayersInput: 2,
             player1Input: '',
             player2Input: '',
+            editPlayer1Input: '',
+            editPlayer2Input: '',
+            player1ToUpdateIndex: null,
+            player2ToUpdateIndex: null,
             numberOfMatches: 1,
+            editMatchZIndex: '-1',
             players: [
                 {id: null, name: 'player'},
                 {id: null, name: 'player'},
@@ -275,7 +280,12 @@ class CreateTournament extends Component {
         this.handleNumberOfPlayers = this.handleNumberOfPlayers.bind(this);
         this.handlePlayer1Input = this.handlePlayer1Input.bind(this);
         this.handlePlayer2Input = this.handlePlayer2Input.bind(this);
+        this.handleEditPlayer1Input = this.handleEditPlayer1Input.bind(this);
+        this.handleEditPlayer2Input = this.handleEditPlayer2Input.bind(this);
         this.addPlayers = this.addPlayers.bind(this);
+        this.editPlayers = this.editPlayers.bind(this);
+        this.updateNames = this.updateNames.bind(this);
+        this.cancelUpdateNames = this.cancelUpdateNames.bind(this);
         //bind
     }
 
@@ -318,12 +328,54 @@ class CreateTournament extends Component {
         }    
     }
 
+    handleEditPlayer1Input(e) {
+        this.setState({
+            editPlayer1Input: e.target.value
+        })
+    }
+
+    handleEditPlayer2Input(e) {
+        this.setState({
+            editPlayer2Input: e.target.value
+        })
+    }
+
+    editPlayers(p1, p2) {
+        this.setState({
+            editMatchZIndex: '3',
+            editPlayer1Input: this.state.players[p1].name,
+            editPlayer2Input: this.state.players[p2].name,
+            player1ToUpdateIndex: p1,
+            player2ToUpdateIndex: p2
+        })
+
+    }
+
+    cancelUpdateNames() {
+        this.setState({
+            editMatchZIndex: '-1',
+        })
+    }
+
+    updateNames() {
+        let players = [...this.state.players]
+        players[this.state.player1ToUpdateIndex].name = this.state.editPlayer1Input
+        players[this.state.player2ToUpdateIndex].name = this.state.editPlayer2Input
+        this.setState({
+            editMatchZIndex: '-1',
+            players: players,
+            editPlayer1Input: '',
+            editPlayer2Input: ''
+        })
+    }
+
 
 
 
     render() {
         console.log(this.state)
 
+        let editMatchZIndex = {"zIndex":this.state.editMatchZIndex}
         let matches = []
         for(let i = 0; i<this.state.numberOfMatches; i++) {
             matches.push(
@@ -331,14 +383,35 @@ class CreateTournament extends Component {
                     <h1 className='ct-match-player1'>{this.state.players[((i+1)*2)-2].name}</h1>
                     <div className="ct-match-matchNumber">Match {i+1}</div>
                     <h1 className='ct-match-player2'>{this.state.players[((i+1)*2)-1].name}</h1>
-                    {/*<div onClick={() => this.editPlayers()}>Edit</div>*/}
+                    <button style={{"width":"30px"}} onClick={() => this.editPlayers(((i+1)*2)-2, ((i+1)*2)-1)}>Edit</button>
                     {/*<h1>{this.state.player[((i+1)*2)-1].name}</h1>*/}
                 </div>
             )
         }
+
         
         return (
             <main className='ct-main'>
+                <div style={editMatchZIndex} className="ct-edit-match-names">
+                    <div>Player 1</div>
+                    <input  onChange={this.handleEditPlayer1Input} 
+                            value={this.state.editPlayer1Input} 
+                            style={{"border":"1px solid grey"}} 
+                            type="text"
+                            />
+                    <br />
+                    <br />
+                    <div>Player 1</div>
+                    <input  onChange={this.handleEditPlayer2Input} 
+                            value={this.state.editPlayer2Input} 
+                            style={{"border":"1px solid grey"}} 
+                            type="text"
+                            />
+                    <br />
+                    <br />
+                    <button style={{"border":"1px solid grey"}} onClick={this.updateNames}>Update</button>
+                    <button style={{"border":"1px solid grey"}} onClick={this.cancelUpdateNames}>Cancel</button>
+                </div>
                 <div className='ct-header'>
                     <h1 className="" style={{"fontSize":"50px"}}>Create Your Tournament</h1>
                     <br/>
