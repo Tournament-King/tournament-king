@@ -107,7 +107,7 @@ const makeTree = function(data) {
 //path for rendering, if the desired tournament isn't already present in the redux
 //state
 const fetchData = function(props) {
-    let {id} = props.match.params
+    let id = window.location.pathname.split('/')[2]
     if (!props.tournamentData.id || id * 1 !== props.tournamentData.id) {
         return props.getTournament(id);
     } else {

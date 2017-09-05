@@ -14,6 +14,7 @@ const Landing = function(props) {
     return (
         <main className="landing-wrapper">
             <div className="landing-splash">
+                
             </div>
             <div className="landing-content">
                 <TournamentSearch />

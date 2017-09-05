@@ -280,7 +280,7 @@ class CreateTournament extends Component {
     }
 
     handleNumberOfPlayers(e) {
-        let input = parseInt(e.target.value)
+        let input = parseInt(e.target.value, 10);
         this.setState({
             handleNumberOfPlayersInput: input,
             numberOfMatches: input / 2

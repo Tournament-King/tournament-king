@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {BrowserRouter} from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import router from './router/router';
@@ -11,16 +12,19 @@ class App extends Component {
 
   render() {
     return (
-      <main className="app-wrapper">
-        <div className="header-shim">  
+    <BrowserRouter>
+      {/* <main className="app-wrapper">
+      <div>
           <Header />
-        </div>
-        <MatchModal />
+        <MatchModal /> */}
           <div className="view-wrapper">
+            <MatchModal />
             {router}
           </div>
+        {/* </div>
         <Footer />
-      </main>
+      </main> */}
+      </BrowserRouter>
     );
   }
 }

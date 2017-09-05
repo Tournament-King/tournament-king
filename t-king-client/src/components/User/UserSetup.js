@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import connect from react-redux;
+import {connect} from 'react-redux';
 
 
 class UserSetup extends Component {
@@ -14,8 +14,17 @@ class UserSetup extends Component {
 
     render() {
         return (
-            <main className="user-setup-wrapper">
+            <main className="settings-wrapper">
+                <div className="settings-content">
+                    asdfasdf
+                </div>
             </main>
         )
     }
 }
+
+function mapStateToProps(state) {
+    return state;
+}
+
+export default connect(mapStateToProps)(UserSetup);
