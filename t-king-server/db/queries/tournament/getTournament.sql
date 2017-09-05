@@ -28,5 +28,6 @@ from (
     ) f
   ) as winner
   from matches
-  where id = $1
+  where tournament_id = $1
+  order by match_num
 ) t;
