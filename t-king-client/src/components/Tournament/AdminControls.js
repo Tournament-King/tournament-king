@@ -50,7 +50,7 @@ class AdminControls extends Component {
             player2_score: player2_score           
         }
         console.log(update)
-        // this.props.updateMatch(update);
+        this.props.updateMatch(update);
         this.emitUpdate(update);
     }
 
@@ -100,13 +100,21 @@ class AdminControls extends Component {
     }
 
     setWinner() {
-        // let round = this.props.activeMatch.round; 
-        // let tournament = this.props.tournamentData.id;
-        // let {id, player1_score, player2_score} = currentMatch(this.props);
-
-        // nextMatch(this.props.tournamentData, this.props.activeMatch)
+        let {id, player1_score, player2_score, player1, player2} = currentMatch(this.props);
+        let winner = player1_score > player2_score ? player1.id : player2.id;
+        console.log('match: ', id, 'winner: ', winner)
+        this.emitWinner(id, winner)
     }
 
+    emitWinner(match, winner) {
+        let body = {
+            match,
+            winner,
+            tournament: this.props.tournamentData.id,
+            round: this.props.activeMatch.round
+        }
+        socket.emit('set winner', body)
+    }
 
     emitUpdate(data) {
         socket.emit('update match', data)
@@ -134,8 +142,15 @@ class AdminControls extends Component {
                     >-</div>
                 </div>
 
+                {this.props.activeMatch.status === 'ready' ? 
                 <div className='admin-controls-start-match'
-                    onClick={this.startMatch}>Test Next</div>
+                    onClick={this.startMatch}>
+                    Start
+                </div> :
+                <div className='admin-controls-start-match'
+                    onClick={this.setWinner}>
+                    Set Winner
+                </div> }
             </main>
         )
     }

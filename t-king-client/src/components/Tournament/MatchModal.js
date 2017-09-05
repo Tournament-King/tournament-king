@@ -90,7 +90,8 @@ class MatchModal extends Component {
         // }
         if (this.props.currentUser && nextProps.activeMatch) {
             if (nextProps.tournamentData.creator === this.props.currentUser.id) {
-                socket.emit('authorize user', {match_id: nextProps.activeMatch.id})
+                console.log('authorize emit')
+                socket.emit('authorize user', {id: nextProps.tournamentData.id})
             }
             return;
         }

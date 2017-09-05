@@ -80,13 +80,11 @@ passport.use(new Auth0Strategy({
 ));
 
 passport.serializeUser((userA, done) => {
-    console.log('serialize: ', userA)
     let userB = userA;
     done(null, userB);
 });
 
 passport.deserializeUser((userB, done) => {
-    console.log('deserialize: ', userB)
     let userC = userB;
     done(null, userC);
 });
@@ -148,9 +146,9 @@ const addListeners = (io, db) => {
         })
 
         socket.on('authorize user', (data) => {
-            db.queries.match.getMatch([data.match_id])
+            db.tournaments.findOne(data)
             .then(res => {
-                let {creator} = res[0]
+                let {creator} = res
                 if (socket.user.id === creator) {
                     socket.emit('user authorized')
                 }
@@ -168,7 +166,6 @@ const addListeners = (io, db) => {
             db.matches.update(query)
             .then(res => {
                 let {id, player1_score, player2_score} = res;
-                console.log(res)
                 io.to('t' + tournament).emit('match update', {
                     id,
                     round: round,
@@ -177,6 +174,22 @@ const addListeners = (io, db) => {
                 })
             })
         })
+
+        socket.on('set winner', (data) => {
+            let {match, winner, tournament, round} = data;
+            db.queries.match.setWinner([match, winner])
+            .then(res => {
+                db.queries.match.getUpdatedMatches([res[0].id, res[1].id])
+                .then(matches => {
+                    io.to('t' + tournament).emit('new matches', {
+                        match1: matches[0].get_match,
+                        match2: matches[1].get_match,
+                        seedRound: round
+                    })
+                })
+            })
+
+        });
     });
 }
 

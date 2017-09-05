@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getTournament, updateMatch} from './../../redux/mainReducer';
+import {getTournament, updateMatch, advanceWinner} from './../../redux/mainReducer';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 
@@ -16,7 +16,11 @@ class TournamentView extends Component {
 
         socket.on('match update', (data) => {
             props.updateMatch(data);
-            console.log('update listener', data)
+        })
+
+        socket.on('new matches', (data) => {
+            console.log('new matches listener', data)
+            props.advanceWinner(data)
         })
 
     }
@@ -67,7 +71,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps,
-    {getTournament, updateMatch}
+    {getTournament, updateMatch, advanceWinner}
 )(TournamentView);
 
 

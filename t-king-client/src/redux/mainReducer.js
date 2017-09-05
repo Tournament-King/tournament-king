@@ -44,7 +44,7 @@ const GET_MATCH_BY_ID_PENDING = 'GET_MATCH_BY_ID_PENDING';
 const GET_MATCH_BY_ID_FULFILLED = 'GET_MATCH_BY_ID_FULFILLED';
 const GET_MATCH_BY_ID_REJECTED = 'GET_MATCH_BY_ID_REJECTED';
 
-const SET_MATCH_WINNER = 'SET_MATCH_WINNER';
+const ADVANCE_WINNER = 'ADVANCE_WINNER';
 
 const UPDATE_CURRENT_MATCH = 'UPDATE_CURRENT_MATCH';
 
@@ -97,17 +97,17 @@ export function getMatchById(match_id) {
     }
 }
 
-export function setWinner(match) {
-    return {
-        type: SET_MATCH_WINNER,
-        payload: match
-    }
-}
-
 export function updateMatch(update) {
     return {
         type: UPDATE_CURRENT_MATCH,
         payload: update
+    }
+}
+
+export function advanceWinner(body) {
+    return {
+        type: ADVANCE_WINNER,
+        payload: body
     }
 }
 
@@ -199,6 +199,7 @@ export default function reducer(state=initialState, action) {
                 match.player1_score = payload.player1_score;
                 match.player2_score = payload.player2_score;
                 if (payload.player1_score === 0 && payload.player2_score === 0) {
+                    state.activeMatch.status = 'active';
                     match.status = 'active';
                     return Object.assign(
                         {},
@@ -223,6 +224,33 @@ export default function reducer(state=initialState, action) {
             } else {
                 return Object.assign({}, state, {requestCount: --state.requestCount});
             }
+
+
+        case ADVANCE_WINNER:
+            let id1 = action.payload.match1.id;
+            let id2 = action.payload.match2.id;
+            let {seedRound} = action.payload;
+            let newTourn = Object.assign({}, state.tournamentData);
+            let indicies = [];
+            newTourn.rounds[seedRound].map((m, i) => {
+                if (m.id === id1) {
+                    indicies.push(i)
+                }
+                return null;
+            })
+            newTourn.rounds[seedRound+1].map((m, i) => {
+                if (m.id === id2) {
+                    indicies.push(i)
+                }
+                return null;
+            })
+            newTourn.rounds[seedRound][indicies[0]] = action.payload.match1;
+            newTourn.rounds[seedRound+1][indicies[1]] = action.payload.match2;
+            return Object.assign(
+                {},
+                state,
+                {tournamentData: newTourn}
+            )
 
 
         case SET_ACTIVE_MATCH:

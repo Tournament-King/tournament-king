@@ -26,7 +26,7 @@ const Header = function(props) {
                 </Link>
                 {props.currentUser ? 
                 <div className="header-user">
-                    <img src={props.currentUser.profile_pic} />
+                    <img alt="" src={props.currentUser.profile_pic} />
                 </div> :
                 <a href="http://localhost:3030/auth" className="header-login">
                     <strong>LOGIN</strong>
