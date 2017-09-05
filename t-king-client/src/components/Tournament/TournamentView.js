@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {getTournament, updateMatch, advanceWinner} from './../../redux/mainReducer';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
+import {Progress} from 'semantic-ui-react';
 
 const io = require('socket.io-client');
 const socket = io();
@@ -15,6 +16,7 @@ class TournamentView extends Component {
         }
 
         socket.on('match update', (data) => {
+            console.log(data);
             props.updateMatch(data);
         })
 
@@ -50,12 +52,17 @@ class TournamentView extends Component {
             "width":width
         }
         let tree = makeTree(this.props.tournamentData)
+        let progress = calcProgress(this.props.tournamentData)
         return (
             <main>
                 <div className="tournament-top-section">
+                    <div className="tournament-top-content">
                         {this.props.tournamentData.name}
+                    </div>
                 </div>
-                <div className="tournament-divider"></div>
+                <div className="tournament-divider">
+                    <Progress percent={progress ? progress : 0} color="green" attached="top"/>
+                </div>
                     <div className="tournament-wrapper">
                     <div className="bracket-container" style={setWidth}>
                         {tree}
@@ -74,6 +81,23 @@ export default connect(mapStateToProps,
     {getTournament, updateMatch, advanceWinner}
 )(TournamentView);
 
+
+const calcProgress = function(data) {
+    let total = 0;
+    let active = 0;
+    let complete = 0;
+    data.rounds.forEach(a => {
+        a.forEach(s => {
+            if (s.status === 'active') {
+                active++
+            } else if (s.status === 'complete') {
+                complete++
+            }
+            total++
+        })
+    })
+    return Math.floor((active + (complete*2)) / (total*2) * 100)
+}
 
 //makeTree is a function that takes in tournament data from the API tree structure
 //and parses/renders it using dynamic nested components, and passes the components

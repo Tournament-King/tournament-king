@@ -193,13 +193,25 @@ export default function reducer(state=initialState, action) {
             let makeUpdate = (payload) => {
                 let {id, round} = payload;
                 let newTourn = Object.assign({}, state.tournamentData)
+                console.log(newTourn, payload, round)
                 let match = newTourn.rounds[round].find(m => {
                     return m.id === id
                 })
-                match.player1_score = payload.player1_score;
-                match.player2_score = payload.player2_score;
+                if (!payload.winner) {
+                    match.player1_score = payload.player1_score;
+                    match.player2_score = payload.player2_score;
+                } else {
+                    match.player1_score = payload.player1_score;
+                    match.player2_score = payload.player2_score;
+                    match.winner = payload.winner;
+                    match.status = payload.status;
+                }
                 if (payload.player1_score === 0 && payload.player2_score === 0) {
-                    state.activeMatch.status = 'active';
+                    if (state.activeMatch) {
+                        if (state.activeMatch.id === id) {
+                            state.activeMatch.status = 'active';
+                        }
+                    }
                     match.status = 'active';
                     return Object.assign(
                         {},
