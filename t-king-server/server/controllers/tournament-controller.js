@@ -53,16 +53,18 @@ const getTournament = (req, res) => {
   let db = req.app.get('db');
   db.queries.tournament.getTournament([req.params.id])
   .then(tournament => {
-    var results = tournament.map(m => m.row_to_json)
+    var tournament = tournament[0].row_to_json
+    var matches = tournament.rounds;
     var rounds = []
-    while (results.length) {
+    while (matches.length) {
       var nextRound = []
-      while (nextRound.length < results.length) {
-        nextRound.push(results.shift())
+      while (nextRound.length < matches.length) {
+        nextRound.push(matches.shift())
       }
       rounds.push(nextRound)
     }
-    res.send(rounds)
+    tournament.rounds = rounds;
+    res.send(tournament)
   })
 }
 
