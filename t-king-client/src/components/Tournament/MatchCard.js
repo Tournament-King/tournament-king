@@ -20,10 +20,10 @@ class MatchCard extends Component {
         let match = {
             id: this.props.id,
             round: this.props.round,
-            active: this.props.active,
+            status: this.props.status,
             tournament: this.props.tournamentData.id
         }
-        if (!this.props.active) {
+        if (this.props.status === 'waiting' || this.props.status === 'complete') {
             return;
         } else {
             if (!this.props.modalActive) {
@@ -38,7 +38,11 @@ class MatchCard extends Component {
         }
     }
 
+    
     render() {
+
+        let statusProp = this.props.status;
+        let status = statusProp === 'waiting' ? 'Waiting' : statusProp  === 'ready' ? 'Players Ready' : statusProp === 'active' ? 'Match Active' : 'Match Complete';
 
         return (
         <main className="match-wrapper" >
@@ -55,7 +59,7 @@ class MatchCard extends Component {
                     </div> */}
             </div>
             <div className="match-data">
-                {this.props.round + 1}
+                {this.props.index + '-' + this.props.round + '-' + this.props.id + ' - ' + status }
             </div>
             <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">

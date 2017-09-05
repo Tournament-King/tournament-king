@@ -13,26 +13,43 @@ class AdminControls extends Component {
 
         }
 
-
+        this.startMatch = this.startMatch.bind(this);
         this.incrementPlayerOne = this.incrementPlayerOne.bind(this);
         this.decrementPlayerOne = this.decrementPlayerOne.bind(this);
         this.incrementPlayerTwo = this.incrementPlayerTwo.bind(this);
         this.decrementPlayerTwo = this.decrementPlayerTwo.bind(this);
+        this.setWinner = this.setWinner.bind(this);
 
     }
 
+    startMatch() {
+        let {round} = this.props.activeMatch;
+        let tournament = this.props.tournamentData.id;
+        let {id} = currentMatch(this.props);
+        let update = {
+            id: id,
+            tournament: tournament,
+            round: round,
+            player1_score: 0,
+            player2_score: 0           
+        }
+        this.props.updateMatch(update);
+        this.emitUpdate(update);
+    }
 
     incrementPlayerOne() {
         let {round} = this.props.activeMatch;
         let tournament = this.props.tournamentData.id;
-        let {id, player1_score, player2_score} = currentMatch(this.props);
+        let {id, player1_score, player2_score, status} = currentMatch(this.props);
         let update = {
             id: id,
+            status: status,
             tournament: tournament,
             round: round,
             player1_score: ++player1_score,
             player2_score: player2_score           
         }
+        console.log(update)
         this.props.updateMatch(update);
         this.emitUpdate(update);
     }
@@ -82,14 +99,28 @@ class AdminControls extends Component {
         this.emitUpdate(update);
     }
 
+    setWinner() {
+        let {id, player1_score, player2_score, player1, player2} = currentMatch(this.props);
+        let winner = player1_score > player2_score ? player1.id : player2.id;
+        console.log('match: ', id, 'winner: ', winner)
+        this.emitWinner(id, winner)
+    }
+
+    emitWinner(match, winner) {
+        let body = {
+            match,
+            winner,
+            tournament: this.props.tournamentData.id,
+            round: this.props.activeMatch.round
+        }
+        socket.emit('set winner', body)
+    }
 
     emitUpdate(data) {
-        socket.emit('update score', data)
+        socket.emit('update match', data)
     }
 
     render() {
-
-        console.log(currentMatch(this.props))
 
         return (
             <main className='admin-controls-main'>
@@ -111,7 +142,15 @@ class AdminControls extends Component {
                     >-</div>
                 </div>
 
-                <div className='admin-controls-start-match'>Start Match</div>
+                {this.props.activeMatch.status === 'ready' ? 
+                <div className='admin-controls-start-match'
+                    onClick={this.startMatch}>
+                    Start
+                </div> :
+                <div className='admin-controls-start-match'
+                    onClick={this.setWinner}>
+                    Set Winner
+                </div> }
             </main>
         )
     }
@@ -135,3 +174,25 @@ const currentMatch = (props) => {
         return m.id === id;
     })
 }
+
+// const nextMatch = (tournament, match) => {
+//     let base = tournament.rounds[match.round].length;
+//     let currentIndex = tournament.rounds[match.round]
+//         .indexOf(tournament.rounds[match.round].find(m => 
+//             {return m.id === match.id}));
+//     let refArray = tournament.rounds[match.round + 1].map(m => {return []});
+//     let tick = 0;
+//     let ind = 0;
+//     for (let i = 0; i < base; i++) {
+//       if (tick > 1) {
+//         tick = 0;
+//         ind ++;
+//       }
+//       refArray[ind].push(i)
+//       tick ++
+//     }
+//     let nextIndex = refArray.indexOf(refArray.filter(obj => 
+//         {return obj.includes(currentIndex)})[0])
+//     let nextMatch = tournament.rounds[match.round+1][nextIndex]
+//     console.log(nextMatch);
+// }

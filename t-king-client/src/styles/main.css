@@ -47,14 +47,107 @@ main, div {
     color:#F7F7F7;
     position:fixed;
     z-index: 6;
-    padding:6px 7px;
+    padding:0 7px;
+    display: flex;
+    justify-content:space-between;
 }
 
-.header-wrapper button {
-    color:#F7F7F7;
-    display:inline-block;
-    float: right;
+.header-logo {
+    padding:3px 6px;
+    height:42px;
+    box-sizing:border-box;
+    color:#307fff;
+    display: flex;
+}
 
+.header-logo h1:hover {
+    color:#307fff;
+}
+
+.header-logo p {
+    margin-top:10px;
+    margin-left:8px;
+}
+
+.header-right {
+    height:42px;
+    display:flex;
+    align-items:center;
+    padding-right:24px;
+}
+
+.header-anchor {
+    font-size:12px;
+    height:32px;
+    padding-top: 6px;
+    padding-right:16px;
+    color:#F7F7F7;
+    border-right:1px solid #494949;
+    transition:all .2s ease-in-out;
+}
+
+.header-anchor:hover {
+    color:#4286f4;
+    transition:all .2s ease-in-out;
+    cursor:pointer;
+}
+
+.header-login {
+    height:32px;
+    padding: 7px 5px;
+    margin-left:16px;
+    background:#14AA14;
+    color:#F7F7F7;
+    border-radius:2px;
+    transition:all .2s ease-in-out;
+}
+
+.header-login:hover {
+    background:#0F930F;
+    color:#FFFFFF;
+    transition:all .2s ease-in-out;
+}
+
+.header-user {
+    height:32px;
+    width:32px;
+    margin-left:16px;
+    border-radius:50%;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border:2px solid transparent;
+    transition:all .3s ease-in-out;
+}
+
+.header-user:hover {
+    border:2px solid #4286f4;
+    transition:all .3s ease-in-out;
+    box-shadow: 0px 0px 6px 0px rgba(48,127,255,1);    
+    cursor:pointer; 
+}
+
+
+.header-user img {
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:transparent;
+    transition:all .4s ease-in-out;  
+}
+
+.header-user img:hover {
+    height:36px;
+    width:36px;
+    transition:all .4s ease-in-out;
+}
+
+
+@media screen and (max-width: 672px) {
+    .header-right {
+        padding-right: 24px;
+    }
 }
 
 /*------------------FOOTER---------------------*/
@@ -80,14 +173,13 @@ main, div {
 .landing-splash {
     width:100%;
     height: 320px;
-    background:#010101;
+    background:#262626;
 }
 
 .landing-content {
     max-width:1280px;
     width:1280px;
-    /* height:100px; */
-    /* background:lightgoldenrodyellow; */
+    /* padding:0 24px; */
     margin:auto;
     box-sizing:border-box;
 }
@@ -112,26 +204,33 @@ main, div {
 .landing-cards-wrapper {
     width:100%;
     box-sizing:border-box;
-    padding-right:12px;
-    padding-left:12px;
-    padding-top:56px;
-    padding-bottom:56px;
+    padding:56px 56px;
     display: flex;
     flex-wrap:wrap;
     justify-content:space-between;
     align-items:space-between;
 }
 
+
 .tournament-card-wrapper {
-    height: 112px;
+    height: 120px;
     width:49%;
-    background:#2A67A4;
+    background:#262626;
     border-radius:3px;
     margin-bottom:24px;
     text-align:center;
     position:relative;
-    /* box-shadow: 3px 3px 17px -8px rgba(0,0,0,0.75); */
+    box-shadow: 3px 3px 17px -8px rgba(0,0,0,0.75);
 }
+
+.tournament-card-wrapper:nth-child(3n+2) {
+    background:#D03B3B;
+}
+
+.tournament-card-wrapper:nth-child(3n+0) {
+    background:#24A4B2;
+}
+
 
 .asef {
     height: 100%;
@@ -148,7 +247,7 @@ main, div {
 }
 
 .white {
-    width:calc(100% - 120px);
+    width:calc(100% - 108px);
     height: 100%;
     background: white;
     float:right;
@@ -159,6 +258,101 @@ main, div {
 
 @media (max-width:1280px) {
     .landing-content {
+        width:100%
+    }
+}
+
+/*------------------USER SETTINGS---------------------*/
+
+.settings-wrapper {
+    width:100%;
+    height:calc(100vh - 190px);
+    background:#F7F7F7;
+}
+
+.settings-content {
+    width:1200px; 
+    height: 100%;
+    padding:24px 12px;
+    margin:auto;
+    background:#F7F7F7;
+    text-align:center;
+}
+
+.settings-content h1 {
+    font-size:2.4em;
+}
+
+.settings-pic-span {
+    width:100%;
+    height:120px;
+    display:flex;
+    justify-content:center;
+}
+
+.settings-pic {
+    height:124px;
+    width:124px;
+    border-radius:50%;
+    background:#333F6F;
+    padding:2px 2px;
+}
+
+.settings-pic img {
+    width:120px;
+    height: 120px;
+    border-radius:50%;
+}
+
+.settings-form {
+    width:100%;
+    padding:32px 12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.settings-form p {
+    font-size:1.2em;
+    margin-bottom:6px;
+}
+
+.settings-form input {
+    width:42%;
+    height:32px;
+    padding:0 12px;
+    background:#ffffff;
+    border:1px solid #262626;
+    border-radius:2px;
+    margin-bottom:24px;
+}
+
+.settings-form button {
+    width:142px;
+    height:36px;
+    margin-top:8px;
+    background:#262626;
+    border-radius:2px;
+    color:#F1F1F1;
+    transition:all .2s ease-in-out;
+}
+
+.settings-form button:hover {
+    background:#000000;
+    color:#FFFFFF;
+    transition:all .2s ease-in-out;
+    cursor:pointer;
+}
+
+@media screen and (max-width: 1400px) {
+    .settings-content {
+        width:85%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .settings-content {
         width:100%
     }
 }
@@ -260,7 +454,7 @@ main, div {
     justify-content: center;
     align-items: center;
     color: #c41d00;
-    font-size: 50px;
+    font-size: 42px;
 }
 
 .scoreboard-player2 {
@@ -330,6 +524,17 @@ main, div {
     font-size: 25px;
 }
 
+@media screen and (max-width: 1180px) {
+    .scoreboard-clock {
+        font-size: 32px;
+    }
+
+    .matchModal {
+        width:70%;
+        left:15%;
+    }
+}
+
 /*-----------------Admin Controls------------------*/
 
 .admin-controls-main {
@@ -392,6 +597,10 @@ main, div {
     align-items: center;
 }
 
+@media screen and (max-width: 1100px) {
+
+}
+
 /*------------------TOURNAMENT---------------------*/
 
 .tournament-wrapper {
@@ -417,7 +626,7 @@ main, div {
 }
 
 .bracket-container {
-    max-width:95%;
+    max-width:1400px;
     min-width:1100px;
     min-height:80%;
     height:fit-content;
@@ -426,11 +635,12 @@ main, div {
     justify-content:space-between;
     align-items:center;
     padding:0 12px;
+    overflow:auto;
 }
 
 .round-column {
-
     height: fit-content;
+    min-width:142px;
     height:100%;
     display:flex;
     flex-direction:column;
@@ -438,8 +648,8 @@ main, div {
 }
 
 .line-column {
-
     height:100%;
+    min-width:16px;
     display:flex;
     flex-direction:column;
     justify-content:space-around;
@@ -491,7 +701,7 @@ main, div {
     display:inline-block;
     position:absolute;
     right:12px;
-    top:7px;
+    top:5px;
 }
 
 .match-win-lose {

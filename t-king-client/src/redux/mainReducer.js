@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import {tournamentJSON, redsPool} from './dummyData/tournamentJSON';
 
 const initialState = {
     currentUser: null,
@@ -9,8 +8,7 @@ const initialState = {
     tRoom: 0,
     activeMatch: null,
     modalActive: false,
-    // dummyData: tournamentJSON,
-    // dummyData2: redsPool,
+    requestCount: 0,
     testProp: 'hello, redux is working'
 }
 
@@ -45,6 +43,8 @@ const GET_MATCH_BY_ID = 'GET_MATCH_BY_ID';
 const GET_MATCH_BY_ID_PENDING = 'GET_MATCH_BY_ID_PENDING';
 const GET_MATCH_BY_ID_FULFILLED = 'GET_MATCH_BY_ID_FULFILLED';
 const GET_MATCH_BY_ID_REJECTED = 'GET_MATCH_BY_ID_REJECTED';
+
+const ADVANCE_WINNER = 'ADVANCE_WINNER';
 
 const UPDATE_CURRENT_MATCH = 'UPDATE_CURRENT_MATCH';
 
@@ -104,6 +104,13 @@ export function updateMatch(update) {
     }
 }
 
+export function advanceWinner(body) {
+    return {
+        type: ADVANCE_WINNER,
+        payload: body
+    }
+}
+
 export function setActiveMatch(match) {
     return {
         type: SET_ACTIVE_MATCH,
@@ -111,11 +118,17 @@ export function setActiveMatch(match) {
     }
 }
 
+//----------------------REDUCER---------------------//
 
 
 export default function reducer(state=initialState, action) {
-    console.log(action.type);
+
+
     switch (action.type) {
+
+        //USERS
+
+
         case GET_CURRENT_USER_PENDING:
             return state;
         case GET_CURRENT_USER_FULFILLED:
@@ -129,12 +142,18 @@ export default function reducer(state=initialState, action) {
             );
         case GET_CURRENT_USER_REJECTED:
             return state;
+
+
         case TOGGLE_MATCH_MODAL:
             return Object.assign(
                 {},
                 state,
                 {modalActive: !state.modalActive}
             );
+
+        //TOURNAMENTS
+
+
         case GET_TOURNAMENTS_PENDING:
             return state;
         case GET_TOURNAMENTS_FULFILLED:
@@ -142,10 +161,11 @@ export default function reducer(state=initialState, action) {
             return state;
         case GET_TOURNAMENTS_REJECTED:
             return state;
+
+
         case GET_TOURNAMENT_PENDING:
             return state;
         case GET_TOURNAMENT_FULFILLED:
-            console.log(action.payload)
             return Object.assign(
                 {},
                 state,
@@ -153,6 +173,10 @@ export default function reducer(state=initialState, action) {
             );
         case GET_TOURNAMENT_REJECTED:
             return state;
+
+        //MATCHES
+
+
         case GET_MATCH_BY_ID_PENDING:
             return(state);
         case GET_MATCH_BY_ID_FULFILLED:
@@ -163,30 +187,80 @@ export default function reducer(state=initialState, action) {
             );
         case GET_MATCH_BY_ID_REJECTED:
             return state;
+
+
         case UPDATE_CURRENT_MATCH:
-            // if (!action.payload.round) {
-            //     return;
-            // } else {
-                let {id, round} = action.payload;
+            let makeUpdate = (payload) => {
+                let {id, round} = payload;
                 let newTourn = Object.assign({}, state.tournamentData)
                 let match = newTourn.rounds[round].find(m => {
                     return m.id === id
                 })
-                match.player1_score = action.payload.player1_score;
-                match.player2_score = action.payload.player2_score;
-                // console.log(newTourn, match)
+                match.player1_score = payload.player1_score;
+                match.player2_score = payload.player2_score;
+                if (payload.player1_score === 0 && payload.player2_score === 0) {
+                    state.activeMatch.status = 'active';
+                    match.status = 'active';
+                    return Object.assign(
+                        {},
+                        state,
+                        {tournamentData: newTourn}
+                    );
+                }
                 return Object.assign(
                     {},
                     state,
                     {tournamentData: newTourn}
                 );
-            // }
+            }
+            let incrementCount = () => {
+                return Object.assign({}, state, {requestCount: ++state.requestCount});
+            }
+            if (action.payload.tournament) {
+                incrementCount();
+                return makeUpdate(action.payload);
+            } else if (state.requestCount === 0) {
+                return makeUpdate(action.payload);
+            } else {
+                return Object.assign({}, state, {requestCount: --state.requestCount});
+            }
+
+
+        case ADVANCE_WINNER:
+            let id1 = action.payload.match1.id;
+            let id2 = action.payload.match2.id;
+            let {seedRound} = action.payload;
+            let newTourn = Object.assign({}, state.tournamentData);
+            let indicies = [];
+            newTourn.rounds[seedRound].map((m, i) => {
+                if (m.id === id1) {
+                    indicies.push(i)
+                }
+                return null;
+            })
+            newTourn.rounds[seedRound+1].map((m, i) => {
+                if (m.id === id2) {
+                    indicies.push(i)
+                }
+                return null;
+            })
+            newTourn.rounds[seedRound][indicies[0]] = action.payload.match1;
+            newTourn.rounds[seedRound+1][indicies[1]] = action.payload.match2;
+            return Object.assign(
+                {},
+                state,
+                {tournamentData: newTourn}
+            )
+
+
         case SET_ACTIVE_MATCH:
             return Object.assign(
                 {},
                 state,
                 {activeMatch: action.payload}
-            )
+            );
+
+
         default:
             return state;
     }

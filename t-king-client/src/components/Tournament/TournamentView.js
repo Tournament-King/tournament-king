@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getTournament, updateMatch} from './../../redux/mainReducer';
+import {getTournament, updateMatch, advanceWinner} from './../../redux/mainReducer';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 
@@ -14,9 +14,13 @@ class TournamentView extends Component {
             currentRoom: 0
         }
 
-        socket.on('score update', (data) => {
+        socket.on('match update', (data) => {
             props.updateMatch(data);
-            console.log('update listener', data)
+        })
+
+        socket.on('new matches', (data) => {
+            console.log('new matches listener', data)
+            props.advanceWinner(data)
         })
 
     }
@@ -35,8 +39,11 @@ class TournamentView extends Component {
         }
     }
 
+    componentWillUnmount() {
+        socket.emit('leave room', {room: this.state.currentRoom})
+    }
+
     render() {
-        console.log('room: ', this.state.currentRoom)
         fetchData(this.props);
         let width = this.props.tournamentData.rounds.length * 248;
         let setWidth = {
@@ -64,7 +71,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps,
-    {getTournament, updateMatch}
+    {getTournament, updateMatch, advanceWinner}
 )(TournamentView);
 
 
@@ -104,7 +111,8 @@ const makeTree = function(data) {
 //path for rendering, if the desired tournament isn't already present in the redux
 //state
 const fetchData = function(props) {
-    let {id} = props.match.params
+    let id = window.location.pathname.split('/')[2]
+    console.log(id)
     if (!props.tournamentData.id || id * 1 !== props.tournamentData.id) {
         return props.getTournament(id);
     } else {

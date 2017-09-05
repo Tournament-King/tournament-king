@@ -20,10 +20,10 @@ class MatchModal extends Component {
             lastRoom: 0
         }
 
-        socket.on('score update', (data) => {
-            props.updateMatch(data);
-            console.log('update listener', data)
-        })
+        // socket.on('score update', (data) => {
+        //     props.updateMatch(data);
+        //     console.log('update listener', data)
+        // })
 
         socket.on('user authorized', () => {
             this.setState({
@@ -57,39 +57,41 @@ class MatchModal extends Component {
     }
 
     closeModal() {
-        this.setState({
-            currentUser: null
-        })
-        if (this.props.activeMatch.active) {
-            socket.emit('leave room', {
-                room: 'm' + this.props.activeMatch.id
-            })
-        }
-        this.setState({lastRoom: this.props.activeMatch.id});        
+        // socket.emit('leave room', {room: 'm' + this.props.activeMatch.id})
+        // this.setState({lastRoom: this.props.activeMatch.id});
         this.props.toggleMatchModal();
     }
 
     componentDidMount() {
+
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!this.props.activeMatch &&
-            nextProps.modalActive &&
-            nextProps.activeMatch.active) {
-                socket.emit('room', {room: 'm' + nextProps.activeMatch.id})
+        if (this.state.matchType !== nextProps.tournamentData.type) {
+            this.setState({
+                matchType: this.props.tournamentData.type
+            })
         }
-        if (this.props.activeMatch) {
-            if (nextProps.modalActive && this.props.activeMatch.id !== nextProps.activeMatch.id) {
-                if (this.state.lastRoom !== this.props.activeMatch.id) {
-                    socket.emit('leave room', {room: 'm' + this.props.activeMatch.id})
-                }
-                socket.emit('room', {room: 'm' + nextProps.activeMatch.id});
-                console.log('state ', this.state.lastRoom)
-            }
-        }
+        // if (!this.props.activeMatch &&
+        //     nextProps.modalActive) {
+        //         if (nextProps.activeMatch.status === 'ready' || 
+        //             nextProps.activeMatch.status === 'active')
+        //         socket.emit('room', {room: 'm' + nextProps.activeMatch.id})
+        // }
+        // if (this.props.activeMatch) {
+        //     if (nextProps.modalActive &&
+        //         this.props.activeMatch.id !== nextProps.activeMatch.id) {
+        //         if (this.state.lastRoom !== this.props.activeMatch.id) {
+        //             socket.emit('leave room', {room: 'm' + this.props.activeMatch.id})
+        //         }
+        //         socket.emit('room', {room: 'm' + nextProps.activeMatch.id});
+        //         console.log('state ', this.state.lastRoom)
+        //     }
+        // }
         if (this.props.currentUser && nextProps.activeMatch) {
             if (nextProps.tournamentData.creator === this.props.currentUser.id) {
-                socket.emit('authorize user', {match_id: nextProps.activeMatch.id})
+                console.log('authorize emit')
+                socket.emit('authorize user', {id: nextProps.tournamentData.id})
             }
             return;
         }
@@ -129,20 +131,17 @@ class MatchModal extends Component {
                     </div>
                     <div className='scoreboard'>
                         <div className='scoreboard-player1'>
-                            {this.props.activeMatch ? 
+                            {match ? match.status === 'active' ?
                             match.player1_score :
-                            '--'}
+                            '--' : '--'}
                         </div>
                         <div className='scoreboard-clock'>
-                            {this.props.currentMatch ?
-                            'Live!' :
-
-                            '--'}
-                        </div>
+                            {match ? match.status : '--'}
+                            </div>
                         <div className='scoreboard-player2'>
-                            {this.props.activeMatch ? 
+                            {match ? match.status === 'active' ?
                             match.player2_score :
-                            '--'}
+                            '--' : '--'}
                         </div>
                     </div>
                 </div>

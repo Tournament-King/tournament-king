@@ -28,7 +28,7 @@ const authMiddleware = require('./middleware/authorization');
 
 //--------------------------APP SETUP---------------------------//
 
-var session = require('express-session')({
+const session = require('express-session')({
   secret:authConfig.sessionSecret,
   resave:false,
   saveUninitialized:false
@@ -92,9 +92,7 @@ passport.deserializeUser((userB, done) => {
 app.get('/auth', passport.authenticate('auth0'));
 
 app.get('/auth/callback',
-    passport.authenticate('auth0', {successRedirect: `${appURL}/`}),
-    (req, res) => {send(req.user)
-});
+    passport.authenticate('auth0', {successRedirect: `${appURL}/`}));
 
 
 //------------------------CLIENT ENDPOINTS------------------------//
@@ -115,9 +113,6 @@ app.get('/api/search/users', searchCtrl.users);
 
 
 //-----------------------------SOCKETS-----------------------------//
-
-// io.on('connection', (socket) => {
-//     console.log('a user connected');
 
 const applyMiddleware = (io) => {
     io.use(sharedSession(session, {
@@ -151,16 +146,16 @@ const addListeners = (io, db) => {
         })
 
         socket.on('authorize user', (data) => {
-            db.queries.match.getMatch([data.match_id])
+            db.tournaments.findOne(data)
             .then(res => {
-                let {creator} = res[0]
+                let {creator} = res
                 if (socket.user.id === creator) {
                     socket.emit('user authorized')
                 }
             })
         })
 
-        socket.on('update score', (data) => {
+        socket.on('update match', (data) => {
             let {round, tournament} = data;
             let query = Object.assign(
                 {},
@@ -171,7 +166,7 @@ const addListeners = (io, db) => {
             db.matches.update(query)
             .then(res => {
                 let {id, player1_score, player2_score} = res;
-                io.to('t' + tournament).emit('score update', {
+                io.to('t' + tournament).emit('match update', {
                     id,
                     round: round,
                     player1_score,
@@ -179,6 +174,22 @@ const addListeners = (io, db) => {
                 })
             })
         })
+
+        socket.on('set winner', (data) => {
+            let {match, winner, tournament, round} = data;
+            db.queries.match.setWinner([match, winner])
+            .then(res => {
+                db.queries.match.getUpdatedMatches([res[0].id, res[1].id])
+                .then(matches => {
+                    io.to('t' + tournament).emit('new matches', {
+                        match1: matches[0].get_match,
+                        match2: matches[1].get_match,
+                        seedRound: round
+                    })
+                })
+            })
+
+        });
     });
 }
 
