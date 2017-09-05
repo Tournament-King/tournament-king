@@ -101,11 +101,12 @@ app.get('/auth/callback',
 
 app.get('/api/user', userCtrl.getUserOnSession);
 
-app.get('/api/tournament/:id', tournamentCtrl.getTournament);
 app.get('/api/tournaments', tournamentCtrl.getTournaments);
+app.get('/api/tournament/:id', tournamentCtrl.getTournament);
 app.post('/api/tournament', authMiddleware.addUserToReq, tournamentCtrl.createTournament);
 
 app.get('/api/match/:id', matchCtrl.getMatch);
+app.post('/api/match/setwinner', matchCtrl.setWinner);
 
 app.get('/api/comments/:match_id', commentCtrl.getComments);
 app.post('/api/comment', authMiddleware.addUserToReq, commentCtrl.createComment);
