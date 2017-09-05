@@ -108,6 +108,7 @@ const makeTree = function(data) {
 //state
 const fetchData = function(props) {
     let id = window.location.pathname.split('/')[2]
+    console.log(id)
     if (!props.tournamentData.id || id * 1 !== props.tournamentData.id) {
         return props.getTournament(id);
     } else {
