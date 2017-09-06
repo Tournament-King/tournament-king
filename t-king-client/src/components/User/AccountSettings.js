@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 
-class UserSetup extends Component {
+class AccountSettings extends Component {
     constructor(props) {
         super(props)
 
@@ -86,4 +86,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps)(UserSetup);
+export default connect(mapStateToProps)(AccountSettings);

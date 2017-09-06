@@ -20,6 +20,12 @@ const GET_CURRENT_USER_PENDING = 'GET_CURRENT_USER_PENDING';
 const GET_CURRENT_USER_FULFILLED = 'GET_CURRENT_USER_FULFILLED';
 const GET_CURRENT_USER_REJECTED = 'GET_CURRENT_USER_REJECTED';
 
+const UPDATE_USER = 'UPDATE_USER';
+const UPDATE_USER_PENDING = 'UPDATE_USER_PENDING';
+const UPDATE_USER_FULFILLED = 'UPDATE_USER_FULFILLED';
+const UPDATE_USER_REJECTED = 'UPDATE_USER_REJECTED';
+
+
 //MODAL
 
 const TOGGLE_MATCH_MODAL = 'TOGGLE_MATCH_MODAL';
@@ -58,6 +64,13 @@ export function getCurrentUser() {
     return {
         type: GET_CURRENT_USER,
         payload: axios.get('/api/user')
+    }
+}
+
+export function updateUser(body) {
+    return {
+        type: UPDATE_USER,
+        payload: body
     }
 }
 
