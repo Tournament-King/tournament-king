@@ -52,21 +52,43 @@ main, div {
     justify-content:space-between;
 }
 
+
 .header-logo {
     padding:3px 6px;
     height:42px;
     box-sizing:border-box;
-    color:#307fff;
+    fill:#307fff;
     display: flex;
+    position:relative;
+    transition:all .2s ease-in-out;
 }
 
-.header-logo h1:hover {
-    color:#307fff;
+.header-svg {
+    display:inline-block;
+    position: absolute;
+    left:-56px;
+    top:-66px;
+}
+
+.header-logo:hover {
+    fill:#EFF4FF;
+    transition:all .2s ease-in-out;
 }
 
 .header-logo p {
     margin-top:10px;
     margin-left:8px;
+}
+
+.header-right p {
+    padding-top:13px;
+    margin-left:16px;
+    transition:all .2s ease-in-out;
+}
+
+.header-right p:hover {
+    color:#4286f4;
+    cursor:default;
 }
 
 .header-right {
@@ -80,7 +102,8 @@ main, div {
     font-size:12px;
     height:32px;
     padding-top: 6px;
-    padding-right:16px;
+    padding-right:18px;
+    padding-left:16px;
     color:#F7F7F7;
     border-right:1px solid #494949;
     transition:all .2s ease-in-out;
@@ -111,20 +134,20 @@ main, div {
 .header-user {
     height:32px;
     width:32px;
-    margin-left:16px;
+    margin-left:8px;
     border-radius:50%;
     overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
     border:2px solid transparent;
-    transition:all .3s ease-in-out;
+    /* transition:all .3s ease-in-out; */
 }
 
 .header-user:hover {
-    border:2px solid #4286f4;
-    transition:all .3s ease-in-out;
-    box-shadow: 0px 0px 6px 0px rgba(48,127,255,1);    
+    border:2px solid #F7F7F7;
+    /* transition:all .3s ease-in-out; */
+    /* box-shadow: 0px 0px 6px 0px rgba(48,127,255,1);     */
     cursor:pointer; 
 }
 
@@ -144,9 +167,9 @@ main, div {
 }
 
 
-@media screen and (max-width: 672px) {
+@media screen and (max-width: 768px) {
     .header-right {
-        padding-right: 24px;
+        padding-right: 12px;
     }
 }
 
@@ -167,21 +190,40 @@ main, div {
 .landing-wrapper {
     width:100%;
     height:100%;
-    background:#F7F7F7;
+    background:#F1F1F1;
 }
 
 .landing-splash {
     width:100%;
     height: 320px;
-    background:#262626;
+    background:#307fff;
+    padding-top:24px;
+    text-align:center;
+    position:relative;
+}
+
+
+.landing-svg {
+    position:relative;
+    height:1px;
+    width:1px;
+    margin:auto;
+    fill:#F7F7F7;
+}
+
+.landing-path {
+    position:absolute;
+    left:-86px;
+    top:-8px;
 }
 
 .landing-content {
-    max-width:1280px;
-    width:1280px;
-    /* padding:0 24px; */
+    /* max-width:1280px; */
+    width:1320px;
     margin:auto;
     box-sizing:border-box;
+
+    
 }
 
 .landing-search-wrapper {
@@ -204,63 +246,136 @@ main, div {
 .landing-cards-wrapper {
     width:100%;
     box-sizing:border-box;
-    padding:56px 56px;
+    /* background:#0F6887; */
+    padding:56px 0px;
     display: flex;
     flex-wrap:wrap;
-    justify-content:space-between;
-    align-items:space-between;
+    justify-content:center;
+    /* background-image:url(http://localhost:3030/public/img/bg-gen.png); */
+    background-position:center;
+    background-size:100% auto;
+    background-repeat:no-repeat;
+    /* align-items:space-between; */
 }
 
 
 .tournament-card-wrapper {
-    height: 120px;
-    width:49%;
-    background:#262626;
-    border-radius:3px;
-    margin-bottom:24px;
-    text-align:center;
+    height: 96px;
+    width:360px;
+    /* min-width:312px; */
+    padding:0 8px;
+    background:rgba(21, 116, 164, 0.78);
+    color:#FFFFFF;
+    margin:8px 8px;
     position:relative;
+    border:2px solid #FFFFFF;
     box-shadow: 3px 3px 17px -8px rgba(0,0,0,0.75);
+    transition:all .2s ease-in-out;
 }
 
-.tournament-card-wrapper:nth-child(3n+2) {
-    background:#D03B3B;
+.tournament-card-wrapper:nth-child(4n+1) {
+    background:rgba(15, 104, 135, .78);
 }
 
-.tournament-card-wrapper:nth-child(3n+0) {
-    background:#24A4B2;
+.tournament-card-wrapper:nth-child(4n+2) {
+    background:rgba(31, 137, 174, .78);
+}
+
+.tournament-card-wrapper:nth-child(4n+3) {
+    background:rgba(25, 122, 156, 0.78);
+}
+
+.tournament-card-wrapper:hover {
+    background:rgba(41, 175, 223, 0.80);
+    transition:all .2s ease-in-out;
+    cursor:pointer;
 }
 
 
-.asef {
+.t-card-d1 {
     height: 100%;
-    width:100%;
+    width:calc(100% - 8px);
     /* background:grey; */
     position: absolute;
     top:0;
 }
 
-.asdf {
-    width:100%;
+.t-card-d2 {
+    width:calc(100% - 4px);
     height: 100%;
+    position:relative;
+    display:flex;
+
+}
+
+.color {
+    width:184px;
+    padding-top:6px;
     position:relative;
 }
 
+.t-card-name {
+    color:#FFFFFF;
+    margin-bottom:4px;
+}
+
+.t-card-type {
+    color:#A1EAFF;
+    font-size:.8em;
+    margin-left:4px;
+}
+
 .white {
-    width:calc(100% - 108px);
-    height: 100%;
-    background: white;
-    float:right;
-    border-bottom:1px solid #DEDEDE;
-    border-right:1px solid #DEDEDE;
-    border-top:1px solid #DEDEDE;
+    width:calc(100% - 200px);
+    height: 84px;
+    margin-top:4px;
+    background:rgba(255, 255, 255, 0.16);
+    border:1px solid rgba(255, 255, 255, 0.28);
+    text-align:center;
+    color:#FAFAFA;
+    overflow:hidden;
+    padding-top:10px;
+    border-radius:2px;
+}
+
+.white img {
+    height: 64px;
+    width:64px;
+}
+
+.white h1 {
+    font-size:3.2em;
+}
+
+@media screen and (max-width: 524px) {
+    
+    
+}
+
+@media screen and (max-width:767px) {
+    .landing-cards-wrapper {
+        padding:56px 0px;
+    }
+
+    .tournament-card-wrapper {
+        margin:4px 0px;
+    }
+
+
 }
 
 @media (max-width:1280px) {
     .landing-content {
         width:100%
     }
+
+    .tournament-card-wrapper {
+        min-width:none;
+        /* width:49% */
+    }
+
 }
+
 
 /*------------------USER SETTINGS---------------------*/
 
@@ -345,7 +460,7 @@ main, div {
     cursor:pointer;
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1280px) {
     .settings-content {
         width:85%;
     }
@@ -524,7 +639,7 @@ main, div {
     font-size: 25px;
 }
 
-@media screen and (max-width: 1180px) {
+@media screen and (max-width: 1280px) {
     .scoreboard-clock {
         font-size: 32px;
     }
@@ -623,6 +738,17 @@ main, div {
     height: 1px;
     margin:auto;
     background:#CFCFCF;
+}
+
+.bracket-svg {
+    height:1px;
+    width:1px;
+    position:relative;
+}
+
+.bracket-path {
+    position: absolute;
+    left:264px;
 }
 
 .bracket-container {

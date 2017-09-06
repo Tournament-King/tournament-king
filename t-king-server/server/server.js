@@ -179,14 +179,24 @@ const addListeners = (io, db) => {
             let {match, winner, tournament, round} = data;
             db.queries.match.setWinner([match, winner])
             .then(res => {
-                db.queries.match.getUpdatedMatches([res[0].id, res[1].id])
-                .then(matches => {
-                    io.to('t' + tournament).emit('new matches', {
-                        match1: matches[0].get_match,
-                        match2: matches[1].get_match,
-                        seedRound: round
+                if (res.length > 1) {
+                    db.queries.match.getUpdatedMatches([res[0].id, res[1].id])
+                    .then(matches => {
+                        io.to('t' + tournament).emit('new matches', {
+                            match1: matches[0].get_match,
+                            match2: matches[1].get_match,
+                            seedRound: round
+                        })
                     })
-                })
+                } else {
+                    db.run(`select get_match (${res[0].id})`)
+                    .then(match => {
+                        match = match[0].get_match;
+                        match.round = round
+                        console.log(match)
+                        io.to('t' + tournament).emit('match update', match)
+                    })
+                }
             })
 
         });

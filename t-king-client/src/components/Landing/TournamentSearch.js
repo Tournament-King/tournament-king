@@ -22,7 +22,7 @@ class TournamentSearch extends Component {
     }
 
     componentDidMount() {
-        // this.props.loadTournaments();
+        this.props.loadTournaments();
     }
 
     render() {
