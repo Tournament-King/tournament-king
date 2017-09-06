@@ -10,7 +10,7 @@ const TournamentCard = (props) => {
                         <p className="t-card-type">{props.type}</p>
                     </div>
                     <div className="white">
-                        <img src={`/public/img/icons/${props.type}.png`} />
+                        <img alt="type" src={`/public/img/icons/${props.type}.png`} />
                     </div>
                 </div>
             </div>

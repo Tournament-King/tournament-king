@@ -3,13 +3,12 @@ import axios from 'axios';
 const initialState = {
     currentUser: null,
     userChecked: false,
-    tournamentList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+    tournamentList: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
     tournamentData: {name: 'loading', id: null, rounds: [[],[],[]]},
     tRoom: 0,
     activeMatch: null,
     modalActive: false,
-    requestCount: 0,
-    testProp: 'hello, redux is working'
+    requestCount: 0
 }
 
 //----------------------FLAGS---------------------//
