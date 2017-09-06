@@ -131,6 +131,24 @@ main, div {
     transition:all .2s ease-in-out;
 }
 
+.header-user-wrapper {
+    list-style:none;
+    display: flex;
+    justify-content:space-around;
+    margin-left:8px;
+}
+
+.user-dropdown {
+    list-style:none;
+    margin-top:7px;
+    transition:color .2s ease-in-out;
+}
+
+.header-dropdown:hover {
+    color:#4286f4;
+    transition:color .2s ease-in-out;
+}
+
 .header-user {
     height:32px;
     width:32px;
@@ -141,6 +159,7 @@ main, div {
     justify-content:center;
     align-items:center;
     border:2px solid transparent;
+    margin-left:18px;
     /* transition:all .3s ease-in-out; */
 }
 
@@ -441,6 +460,7 @@ main, div {
     border:1px solid #262626;
     border-radius:2px;
     margin-bottom:24px;
+    text-align:center;
 }
 
 .settings-form button {

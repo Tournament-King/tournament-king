@@ -6,6 +6,7 @@ const express = require('express')
 , sharedSession = require('express-socket.io-session')
 , passport = require('passport')
 , Auth0Strategy = require('passport-auth0')
+, logout = require('express-passport-logout')
 , socket = require('socket.io')
 , authConfig = require('./../config/auth-config')
 , dbConfig = require('./../config/db-config')
@@ -94,10 +95,13 @@ app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback',
     passport.authenticate('auth0', {successRedirect: `${appURL}/`}));
 
+app.get('/auth/logout', logout());
+
 
 //------------------------CLIENT ENDPOINTS------------------------//
 
 app.get('/api/user', userCtrl.getUserOnSession);
+app.patch('/api/user', userCtrl.updateUser);
 
 app.get('/api/tournaments', tournamentCtrl.getTournaments);
 app.get('/api/tournament/:id', tournamentCtrl.getTournament);

@@ -3,6 +3,7 @@ import axios from 'axios';
 const initialState = {
     currentUser: null,
     userChecked: false,
+    userUpdated: false,
     tournamentList: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
     tournamentData: {name: 'loading', id: null, rounds: [[],[],[]]},
     tRoom: 0,
@@ -70,7 +71,7 @@ export function getCurrentUser() {
 export function updateUser(body) {
     return {
         type: UPDATE_USER,
-        payload: body
+        payload: axios.patch('/api/user', body)
     }
 }
 
@@ -153,6 +154,16 @@ export default function reducer(state=initialState, action) {
                 }
             );
         case GET_CURRENT_USER_REJECTED:
+            return state;
+        case UPDATE_USER_PENDING:
+            return state;
+        case UPDATE_USER_FULFILLED:
+            return Object.assign(
+                {},
+                state,
+                {userUpdated: true}
+            );
+        case UPDATE_USER_REJECTED:
             return state;
 
 

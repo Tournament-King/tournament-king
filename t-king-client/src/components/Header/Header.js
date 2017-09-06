@@ -2,15 +2,32 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {getCurrentUser} from './../../redux/mainReducer';
+import {Dropdown, Icon} from 'semantic-ui-react';
 
 const checkUser = function(props) {
     return props.userChecked ? null : props.getCurrentUser()
 }
 
+const handleLogout = () => {
+    return window.location.href = 'http://localhost:3030/logout?returnTo=http://localhost:3031'
+}
 
+const handleClick = (e) => {
+    console.log(e)
+}
 
 const Header = function(props) {
     checkUser(props)
+
+    const trigger = (
+           <Icon name='user' />
+    )
+
+    const options = [
+        { key: 'profile', text: 'Your Profile'},
+        { key: 'settings', text: 'Account Settings'},
+        { key: 'logout', text: 'Log Out'}
+      ]
     return (
         <main className="header-wrapper">
             <Link to="/">
@@ -28,11 +45,16 @@ const Header = function(props) {
                     </div>
                 </Link>
                 {props.currentUser ?
-                <div>
-                <div className="header-user">
-                    <img alt="" src={props.currentUser.profile_pic} />
-                </div>
-                </div> :
+                <ul className="header-user-wrapper">
+                    <li className="header-userdrop">
+                        <ul className="user-dropdown">
+                            <li><a href="#">asdf</a></li>
+                        </ul>
+                    </li>
+                    <li className="header-user">
+                        <img alt="" src={props.currentUser.profile_pic} />
+                    </li>
+                </ul> :
                 <a href="http://localhost:3030/auth" className="header-login">
                     <strong>LOGIN</strong>
                 </a>}
