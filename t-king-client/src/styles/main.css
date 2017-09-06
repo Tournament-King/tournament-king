@@ -145,17 +145,10 @@ main, div {
 }
 
 .header-user:hover {
-<<<<<<< HEAD
-    border:2px solid #4286f4;
-    transition:all .3s ease-in-out;
-    box-shadow: 0px 0px 6px 0px rgba(48,127,255,1);
-    cursor:pointer;
-=======
     border:2px solid #F7F7F7;
     /* transition:all .3s ease-in-out; */
     /* box-shadow: 0px 0px 6px 0px rgba(48,127,255,1);     */
-    cursor:pointer; 
->>>>>>> master
+    cursor:pointer;
 }
 
 
@@ -230,7 +223,7 @@ main, div {
     margin:auto;
     box-sizing:border-box;
 
-    
+
 }
 
 .landing-search-wrapper {
@@ -355,8 +348,8 @@ main, div {
 }
 
 @media screen and (max-width: 524px) {
-    
-    
+
+
 }
 
 @media screen and (max-width:767px) {
