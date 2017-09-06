@@ -1,292 +1,60 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import Autocomplete from 'react-autocomplete';
+import { Redirect } from 'react-router-dom';
+import debounce from 'debounce';
+
+import { searchUsers } from '../../services/user';
+import { createTournament } from '../../services/tournament';
 
 
 
 class CreateTournament extends Component {
     constructor(props) {
         super(props)
-
+        var players = []
+        for (var i=0; i<256; i++) {
+          players.push({user_id: null, name: 'player'})
+        }
         this.state = {
-            handleNumberOfPlayersInput: 2,
-            player1Input: '',
-            player2Input: '',
+            handleNumberOfPlayersInput: 4,
+            id:null,
+            name:'',
+            description:'',
+            type:'',
+            player1Input: {
+              user_id: null,
+              name:''
+            },
+            player2Input: {
+              user_id: null,
+              name: ''
+            },
             editPlayer1Input: '',
             editPlayer2Input: '',
             player1ToUpdateIndex: null,
             player2ToUpdateIndex: null,
-            numberOfMatches: 1,
+            numberOfMatches: 2,
             editMatchZIndex: '-1',
-            players: [
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-                {id: null, name: 'player'},
-            ]
+            players: players,
+            users:[]
         }
 
         this.handleNumberOfPlayers = this.handleNumberOfPlayers.bind(this);
-        this.handlePlayer1Input = this.handlePlayer1Input.bind(this);
-        this.handlePlayer2Input = this.handlePlayer2Input.bind(this);
         this.handleEditPlayer1Input = this.handleEditPlayer1Input.bind(this);
         this.handleEditPlayer2Input = this.handleEditPlayer2Input.bind(this);
         this.addPlayers = this.addPlayers.bind(this);
         this.editPlayers = this.editPlayers.bind(this);
         this.updateNames = this.updateNames.bind(this);
         this.cancelUpdateNames = this.cancelUpdateNames.bind(this);
-        //bind
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePlayer1Select = this.handlePlayer1Select.bind(this);
+        this.handlePlayer2Select = this.handlePlayer2Select.bind(this);
+        this.handlePlayer1Change = this.handlePlayer1Change.bind(this);
+        this.handlePlayer2Change = this.handlePlayer2Change.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleDescChange = this.handleDescChange.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.handleSearch = debounce(this.handleSearch.bind(this),400)
     }
 
     handleNumberOfPlayers(e) {
@@ -297,35 +65,107 @@ class CreateTournament extends Component {
         })
     }
 
-    handlePlayer1Input(e) {
-        this.setState({
-            player1Input: e.target.value
-        })
+    handlePlayer1Select(value, user) {
+      this.setState({
+        player1Input:{
+          user_id:user.id,
+          name:user.name
+        }
+      })
     }
 
-    handlePlayer2Input(e) {
+    handlePlayer2Select(value, user) {
+      this.setState({
+        player2Input:{
+          user_id:user.id,
+          name:user.name
+        }
+      })
+    }
+
+    handlePlayer1Change(value) {
+      this.setState({
+        player1Input:{
+          user_id: null,
+          name:value
+        }
+      })
+    }
+
+    handlePlayer2Change(value) {
+      this.setState({
+        player2Input:{
+          user_id: null,
+          name:value
+        }
+      })
+    }
+
+    handleNameChange(e) {
+      this.setState({
+        name:e.target.value
+      })
+    }
+
+    handleDescChange(e) {
+      this.setState({
+        description:e.target.value
+      })
+    }
+
+    handleTypeChange(e) {
+      this.setState({
+        type:e.target.value
+      })
+    }
+
+    handleSearch(name) {
+      console.log("handle search");
+      searchUsers(name)
+      .then(data => {
         this.setState({
-            player2Input: e.target.value
+          users:data
         })
+      })
+    }
+
+    handleSubmit() {
+      var data = {
+        name:this.state.name,
+        description:this.state.description,
+        type:this.state.type,
+        players:this.state.players.slice(0,this.state.handleNumberOfPlayersInput)
+      }
+      var promise = createTournament(data)
+      promise.then(res => {
+        this.setState({
+          id:res.data.id
+        })
+      })
+      .catch(err => console.log(err.message))
     }
 
     addPlayers() {
-        console.log(this.state.numberOfMatches *2)
         for(let i = 0; i < this.state.numberOfMatches * 2; i+=2) {
-            console.log(i)
             if (this.state.players[i].name === 'player' && this.state.players[i+1].name ==='player') {
                 console.log('hit', i)
                 let newPlayers = [...this.state.players]
-                newPlayers[i].name = this.state.player1Input
-                newPlayers[i+1].name = this.state.player2Input
+                newPlayers[i] = this.state.player1Input
+                newPlayers[i+1] = this.state.player2Input
                 this.setState({
                     players: newPlayers,
-                    player1Input: '',
-                    player2Input: ''
+                    player1Input: {
+                      user_id:null,
+                      name:''
+                    },
+                    player2Input: {
+                      user_id:null,
+                      name:''
+                    }
                 })
                 return
             }
-        }    
+        }
     }
 
     handleEditPlayer1Input(e) {
@@ -369,11 +209,7 @@ class CreateTournament extends Component {
         })
     }
 
-
-
-
     render() {
-        console.log(this.state)
 
         let editMatchZIndex = {"zIndex":this.state.editMatchZIndex}
         let matches = []
@@ -389,22 +225,30 @@ class CreateTournament extends Component {
             )
         }
 
-        
+
         return (
+          <div>
+            {
+              this.state.id
+              ?
+              <Redirect to={`/tournament/${this.state.id}`}/>
+              :
+              null
+            }
             <main className='ct-main'>
                 <div style={editMatchZIndex} className="ct-edit-match-names">
                     <div>Player 1</div>
-                    <input  onChange={this.handleEditPlayer1Input} 
-                            value={this.state.editPlayer1Input} 
-                            style={{"border":"1px solid grey"}} 
+                    <input  onChange={this.handleEditPlayer1Input}
+                            value={this.state.editPlayer1Input}
+                            style={{"border":"1px solid grey"}}
                             type="text"
                             />
                     <br />
                     <br />
                     <div>Player 1</div>
-                    <input  onChange={this.handleEditPlayer2Input} 
-                            value={this.state.editPlayer2Input} 
-                            style={{"border":"1px solid grey"}} 
+                    <input  onChange={this.handleEditPlayer2Input}
+                            value={this.state.editPlayer2Input}
+                            style={{"border":"1px solid grey"}}
                             type="text"
                             />
                     <br />
@@ -426,12 +270,20 @@ class CreateTournament extends Component {
                         <h4 style={{"color":"white"}}>!!!Maybe some competition quote here?!!!</h4>
                         <br />
 
-                        <input placeholder="Tournament Name" type="text" required/>
+                        <input onChange={this.handleNameChange} placeholder="Tournament Name" type="text" required/>
 
-                        <textarea placeholder="Tournament Description (optional)"></textarea>
+                        <select value={this.state.type} onChange={this.handleTypeChange}>
+                          <option value={'basketball'}>Basketball</option>
+                          <option value={'pool'}>Pool</option>
+                          <option value={'tennis'}>Tennis</option>
+                          <option value={'ping-pong'}>Ping-Pong</option>
+                          <option value={'beer-pong'}>Beer-Pong</option>
+                          <option value={'soccer'}>Soccer</option>
+                        </select>
+
+                        <textarea onChange={this.handleDescChange} placeholder="Tournament Description (optional)"></textarea>
 
                         <select value={this.state.handleNumberOfPlayersInput} onChange={this.handleNumberOfPlayers}>
-                            <option value={2}>2 Competitors</option>
                             <option value={4}>4 Competitors</option>
                             <option value={8}>8 Competitors</option>
                             <option value={16}>16 Competitors</option>
@@ -444,43 +296,66 @@ class CreateTournament extends Component {
                             <br />
                             <div className='ct-matches-header'>
                                 <h1>1st Round Matches</h1>
-                                {/*<br/>*/}
-                                <input  style={{"width":"35%"}} 
-                                        type="text" 
-                                        placeholder='Competitor' 
-                                        value={this.state.player1Input}
-                                        onChange={this.handlePlayer1Input}
-                                        tabIndex='1'
-                                        />
+                                <PlayerAutocomplete
+                                  value={ this.state.player1Input.name }
+                                  items={ this.state.users }
+                                  handleSelect={ this.handlePlayer1Select }
+                                  handleChange={ this.handlePlayer1Change }
+                                  handleSearch={ this.handleSearch }
+                                />
                                 <span> vs </span>
-                                <input  style={{"width":"35%"}} 
-                                        type="text" 
-                                        placeholder='Competitor' 
-                                        value={this.state.player2Input}
-                                        onChange={this.handlePlayer2Input}                                        
-                                        tabIndex='2'
-                                        />
+                                <PlayerAutocomplete
+                                  value={ this.state.player2Input.name }
+                                  items={ this.state.users }
+                                  handleSelect={ this.handlePlayer2Select }
+                                  handleChange={ this.handlePlayer2Change }
+                                  handleSearch={ this.handleSearch }
+                                />
                                 <button tabIndex='3' type='submit' style={{"margin":"10px"}} onClick={this.addPlayers}>Add</button>
                             </div>
                             <br />
-                            <div className='ct-matches-list'>   
+                            <div className='ct-matches-list'>
                                 {matches}
                             </div>
                         </div>
 
-                        <div className='ct-submit'>Finalize</div>
+                        <div onClick={ this.handleSubmit } className='ct-submit'>Finalize</div>
                    </div>
                 </div>
                 <div className='ct-player-info'>
 
                 </div>
             </main>
+          </div>
+
         )
     }
 }
 
-function mapStateToProps(state) {
-    return state
+function PlayerAutocomplete({ value, items, handleSelect, handleChange, handleSearch }) {
+  return (
+    <Autocomplete
+      getItemValue={(user) => user.name}
+      value={ value }
+      items={ items }
+      onSelect={handleSelect}
+      onChange={(event, value) => {
+        handleChange(value)
+        handleSearch(value)
+      }}
+      renderMenu={children => (
+        <div className="menu">
+          {children}
+        </div>
+      )}
+      renderItem={(item, isHighlighted) => (
+      <div
+        className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+        key={item.abbr}
+      >{item.name}</div>
+      )}
+    />
+  )
 }
 
-export default connect(mapStateToProps)(CreateTournament);
+export default CreateTournament;

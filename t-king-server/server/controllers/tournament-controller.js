@@ -1,11 +1,12 @@
 const createTournament = (req, res) => {
   let db = req.app.get('db');
-  const { name, type, players } = req.body;
+  const { name, description, type, players } = req.body;
   if (!players.length || !players.length & players.length-1 === 0) {
     res.status(400).send({"error" : "Number of players in tournament must be a power of 2"})
   }
   db.tournaments.insert({
     name,
+    description,
     type,
     creator: req.user.id
   }).then(tournament => {

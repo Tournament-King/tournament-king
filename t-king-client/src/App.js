@@ -5,9 +5,6 @@ import router from './router/router';
 import MatchModal from './components/Tournament/MatchModal';
 
 class App extends Component {
-
-
-
   render() {
     return (
     <BrowserRouter>
