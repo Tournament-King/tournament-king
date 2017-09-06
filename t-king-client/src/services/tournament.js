@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-export function createTournament(players) {
-  return axios.post("/api/tournament", players)
+export function createTournament(data) {
+  return axios.post("/api/tournament", data)
 }
