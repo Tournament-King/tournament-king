@@ -48,7 +48,12 @@ const Header = function(props) {
                 <ul className="header-user-wrapper">
                     <li className="header-userdrop">
                         <ul className="user-dropdown">
-                            <li><a href="#">asdf</a></li>
+                            <li>asdf</li>
+                            <ul className="dropdown-items">
+                                <li><a href="#">My Profile</a></li>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Log Out</a></li>
+                            </ul>
                         </ul>
                     </li>
                     <li className="header-user">
