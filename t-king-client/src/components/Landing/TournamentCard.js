@@ -1,13 +1,19 @@
 import React from 'react';
-import {Progress} from 'semantic-ui-react';
 
 const TournamentCard = (props) => {
     return (
         <main className="tournament-card-wrapper">
-            <div className="asef">
-                <div className="asdf"><div className="white"></div></div>
+            <div className="t-card-d1">
+                <div className="t-card-d2">
+                    <div className="color">
+                        <h5 className="t-card-name">{props.name}</h5>
+                        <p className="t-card-type">{props.type}</p>
+                    </div>
+                    <div className="white">
+                        <img alt="type" src={`/public/img/icons/${props.type}.png`} />
+                    </div>
+                </div>
             </div>
-            <Progress percent={70} color="green" attached="top"/>
             </main>
     )
 }

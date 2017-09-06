@@ -5,6 +5,7 @@ CREATE TABLE "users" (
 	"profile_pic" TEXT NOT NULL,
 	"name" TEXT NOT NULL,
 	"username" TEXT UNIQUE,
+	"location" TEXT,
 	CONSTRAINT users_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE

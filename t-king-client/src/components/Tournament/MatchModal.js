@@ -104,7 +104,7 @@ class MatchModal extends Component {
         let hideDisplay = {
             "display":"none"
         }
-        let url = `url(http://localhost:3030/public/img/${this.state.matchType}Background.jpg)`
+        let url = `url(/public/img/${this.state.matchType}Background.jpg)`
         let background = {
             "backgroundImage":url
         }
