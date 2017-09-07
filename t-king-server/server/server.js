@@ -107,7 +107,7 @@ app.patch('/api/user', userCtrl.updateUser);
 
 app.get('/api/tournaments', tournamentCtrl.getTournaments);
 app.get('/api/tournament/:id', tournamentCtrl.getTournament);
-app.post('/api/tournament', authMiddleware.addUserToReq, tournamentCtrl.createTournament);
+app.post('/api/tournament', tournamentCtrl.createTournament);
 
 app.get('/api/match/:id', matchCtrl.getMatch);
 app.post('/api/match/setwinner', matchCtrl.setWinner);
