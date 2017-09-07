@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Crown from './Crown';
 import { getStats, getUser } from '../../services/user';
-import stats from './stats.json';
-import user from './user.json';
 
 class Profile extends Component {
   constructor(props) {

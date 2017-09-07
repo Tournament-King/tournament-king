@@ -317,6 +317,10 @@ etag@~1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.0.tgz#6f631aef336d6c46362b51764044ce216be3c051"
 
+express-passport-logout@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/express-passport-logout/-/express-passport-logout-0.1.0.tgz#ae20b635312f43b10a24c35e1eb1e89bda3ecd27"
+
 express-session@^1.15.5:
   version "1.15.5"
   resolved "https://registry.yarnpkg.com/express-session/-/express-session-1.15.5.tgz#f49a18227263b316f6f8544da5fee25a540259ec"
