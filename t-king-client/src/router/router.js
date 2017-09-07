@@ -5,7 +5,7 @@ import Profile from '../components/User/Profile';
 import Header from './../components/Header/Header';
 import Footer from './../components/Footer/Footer';
 import Landing from './../components/Landing/Landing';
-import UserSetup from './../components/User/UserSetup';
+import AccountSettings from './../components/User/AccountSettings';
 import TournamentView from './../components/Tournament/TournamentView';
 import CreateTournament from './../components/Tournament/CreateTournament';
 
@@ -26,8 +26,7 @@ export default (
     <Switch>
         <Route path="/splash" component={Splash} />
         <RouteWithLayout exact path="/" component={Landing} />
-        <RouteWithLayout path="/user" component={Profile} />
-        <RouteWithLayout path="/user/settings" component={UserSetup} />
+        <RouteWithLayout path="/user/settings" component={AccountSettings} />
         <RouteWithLayout path="/newbracket" component={CreateTournament} />
         <RouteWithLayout path="/tournament/:id" component={TournamentView} />
         <Route path="*" component={PageNotFound} />

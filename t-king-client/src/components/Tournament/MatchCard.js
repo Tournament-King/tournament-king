@@ -41,6 +41,12 @@ class MatchCard extends Component {
     
     render() {
 
+        let winner = (
+            <div className="match-win-lose">
+                Winner!
+            </div>
+        )
+
         let statusProp = this.props.status;
         let status = statusProp === 'waiting' ? 'Waiting' : statusProp  === 'ready' ? 'Players Ready' : statusProp === 'active' ? 'Match Active' : 'Match Complete';
 
@@ -48,30 +54,26 @@ class MatchCard extends Component {
         <main className="match-wrapper" >
             <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
-                    <Icon name='trophy' />
+                    <Icon name={this.props.status === 'complete' ? this.props.p1score > this.props.p2score ? 'trophy' : 'remove' : 'user circle'} />
                     {this.props.p1}
                 </div>
                     <div className="match-player-score" style={this.props.p1score ? formatScore(this.props.p1score, this.props.p2score) : scoreInactive}>
                         {this.props.p1score}
                     </div>
-                    {/* <div className="match-win-lose">
-                        Win!
-                    </div> */}
+                    {this.props.status === 'complete' ? this.props.p1score > this.props.p2score ? winner : null : null}
             </div>
             <div className="match-data">
-                {this.props.index + '-' + this.props.round + '-' + this.props.id + ' - ' + status }
+                {'Round: ' + (this.props.round+1) + ' - ' + status }
             </div>
             <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
-                    <Icon name='gamepad' />
+                    <Icon name={this.props.status === 'complete' ? this.props.p2score > this.props.p1score ? 'trophy' : 'remove' : 'user circle'} />
                     {this.props.p2}
                 </div>
                 <div className="match-player-score" style={this.props.p2score ? formatScore(this.props.p2score, this.props.p1score) : scoreInactive}>
                     {this.props.p2score}
                 </div>
-                {/* <div className="match-win-lose">
-                    Lose!
-                </div>                 */}
+                {this.props.status === 'complete' ? this.props.p2score > this.props.p1score ? winner : null : null}
             </div>
         </main>
         )
