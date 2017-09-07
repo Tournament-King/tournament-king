@@ -1179,3 +1179,60 @@ main, div {
     /*padding: 15px;*/
     margin-bottom: 10px;
 }
+
+/*---------Profile-----------*/
+.profile-container {
+  width: 100%;
+  height: calc(100VH - 42PX);
+  padding: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.profile-display {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 30%;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid grey;
+  padding: 10px;
+  
+}
+
+.profile-display img {
+  width: 300px;
+  height: 300px;
+  border-radius: 150px;
+}
+
+.profile-display h1 {
+  font-size: 48px;
+}
+
+.profile-info {
+  text-align: center;
+  width: 70%;
+  margin-left: 25%;
+  margin-bottom: 50px;
+}
+
+.profile-info h1 {
+  font-size: 48px;
+}
+
+.profile-stats {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.profile-stat-display h1 {
+  font-size: 72px;
+}
+
+/*.profile-display svg {
+  margin-left: 45px;
+}*/
