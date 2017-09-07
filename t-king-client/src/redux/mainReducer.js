@@ -3,8 +3,9 @@ import axios from 'axios';
 const initialState = {
     currentUser: null,
     userChecked: false,
+    userUpdated: false,
     tournamentList: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-    tournamentData: {name: 'loading', id: null, rounds: [[],[],[]]},
+    tournamentData: {name: 'loading', description: '--', id: null, rounds: [[],[],[]]},
     tRoom: 0,
     activeMatch: null,
     modalActive: false,
@@ -19,6 +20,12 @@ const GET_CURRENT_USER = 'GET_CURRENT_USER';
 const GET_CURRENT_USER_PENDING = 'GET_CURRENT_USER_PENDING';
 const GET_CURRENT_USER_FULFILLED = 'GET_CURRENT_USER_FULFILLED';
 const GET_CURRENT_USER_REJECTED = 'GET_CURRENT_USER_REJECTED';
+
+const UPDATE_USER = 'UPDATE_USER';
+const UPDATE_USER_PENDING = 'UPDATE_USER_PENDING';
+const UPDATE_USER_FULFILLED = 'UPDATE_USER_FULFILLED';
+const UPDATE_USER_REJECTED = 'UPDATE_USER_REJECTED';
+
 
 //MODAL
 
@@ -58,6 +65,13 @@ export function getCurrentUser() {
     return {
         type: GET_CURRENT_USER,
         payload: axios.get('/api/user')
+    }
+}
+
+export function updateUser(body) {
+    return {
+        type: UPDATE_USER,
+        payload: axios.patch('/api/user', body)
     }
 }
 
@@ -140,6 +154,16 @@ export default function reducer(state=initialState, action) {
                 }
             );
         case GET_CURRENT_USER_REJECTED:
+            return state;
+        case UPDATE_USER_PENDING:
+            return state;
+        case UPDATE_USER_FULFILLED:
+            return Object.assign(
+                {},
+                state,
+                {userUpdated: true}
+            );
+        case UPDATE_USER_REJECTED:
             return state;
 
 

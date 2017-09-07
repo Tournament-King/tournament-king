@@ -7,10 +7,11 @@ const checkUser = function(props) {
     return props.userChecked ? null : props.getCurrentUser()
 }
 
-
-
 const Header = function(props) {
     checkUser(props)
+
+    let urlId = props.currentUser ? props.currentUser.id : 0;
+    
     return (
         <main className="header-wrapper">
             <Link to="/">
@@ -28,11 +29,29 @@ const Header = function(props) {
                     </div>
                 </Link>
                 {props.currentUser ?
-                <div>
-                <div className="header-user">
-                    <img alt="" src={props.currentUser.profile_pic} />
-                </div>
-                </div> :
+                <ul className="header-user-wrapper">
+                    <li className="header-userdrop">
+                        <ul className="user-dropdown">
+                            <li>{props.currentUser ? props.currentUser.username ? props.currentUser.username : '' : ''}</li>
+                            <ul className="dropdown-items">
+                                <li>
+                                    <Link to={`/user/${urlId}`}>
+                                        My Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={`/user/settings`}>
+                                        Account
+                                    </Link>
+                                </li>
+                                <li><a href="https://spcbrn1.auth0.com/v2/logout">Log Out</a></li>
+                            </ul>
+                        </ul>
+                    </li>
+                    <li className="header-user">
+                        <img alt="" src={props.currentUser.profile_pic} />
+                    </li>
+                </ul> :
                 <a href="http://localhost:3030/auth" className="header-login">
                     <strong>LOGIN</strong>
                 </a>}

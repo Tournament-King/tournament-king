@@ -95,7 +95,7 @@ main, div {
     height:42px;
     display:flex;
     align-items:center;
-    padding-right:24px;
+    padding-right:12px;
 }
 
 .header-anchor {
@@ -131,6 +131,66 @@ main, div {
     transition:all .2s ease-in-out;
 }
 
+.header-user-wrapper {
+    height: 42px;
+    padding-top:5px;
+    color:#D0D0D0;
+    list-style:none;
+    display: flex;
+    padding-right:18px;
+    justify-content:space-around;
+    margin-left:8px;
+    transition:color .2s ease-in-out;
+    /* background:#FFFFFF; */
+    z-index:1;
+}
+
+.header-user-wrapper a {
+    text-decoration:none;
+    color:inherit;
+}
+
+.header-user-wrapper:hover {
+    color:#FFFFFF;
+    transition:color .2s ease-in-out;
+    cursor:pointer;
+}
+
+.header-user-wrapper:hover > 
+.header-userdrop > 
+.user-dropdown > 
+.dropdown-items {
+    display:block;
+    top:30px;
+    transition:all .3s ease-in-out;
+}
+
+.user-dropdown {
+    list-style:none;
+    margin-top:7px;
+    position:relative;
+}
+
+.dropdown-items {
+    list-style:none;
+    display:none;
+    position: absolute;
+    left:-8px;
+    transition:all .3s ease-in-out;
+    z-index:-1;
+}
+
+.dropdown-items li {
+    background:#1B1C1D;
+    padding:4px 6px;
+    width:82px;
+    border-top:1px solid #494949;
+}
+
+.dropdown-items li:hover {
+    background:#000000;
+}
+
 .header-user {
     height:32px;
     width:32px;
@@ -141,13 +201,13 @@ main, div {
     justify-content:center;
     align-items:center;
     border:2px solid transparent;
-    /* transition:all .3s ease-in-out; */
+    margin-left:8px;
+    transition:all .2s ease-in-out;
 }
 
-.header-user:hover {
-    border:2px solid #F7F7F7;
-    /* transition:all .3s ease-in-out; */
-    /* box-shadow: 0px 0px 6px 0px rgba(48,127,255,1);     */
+.header-user-wrapper:hover > .header-user {
+    border:2px solid #FFFFFF;
+    transition:all .3s ease-in-out;
     cursor:pointer;
 }
 
@@ -160,7 +220,7 @@ main, div {
     transition:all .4s ease-in-out;
 }
 
-.header-user img:hover {
+.header-user-wrapper:hover > img {
     height:36px;
     width:36px;
     transition:all .4s ease-in-out;
@@ -189,7 +249,7 @@ main, div {
 
 .landing-wrapper {
     width:100%;
-    height:100%;
+    height:calc(100vh - 42px);
     background:#F1F1F1;
 }
 
@@ -322,9 +382,14 @@ main, div {
 .t-card-type {
     color:#A1EAFF;
     font-size:.8em;
-    margin-left:4px;
+    margin-left:8px;
 }
 
+.t-card-desc
+ {
+     color:#FFFFFF;
+     font-size:.8em;
+ }
 .white {
     width:calc(100% - 200px);
     height: 84px;
@@ -441,6 +506,7 @@ main, div {
     border:1px solid #262626;
     border-radius:2px;
     margin-bottom:24px;
+    text-align:center;
 }
 
 .settings-form button {
@@ -811,7 +877,7 @@ main, div {
 }
 
 .match-player-info {
-    padding-top:9px;
+    padding-top:7px;
     padding-left:6px;
     width:fit-content;
     display:inline-block;
@@ -833,16 +899,16 @@ main, div {
 .match-win-lose {
     height:20px;
     width:58px;
-    background:#F7F7F7;
+    background:#06C440;
     border-radius:5px;
     border:1px solid #777777;
     text-align:center;
     padding:0px 4px;
     display:inline-block;
     position: absolute;
-    top:-10px;
+    top:6px;
     right:52px;
-    /* transform:rotate(9deg); */
+    transform:rotate(-7deg);
 }
 
 .match-data {
