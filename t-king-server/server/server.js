@@ -36,7 +36,6 @@ const session = require('express-session')({
 })
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
 app.use(cors());
 app.use(session);
 app.use(passport.initialize());
