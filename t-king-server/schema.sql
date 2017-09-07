@@ -48,6 +48,7 @@ CREATE TABLE "users" (
 	"profile_pic" TEXT NOT NULL,
 	"name" TEXT NOT NULL,
 	"username" TEXT NOT NULL UNIQUE,
+	"ranking" INTEGER DEFAULT 0,
 	CONSTRAINT users_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE

@@ -6,8 +6,6 @@ import debounce from 'debounce';
 import { searchUsers } from '../../services/user';
 import { createTournament } from '../../services/tournament';
 
-
-
 class CreateTournament extends Component {
     constructor(props) {
         super(props)
@@ -54,7 +52,7 @@ class CreateTournament extends Component {
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleDescChange = this.handleDescChange.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
-        this.handleSearch = debounce(this.handleSearch.bind(this),400)
+        this.handleSearch = debounce(this.handleSearch.bind(this),300)
     }
 
     handleNumberOfPlayers(e) {

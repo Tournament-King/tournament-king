@@ -1,6 +1,7 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import Splash from './../components/User/Splash';
+import Profile from '../components/User/Profile';
 import Header from './../components/Header/Header';
 import Footer from './../components/Footer/Footer';
 import Landing from './../components/Landing/Landing';
@@ -25,6 +26,7 @@ export default (
     <Switch>
         <Route path="/splash" component={Splash} />
         <RouteWithLayout exact path="/" component={Landing} />
+        <RouteWithLayout path="/user" component={Profile} />
         <RouteWithLayout path="/user/settings" component={UserSetup} />
         <RouteWithLayout path="/newbracket" component={CreateTournament} />
         <RouteWithLayout path="/tournament/:id" component={TournamentView} />
