@@ -41,6 +41,7 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/public', express.static('./public'));
+app.use(express.static('./public'));
 
 //--------------------------AUTH0-------------------------------//
 
