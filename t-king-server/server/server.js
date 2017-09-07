@@ -49,7 +49,7 @@ passport.use(new Auth0Strategy({
     domain: authConfig.domain,
     clientID: authConfig.clientID,
     clientSecret: authConfig.clientSecret,
-    callbackURL: `http://localhost:3030/auth/callback`
+    callbackURL: `http://tournament-king.win/auth/callback`
 },  function(accessToken, refreshToken, extraParams, profile, done) {
         let db = app.get('db');
         db.queries.user.getUserByAuthId([profile.id])  //checking to see if the user exists in our database
