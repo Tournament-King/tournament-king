@@ -4,6 +4,7 @@ const express = require('express')
 , cors = require('cors')
 , massive = require('massive')
 , sharedSession = require('express-socket.io-session')
+, fallback = require('express-history-api-fallback')
 , passport = require('passport')
 , Auth0Strategy = require('passport-auth0')
 , logout = require('express-passport-logout')
@@ -209,6 +210,9 @@ const addListeners = (io, db) => {
         });
     });
 }
+//----------------------------FALLBACK----------------------------//
+
+app.use(fallback('index.html', { root: '/public' }));
 
 //----------------------------DB/LISTEN---------------------------//
 
