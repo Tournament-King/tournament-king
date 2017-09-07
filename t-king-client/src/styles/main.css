@@ -95,7 +95,7 @@ main, div {
     height:42px;
     display:flex;
     align-items:center;
-    padding-right:24px;
+    padding-right:12px;
 }
 
 .header-anchor {
@@ -132,20 +132,22 @@ main, div {
 }
 
 .header-user-wrapper {
+    height: 42px;
+    padding-top:5px;
     color:#D0D0D0;
     list-style:none;
     display: flex;
+    padding-right:18px;
     justify-content:space-around;
     margin-left:8px;
     transition:color .2s ease-in-out;
-    background:#1B1C1D;
+    /* background:#FFFFFF; */
     z-index:1;
 }
 
 .header-user-wrapper a {
     text-decoration:none;
     color:inherit;
-    z-index:10px;
 }
 
 .header-user-wrapper:hover {
@@ -159,7 +161,7 @@ main, div {
 .user-dropdown > 
 .dropdown-items {
     display:block;
-    top:29px;
+    top:30px;
     transition:all .3s ease-in-out;
 }
 
@@ -171,18 +173,22 @@ main, div {
 
 .dropdown-items {
     list-style:none;
-    display:hidden;
+    display:none;
     position: absolute;
-    top:-56px;
+    left:-8px;
     transition:all .3s ease-in-out;
-    z-index:-2;
+    z-index:-1;
 }
 
 .dropdown-items li {
     background:#1B1C1D;
-    padding:4px 4px;
-    width:88px;
+    padding:4px 6px;
+    width:82px;
     border-top:1px solid #494949;
+}
+
+.dropdown-items li:hover {
+    background:#000000;
 }
 
 .header-user {
@@ -243,7 +249,7 @@ main, div {
 
 .landing-wrapper {
     width:100%;
-    height:100%;
+    height:calc(100vh - 42px);
     background:#F1F1F1;
 }
 
@@ -376,9 +382,14 @@ main, div {
 .t-card-type {
     color:#A1EAFF;
     font-size:.8em;
-    margin-left:4px;
+    margin-left:8px;
 }
 
+.t-card-desc
+ {
+     color:#FFFFFF;
+     font-size:.8em;
+ }
 .white {
     width:calc(100% - 200px);
     height: 84px;
@@ -866,7 +877,7 @@ main, div {
 }
 
 .match-player-info {
-    padding-top:9px;
+    padding-top:7px;
     padding-left:6px;
     width:fit-content;
     display:inline-block;
@@ -888,16 +899,16 @@ main, div {
 .match-win-lose {
     height:20px;
     width:58px;
-    background:#F7F7F7;
+    background:#06C440;
     border-radius:5px;
     border:1px solid #777777;
     text-align:center;
     padding:0px 4px;
     display:inline-block;
     position: absolute;
-    top:-10px;
+    top:6px;
     right:52px;
-    /* transform:rotate(9deg); */
+    transform:rotate(-7deg);
 }
 
 .match-data {

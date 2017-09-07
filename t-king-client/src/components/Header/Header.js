@@ -2,32 +2,16 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {getCurrentUser} from './../../redux/mainReducer';
-import {Dropdown, Icon} from 'semantic-ui-react';
 
 const checkUser = function(props) {
     return props.userChecked ? null : props.getCurrentUser()
 }
 
-const handleLogout = () => {
-    return window.location.href = 'http://localhost:3030/logout?returnTo=http://localhost:3031'
-}
-
-const handleClick = (e) => {
-    console.log(e)
-}
-
 const Header = function(props) {
     checkUser(props)
 
-    const trigger = (
-           <Icon name='user' />
-    )
-
-    const options = [
-        { key: 'profile', text: 'Your Profile'},
-        { key: 'settings', text: 'Account Settings'},
-        { key: 'logout', text: 'Log Out'}
-      ]
+    let urlId = props.currentUser ? props.currentUser.id : 0;
+    
     return (
         <main className="header-wrapper">
             <Link to="/">
@@ -48,11 +32,19 @@ const Header = function(props) {
                 <ul className="header-user-wrapper">
                     <li className="header-userdrop">
                         <ul className="user-dropdown">
-                            <li>asdf</li>
+                            <li>{props.currentUser ? props.currentUser.username ? props.currentUser.username : '' : ''}</li>
                             <ul className="dropdown-items">
-                                <li><a href="#">My Profile</a></li>
-                                <li><a href="#">Account</a></li>
-                                <li><a href="#">Log Out</a></li>
+                                <li>
+                                    <Link to={`/user/${urlId}`}>
+                                        My Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={`/user/settings`}>
+                                        Account
+                                    </Link>
+                                </li>
+                                <li><a href="https://spcbrn1.auth0.com/v2/logout">Log Out</a></li>
                             </ul>
                         </ul>
                     </li>

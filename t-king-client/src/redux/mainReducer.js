@@ -5,7 +5,7 @@ const initialState = {
     userChecked: false,
     userUpdated: false,
     tournamentList: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-    tournamentData: {name: 'loading', id: null, rounds: [[],[],[]]},
+    tournamentData: {name: 'loading', description: '--', id: null, rounds: [[],[],[]]},
     tRoom: 0,
     activeMatch: null,
     modalActive: false,

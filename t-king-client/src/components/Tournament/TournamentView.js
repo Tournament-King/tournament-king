@@ -57,7 +57,8 @@ class TournamentView extends Component {
             <main>
                 <div className="tournament-top-section">
                     <div className="tournament-top-content">
-                        {this.props.tournamentData.name}
+                        <h2>{this.props.tournamentData.name}</h2><br />
+                        {this.props.tournamentData.description}
                     </div>
                 </div>
                 <div className="tournament-divider">
