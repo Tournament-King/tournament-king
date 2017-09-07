@@ -212,7 +212,7 @@ const addListeners = (io, db) => {
 }
 //----------------------------FALLBACK----------------------------//
 
-app.use(fallback('index.html', { root: '/public' }));
+app.use(fallback('index.html', { root: './public' }));
 
 //----------------------------DB/LISTEN---------------------------//
 
