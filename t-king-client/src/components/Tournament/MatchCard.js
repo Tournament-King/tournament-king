@@ -54,7 +54,8 @@ class MatchCard extends Component {
         <main className="match-wrapper" >
             <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
-                    <Icon name={this.props.status === 'complete' ? this.props.p1score > this.props.p2score ? 'trophy' : 'remove' : 'user circle'} />
+                    <Icon name={this.props.status === 'complete' ? this.props.p1score > this.props.p2score ? 'trophy' : 'remove' : 'user circle'}
+                    color={this.props.status === 'complete' ? this.props.p1score > this.props.p2score ? 'green' : 'red' : null}/>
                     {this.props.p1}
                 </div>
                     <div className="match-player-score" style={this.props.p1score ? formatScore(this.props.p1score, this.props.p2score) : scoreInactive}>
@@ -67,7 +68,8 @@ class MatchCard extends Component {
             </div>
             <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
-                    <Icon name={this.props.status === 'complete' ? this.props.p2score > this.props.p1score ? 'trophy' : 'remove' : 'user circle'} />
+                    <Icon name={this.props.status === 'complete' ? this.props.p2score > this.props.p1score ? 'trophy' : 'remove' : 'user circle'} 
+                        color={this.props.status === 'complete' ? this.props.p2score > this.props.p1score ? 'green' : 'red' : null}/>
                     {this.props.p2}
                 </div>
                 <div className="match-player-score" style={this.props.p2score ? formatScore(this.props.p2score, this.props.p1score) : scoreInactive}>

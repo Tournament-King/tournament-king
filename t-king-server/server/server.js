@@ -42,7 +42,7 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/public', express.static('./public'));
-app.use(express.static('./public'));
+// app.use(express.static('./public'));
 
 //--------------------------AUTH0-------------------------------//
 
@@ -50,7 +50,7 @@ passport.use(new Auth0Strategy({
     domain: authConfig.domain,
     clientID: authConfig.clientID,
     clientSecret: authConfig.clientSecret,
-    callbackURL: `http://tournament-king.win/auth/callback`
+    callbackURL: `http://localhost:3030/auth/callback`
 },  function(accessToken, refreshToken, extraParams, profile, done) {
         let db = app.get('db');
         db.queries.user.getUserByAuthId([profile.id])  //checking to see if the user exists in our database

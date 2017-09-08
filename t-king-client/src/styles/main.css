@@ -256,7 +256,7 @@ main, div {
 .landing-splash {
     width:100%;
     height: 320px;
-    background:#307fff;
+    background:#2668D3;
     padding-top:24px;
     text-align:center;
     position:relative;
@@ -899,16 +899,16 @@ main, div {
 .match-win-lose {
     height:20px;
     width:58px;
-    background:#06C440;
+    /* background:#06C440; */
     border-radius:5px;
-    border:1px solid #777777;
+    /* border:1px solid #777777; */
     text-align:center;
     padding:0px 4px;
     display:inline-block;
     position: absolute;
     top:6px;
     right:52px;
-    transform:rotate(-7deg);
+    /* transform:rotate(-7deg); */
 }
 
 .match-data {

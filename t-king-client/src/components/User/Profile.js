@@ -49,7 +49,7 @@ class Profile extends Component {
 
 const Display = ({ profile_img, ranking }) => (
   <div className="profile-display">
-    <img src={ profile_img }/>
+    <img alt="" src={ profile_img }/>
     <Crown/>
     <h1>{ranking}</h1>
   </div>

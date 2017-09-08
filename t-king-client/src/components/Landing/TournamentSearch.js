@@ -51,4 +51,6 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, {loadTournaments})(TournamentSearch);
+export default connect(mapStateToProps,
+    {loadTournaments}
+)(TournamentSearch);
