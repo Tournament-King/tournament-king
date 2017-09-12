@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import './styles/main.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-// import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import store from './redux/store';
 
 ReactDOM.render(
-    // <BrowserRouter>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    // </BrowserRouter>
+  <Provider store={store}>
+    <App />
+  </Provider>
 , document.getElementById('root'));
 registerServiceWorker();

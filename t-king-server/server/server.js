@@ -123,90 +123,61 @@ app.get('/api/search/users', searchCtrl.users);
 //-----------------------------SOCKETS-----------------------------//
 
 const applyMiddleware = (io) => {
-    io.use(sharedSession(session, {
-        autoSave:true
-    }));
-
+    // io.use(sharedSession(session, {
+    //     autoSave:true
+    // }));
+    //
+    // io.use((socket, next) => {
+    //     if (socket.handshake.session.passport) {
+    //         socket.user = socket.handshake.session.passport.user
+    //     }
+    //     return next();
+    // })
     io.use((socket, next) => {
-        if (socket.handshake.session.passport) {
-            socket.user = socket.handshake.session.passport.user
-        }
+        socket.user = {id: 2, name:"Victor"}
         return next();
     })
 }
 
 const addListeners = (io, db) => {
     io.on('connect', (socket) => {
-        console.log('user connected', socket.id);
+        console.log(socket.id + ' connected');
+        socket.on('action', (action) => {
+          switch (action.type) {
+            case 'server/room':
+              socket.join(action.data)
+              break;
+            case 'server/leave room':
+              socket.leave(action.data)
+              break;
+            case 'server/update match':
+                let { id, player1_score, player2_score, tournament_id } = action.data
+                    db.queries.match.updateMatch([player1_score, player2_score, id, socket.user.id])
+                    .then(res => {
+                        socket.to(tournament_id).emit('action', {type:'UPDATE MATCH', payload: res[0].get_match})
+                    })
+                break;
+
+            case 'server/set winner':
+                db.queries.match.getMatchCreator([action.data.match_id])
+                .then(res => {
+                    if (res[0].creator === socket.user.id) {
+                        db.queries.match.setWinner([action.data.match_id, action.data.winner])
+                        .then(matches => {
+                            db.run('select get_match($1);select get_match($2)', [matches[0].id, matches[1].id])
+                            .then(res => {
+                                socket.to(action.data.tournament_id).emit('action', {type:'UPDATE MATCH', payload: res[0].get_match})
+                                socket.to(action.data.tournament_id).emit('action', {type:'UPDATE MATCH', payload: res[1].get_match})
+                            })
+                        })
+                    }
+                })
+                break;
+          }
+        })
 
         socket.on('disconnect', () => {
-            console.log('user disconnected')
-        });
-
-        socket.on('room', function(data) {
-            socket.join(data.room)
-            console.log('user joined room', data.room)
-        })
-
-        socket.on('leave room', (data) => {
-            socket.leave(data.room)
-            console.log('user left room', data.room)
-        })
-
-        socket.on('authorize user', (data) => {
-            db.tournaments.findOne(data)
-            .then(res => {
-                let {creator} = res
-                if (socket.user.id === creator) {
-                    socket.emit('user authorized')
-                }
-            })
-        })
-
-        socket.on('update match', (data) => {
-            let {round, tournament} = data;
-            let query = Object.assign(
-                {},
-                {id: data.id,
-                player1_score: data.player1_score,
-                player2_score: data.player2_score}
-            )
-            db.matches.update(query)
-            .then(res => {
-                let {id, player1_score, player2_score} = res;
-                io.to('t' + tournament).emit('match update', {
-                    id,
-                    round: round,
-                    player1_score,
-                    player2_score
-                })
-            })
-        })
-
-        socket.on('set winner', (data) => {
-            let {match, winner, tournament, round} = data;
-            db.queries.match.setWinner([match, winner])
-            .then(res => {
-                if (res.length > 1) {
-                    db.queries.match.getUpdatedMatches([res[0].id, res[1].id])
-                    .then(matches => {
-                        io.to('t' + tournament).emit('new matches', {
-                            match1: matches[0].get_match,
-                            match2: matches[1].get_match,
-                            seedRound: round
-                        })
-                    })
-                } else {
-                    db.run(`select get_match (${res[0].id})`)
-                    .then(match => {
-                        match = match[0].get_match;
-                        match.round = round
-                        console.log(match)
-                        io.to('t' + tournament).emit('match update', match)
-                    })
-                }
-            })
-
+            console.log(socket.id + ' disconnected')
         });
     });
 }
