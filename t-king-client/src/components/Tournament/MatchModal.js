@@ -73,14 +73,10 @@ class MatchModal extends Component {
         }
 
         let adminControls = null;
-        // if (this.state.currentUser === 'admin') {
-        //     adminControls = <AdminControls />
-        // } else {
-        //     adminControls = null
-        // }
-
-        if (match) {
-          adminControls = <AdminControls/>
+        if (this.state.currentUser === 'admin') {
+            adminControls = <AdminControls />
+        } else {
+            adminControls = null
         }
 
         return (

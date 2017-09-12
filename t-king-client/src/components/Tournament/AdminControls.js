@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {updateMatch, updateMatchEmit, setWinner} from './../../redux/mainReducer';
+import {updateMatch, updateMatchEmit, setWinner, updateCurrentMatch} from './../../redux/mainReducer';
 
 class AdminControls extends Component {
     constructor(props) {
@@ -16,6 +16,7 @@ class AdminControls extends Component {
     startMatch() {
         let update = Object.assign({}, this.props.activeMatch, {player1_score:0, player2_score:0, status:"active"} )
         this.props.updateMatch(update);
+        this.props.updateCurrentMatch(update);
         this.props.updateMatchEmit(Object.assign(update, { tournament_id:this.props.tournamentData.id }));
     }
 
@@ -50,7 +51,6 @@ class AdminControls extends Component {
     setWinner() {
         let { id, player1, player2, player1_score, player2_score } = this.props.activeMatch
         let winner = player1_score > player2_score ? player1.id : player2.id
-        console.log(winner);
         this.props.setWinner({ match_id: id, winner: winner, tournament_id: this.props.tournamentData.id })
     }
 
@@ -95,5 +95,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps,
-    {updateMatch, updateMatchEmit, setWinner}
+    {updateMatch, updateMatchEmit, setWinner, updateCurrentMatch}
 )(AdminControls);

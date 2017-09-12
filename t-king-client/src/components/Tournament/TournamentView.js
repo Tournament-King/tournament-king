@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import { getTournament, updateMatch, advanceWinner, joinRoom, leaveRoom} from './../../redux/mainReducer';
+import { getTournament, updateMatch, joinRoom, leaveRoom} from './../../redux/mainReducer';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 import {Progress} from 'semantic-ui-react';
@@ -54,7 +54,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps,
-    {getTournament, updateMatch, advanceWinner, joinRoom, leaveRoom}
+    {getTournament, updateMatch, joinRoom, leaveRoom}
 )(TournamentView);
 
 

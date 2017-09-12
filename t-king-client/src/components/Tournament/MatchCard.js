@@ -79,11 +79,6 @@ export default connect(mapStateToProps,
     {toggleMatchModal, setActiveMatch, getMatchById}
 )(MatchCard);
 
-
-
-
-
-
 const scoreAhead = {
     "background":"#95dba5"
 }

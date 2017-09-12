@@ -50,7 +50,7 @@ passport.use(new Auth0Strategy({
     domain: authConfig.domain,
     clientID: authConfig.clientID,
     clientSecret: authConfig.clientSecret,
-    callbackURL: `http://tournament-king.win/auth/callback`
+    callbackURL: process.env.AUTH_REDIRECT
 },  function(accessToken, refreshToken, extraParams, profile, done) {
         let db = app.get('db');
         db.queries.user.getUserByAuthId([profile.id])  //checking to see if the user exists in our database
@@ -123,18 +123,13 @@ app.get('/api/search/users', searchCtrl.users);
 //-----------------------------SOCKETS-----------------------------//
 
 const applyMiddleware = (io) => {
-    // io.use(sharedSession(session, {
-    //     autoSave:true
-    // }));
-    //
-    // io.use((socket, next) => {
-    //     if (socket.handshake.session.passport) {
-    //         socket.user = socket.handshake.session.passport.user
-    //     }
-    //     return next();
-    // })
+    io.use(sharedSession(session, {
+        autoSave:true
+    }));
     io.use((socket, next) => {
-        socket.user = {id: 2, name:"Victor"}
+        if (socket.handshake.session.passport) {
+            socket.user = socket.handshake.session.passport.user
+        }
         return next();
     })
 }
@@ -154,21 +149,30 @@ const addListeners = (io, db) => {
                 let { id, player1_score, player2_score, tournament_id } = action.data
                     db.queries.match.updateMatch([player1_score, player2_score, id, socket.user.id])
                     .then(res => {
-                        socket.to(tournament_id).emit('action', {type:'UPDATE MATCH', payload: res[0].get_match})
+                        socket.to(tournament_id).emit('action', {type:'UPDATE_MATCH', payload: res[0].get_match})
                     })
                 break;
-
             case 'server/set winner':
                 db.queries.match.getMatchCreator([action.data.match_id])
                 .then(res => {
                     if (res[0].creator === socket.user.id) {
                         db.queries.match.setWinner([action.data.match_id, action.data.winner])
                         .then(matches => {
-                            db.run('select get_match($1);select get_match($2)', [matches[0].id, matches[1].id])
-                            .then(res => {
-                                socket.to(action.data.tournament_id).emit('action', {type:'UPDATE MATCH', payload: res[0].get_match})
-                                socket.to(action.data.tournament_id).emit('action', {type:'UPDATE MATCH', payload: res[1].get_match})
-                            })
+                            if (matches.length === 2) {
+                                db.run('select get_match($1);select get_match($2)', [matches[0].id, matches[1].id])
+                                .then(res => {
+                                    io.to(action.data.tournament_id).emit('action', {type:'UPDATE_CURRENT_MATCH', payload: res[0].get_match})
+                                    io.to(action.data.tournament_id).emit('action', {type:'UPDATE_MATCH', payload: res[0].get_match})
+                                    io.to(action.data.tournament_id).emit('action', {type:'UPDATE_MATCH', payload: res[1].get_match})
+                                })
+                            } else {
+                                db.run('select get_match($1);', [matches[0].id])
+                                .then(res => {
+                                    io.to(action.data.tournament_id).emit('action', {type:'UPDATE_CURRENT_MATCH', payload: res[0].get_match})
+                                    io.to(action.data.tournament_id).emit('action', {type:'UPDATE_MATCH', payload: res[0].get_match})
+                                })
+                            }
+
                         })
                     }
                 })

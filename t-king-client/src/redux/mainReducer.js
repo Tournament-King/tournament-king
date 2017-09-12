@@ -4,7 +4,7 @@ const initialState = {
     currentUser: null,
     userChecked: false,
     userUpdated: false,
-    tournamentList: null,
+    tournamentList: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
     tournamentData: {name: 'loading', description: '--', id: null, rounds: [[],[],[]]},
     activeMatch: null,
     modalActive: false
@@ -48,11 +48,10 @@ const GET_MATCH_BY_ID_PENDING = 'GET_MATCH_BY_ID_PENDING';
 const GET_MATCH_BY_ID_FULFILLED = 'GET_MATCH_BY_ID_FULFILLED';
 const GET_MATCH_BY_ID_REJECTED = 'GET_MATCH_BY_ID_REJECTED';
 
-const ADVANCE_WINNER = 'ADVANCE_WINNER';
-
-const UPDATE_CURRENT_MATCH = 'UPDATE_CURRENT_MATCH';
-
 const SET_ACTIVE_MATCH = 'SET_ACTIVE_MATCH';
+
+const UPDATE_MATCH = 'UPDATE_MATCH';
+const UPDATE_CURRENT_MATCH = 'UPDATE_CURRENT_MATCH';
 
 
 //----------------------ACTIONS---------------------//
@@ -140,21 +139,21 @@ export function getMatchById(match_id) {
 
 export function updateMatch(update) {
     return {
-        type: 'UPDATE MATCH',
+        type: UPDATE_MATCH,
         payload: update
-    }
-}
-
-export function advanceWinner(body) {
-    return {
-        type: ADVANCE_WINNER,
-        payload: body
     }
 }
 
 export function setActiveMatch(match) {
     return {
         type: SET_ACTIVE_MATCH,
+        payload: match
+    }
+}
+
+export function updateCurrentMatch(match) {
+    return {
+        type: UPDATE_CURRENT_MATCH,
         payload: match
     }
 }
@@ -242,7 +241,7 @@ export default function reducer(state=initialState, action) {
         case GET_MATCH_BY_ID_REJECTED:
             return state;
 
-        case 'UPDATE MATCH':
+        case UPDATE_MATCH:
           let match = action.payload;
           let newTourn = Object.assign({}, state.tournamentData)
           let roundIdx = null;
@@ -261,7 +260,14 @@ export default function reducer(state=initialState, action) {
             }
           }
           newTourn.rounds[roundIdx].splice(matchIdx, 1, action.payload)
-          return Object.assign({}, state, { tournamentData: newTourn, activeMatch: action.payload })
+          if (state.activeMatch && action.payload.id === state.activeMatch.id) {
+              return Object.assign({}, state, { tournamentData: newTourn, activeMatch: action.payload })
+          } else {
+              return Object.assign({}, state, { tournamentData: newTourn })
+          }
+
+        case UPDATE_CURRENT_MATCH:
+            return Object.assign({}, state, { activeMatch: action.payload })
 
         case SET_ACTIVE_MATCH:
             return Object.assign(
