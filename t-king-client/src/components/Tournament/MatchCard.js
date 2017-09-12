@@ -8,11 +8,7 @@ class MatchCard extends Component {
     constructor(props) {
         super(props)
 
-        match.state = {
-            activeItem: '',
-        }
-
-        match.toggleModal = match.toggleModal.bind(match);
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
 
@@ -43,7 +39,7 @@ class MatchCard extends Component {
 
         let statusProp = match.props.match.status;
         let status = statusProp === 'waiting' ? 'Waiting' : statusProp  === 'ready' ? 'Players Ready' : statusProp === 'active' ? 'Match Active' : 'Match Complete';
-        let match = match.props.match
+        let match = this.props.match
         return (
         <main className="match-wrapper" >
             <div className="match-player" onClick={match.toggleModal}>
