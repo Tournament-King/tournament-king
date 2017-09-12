@@ -6,10 +6,8 @@ const initialState = {
     userUpdated: false,
     tournamentList: [{}, {}, {}, {}, {}, {}, {}, {}, {}],
     tournamentData: {name: 'loading', description: '--', id: null, rounds: [[],[],[]]},
-    tRoom: 0,
     activeMatch: null,
-    modalActive: false,
-    requestCount: 0
+    modalActive: false
 }
 
 //----------------------FLAGS---------------------//
@@ -50,11 +48,10 @@ const GET_MATCH_BY_ID_PENDING = 'GET_MATCH_BY_ID_PENDING';
 const GET_MATCH_BY_ID_FULFILLED = 'GET_MATCH_BY_ID_FULFILLED';
 const GET_MATCH_BY_ID_REJECTED = 'GET_MATCH_BY_ID_REJECTED';
 
-const ADVANCE_WINNER = 'ADVANCE_WINNER';
-
-const UPDATE_CURRENT_MATCH = 'UPDATE_CURRENT_MATCH';
-
 const SET_ACTIVE_MATCH = 'SET_ACTIVE_MATCH';
+
+const UPDATE_MATCH = 'UPDATE_MATCH';
+const UPDATE_CURRENT_MATCH = 'UPDATE_CURRENT_MATCH';
 
 
 //----------------------ACTIONS---------------------//
@@ -100,7 +97,37 @@ export function getTournament(id) {
     }
 }
 
+export function joinRoom(id) {
+  return {
+    type: 'server/room',
+    data: id
+  }
+}
+
+export function leaveRoom(id) {
+  return {
+    type: 'server/leave room',
+    data: id
+  }
+}
+
+
+
 //MATCHES
+
+export function updateMatchEmit(match) {
+    return {
+        type: 'server/update match',
+        data: match
+    }
+}
+
+export function setWinner(data) {
+    return {
+        type: 'server/set winner',
+        data: data
+    }
+}
 
 
 export function getMatchById(match_id) {
@@ -112,21 +139,21 @@ export function getMatchById(match_id) {
 
 export function updateMatch(update) {
     return {
-        type: UPDATE_CURRENT_MATCH,
+        type: UPDATE_MATCH,
         payload: update
-    }
-}
-
-export function advanceWinner(body) {
-    return {
-        type: ADVANCE_WINNER,
-        payload: body
     }
 }
 
 export function setActiveMatch(match) {
     return {
         type: SET_ACTIVE_MATCH,
+        payload: match
+    }
+}
+
+export function updateCurrentMatch(match) {
+    return {
+        type: UPDATE_CURRENT_MATCH,
         payload: match
     }
 }
@@ -214,82 +241,33 @@ export default function reducer(state=initialState, action) {
         case GET_MATCH_BY_ID_REJECTED:
             return state;
 
+        case UPDATE_MATCH:
+          let match = action.payload;
+          let newTourn = Object.assign({}, state.tournamentData)
+          let roundIdx = null;
+          let matchIdx = null;
+          for (var i=0; i<newTourn.rounds.length; i++) {
+            for (var j=0; j<newTourn.rounds[i].length; j++) {
+              let testMatch = newTourn.rounds[i][j]
+              if (testMatch.id === match.id) {
+                roundIdx = i;
+                matchIdx = j;
+                break;
+              }
+            }
+            if (matchIdx !== null) {
+              break;
+            }
+          }
+          newTourn.rounds[roundIdx].splice(matchIdx, 1, action.payload)
+          if (state.activeMatch && action.payload.id === state.activeMatch.id) {
+              return Object.assign({}, state, { tournamentData: newTourn, activeMatch: action.payload })
+          } else {
+              return Object.assign({}, state, { tournamentData: newTourn })
+          }
 
         case UPDATE_CURRENT_MATCH:
-            let makeUpdate = (payload) => {
-                let {id, round} = payload;
-                let newTourn = Object.assign({}, state.tournamentData)
-                console.log(newTourn, payload, round)
-                let match = newTourn.rounds[round].find(m => {
-                    return m.id === id
-                })
-                if (!payload.winner) {
-                    match.player1_score = payload.player1_score;
-                    match.player2_score = payload.player2_score;
-                } else {
-                    match.player1_score = payload.player1_score;
-                    match.player2_score = payload.player2_score;
-                    match.winner = payload.winner;
-                    match.status = payload.status;
-                }
-                if (payload.player1_score === 0 && payload.player2_score === 0) {
-                    if (state.activeMatch) {
-                        if (state.activeMatch.id === id) {
-                            state.activeMatch.status = 'active';
-                        }
-                    }
-                    match.status = 'active';
-                    return Object.assign(
-                        {},
-                        state,
-                        {tournamentData: newTourn}
-                    );
-                }
-                return Object.assign(
-                    {},
-                    state,
-                    {tournamentData: newTourn}
-                );
-            }
-            let incrementCount = () => {
-                return Object.assign({}, state, {requestCount: ++state.requestCount});
-            }
-            if (action.payload.tournament) {
-                incrementCount();
-                return makeUpdate(action.payload);
-            } else if (state.requestCount === 0) {
-                return makeUpdate(action.payload);
-            } else {
-                return Object.assign({}, state, {requestCount: --state.requestCount});
-            }
-
-
-        case ADVANCE_WINNER:
-            let id1 = action.payload.match1.id;
-            let id2 = action.payload.match2.id;
-            let {seedRound} = action.payload;
-            let newTourn = Object.assign({}, state.tournamentData);
-            let indicies = [];
-            newTourn.rounds[seedRound].map((m, i) => {
-                if (m.id === id1) {
-                    indicies.push(i)
-                }
-                return null;
-            })
-            newTourn.rounds[seedRound+1].map((m, i) => {
-                if (m.id === id2) {
-                    indicies.push(i)
-                }
-                return null;
-            })
-            newTourn.rounds[seedRound][indicies[0]] = action.payload.match1;
-            newTourn.rounds[seedRound+1][indicies[1]] = action.payload.match2;
-            return Object.assign(
-                {},
-                state,
-                {tournamentData: newTourn}
-            )
-
+            return Object.assign({}, state, { activeMatch: action.payload })
 
         case SET_ACTIVE_MATCH:
             return Object.assign(

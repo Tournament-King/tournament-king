@@ -11,34 +11,28 @@ class MatchCard extends Component {
         this.state = {
             activeItem: '',
         }
-        
+
         this.toggleModal = this.toggleModal.bind(this);
     }
 
 
     toggleModal() {
-        let match = {
-            id: this.props.id,
-            round: this.props.round,
-            status: this.props.status,
-            tournament: this.props.tournamentData.id
-        }
-        if (this.props.status === 'waiting' || this.props.status === 'complete') {
+        if (this.props.match.status === 'waiting' || this.props.match.status === 'complete') {
             return;
         } else {
             if (!this.props.modalActive) {
                 this.props.toggleMatchModal();
-                this.props.setActiveMatch(match);
+                this.props.setActiveMatch(this.props.match);
             }
             if (this.props.activeMatch) {
                 if (this.props.activeMatch.id !== this.props.id) {
-                    this.props.setActiveMatch(match);
+                    this.props.setActiveMatch(this.props.match);
                 }
             }
         }
     }
 
-    
+
     render() {
 
         let winner = (
@@ -47,51 +41,43 @@ class MatchCard extends Component {
             </div>
         )
 
-        let statusProp = this.props.status;
+        let statusProp = this.props.match.status;
         let status = statusProp === 'waiting' ? 'Waiting' : statusProp  === 'ready' ? 'Players Ready' : statusProp === 'active' ? 'Match Active' : 'Match Complete';
-
+        let match = this.props.match
         return (
         <main className="match-wrapper" >
             <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
-                    <Icon name={this.props.status === 'complete' ? this.props.p1score > this.props.p2score ? 'trophy' : 'remove' : 'user circle'} />
-                    {this.props.p1}
+                    <Icon name={match.status === 'complete' ? match.player1_score > match.player2_score ? 'trophy' : 'remove' : 'user circle'} />
+                    {match.player1 ? match.player1.name : 'TBA'}
                 </div>
-                    <div className="match-player-score" style={this.props.p1score ? formatScore(this.props.p1score, this.props.p2score) : scoreInactive}>
-                        {this.props.p1score}
+                    <div className="match-player-score" style={match.player1_score ? formatScore(match.player1_score, match.player2_score) : scoreInactive}>
+                        {match.player1_score}
                     </div>
-                    {this.props.status === 'complete' ? this.props.p1score > this.props.p2score ? winner : null : null}
-            </div>
-            <div className="match-data">
-                {'Round: ' + (this.props.round+1) + ' - ' + status }
+                    {match.status === 'complete' ? match.player1_score > match.player2_score ? winner : null : null}
             </div>
             <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
-                    <Icon name={this.props.status === 'complete' ? this.props.p2score > this.props.p1score ? 'trophy' : 'remove' : 'user circle'} />
-                    {this.props.p2}
+                    <Icon name={match.status === 'complete' ? match.player2_score > match.player1_score ? 'trophy' : 'remove' : 'user circle'} />
+                    {match.player2 ? match.player2.name : 'TBA'}
                 </div>
                 <div className="match-player-score" style={this.props.p2score ? formatScore(this.props.p2score, this.props.p1score) : scoreInactive}>
-                    {this.props.p2score}
+                    {match.player2_score}
                 </div>
-                {this.props.status === 'complete' ? this.props.p2score > this.props.p1score ? winner : null : null}
+                {match.status === 'complete' ? match.player2_score > match.player1_score ? winner : null : null}
             </div>
         </main>
         )
     }
-} 
+}
 
 function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, 
+export default connect(mapStateToProps,
     {toggleMatchModal, setActiveMatch, getMatchById}
 )(MatchCard);
-
-
-
-
-
 
 const scoreAhead = {
     "background":"#95dba5"
