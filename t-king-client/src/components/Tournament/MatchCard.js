@@ -42,7 +42,7 @@ class MatchCard extends Component {
         let match = this.props.match
         return (
         <main className="match-wrapper" >
-            <div className="match-player" onClick={match.toggleModal}>
+            <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
                     <Icon name={match.status === 'complete' ? match.player1_score > match.player2_score ? 'trophy' : 'remove' : 'user circle'}
                     color={match.status === 'complete' ? match.player1_score > match.player2_score ? 'green' : 'red' : null} />
@@ -53,7 +53,7 @@ class MatchCard extends Component {
                     </div>
                     {match.status === 'complete' ? match.player1_score > match.player2_score ? winner : null : null}
             </div>
-            <div className="match-player" onClick={match.toggleModal}>
+            <div className="match-player" onClick={this.toggleModal}>
                 <div className="match-player-info">
                     <Icon name={match.status === 'complete' ? match.player2_score > match.player1_score ? 'trophy' : 'remove' : 'user circle'}
                     color={match.status === 'complete' ? match.player2_score > match.player1_score ? 'green' : 'red' : null} />
