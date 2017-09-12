@@ -13,16 +13,16 @@ class MatchCard extends Component {
 
 
     toggleModal() {
-        if (match.props.match.status === 'waiting' || match.props.match.status === 'complete') {
+        if (this.props.match.status === 'waiting' || this.props.match.status === 'complete') {
             return;
         } else {
-            if (!match.props.modalActive) {
-                match.props.toggleMatchModal();
-                match.props.setActiveMatch(match.props.match);
+            if (!this.props.modalActive) {
+                this.props.toggleMatchModal();
+                this.props.setActiveMatch(this.props.match);
             }
-            if (match.props.activeMatch) {
-                if (match.props.activeMatch.id !== match.props.id) {
-                    match.props.setActiveMatch(match.props.match);
+            if (this.props.activeMatch) {
+                if (this.props.activeMatch.id !== this.props.id) {
+                    this.props.setActiveMatch(this.props.match);
                 }
             }
         }
@@ -37,7 +37,7 @@ class MatchCard extends Component {
             </div>
         )
 
-        let statusProp = match.props.match.status;
+        let statusProp = this.props.match.status;
         let status = statusProp === 'waiting' ? 'Waiting' : statusProp  === 'ready' ? 'Players Ready' : statusProp === 'active' ? 'Match Active' : 'Match Complete';
         let match = this.props.match
         return (
@@ -45,7 +45,7 @@ class MatchCard extends Component {
             <div className="match-player" onClick={match.toggleModal}>
                 <div className="match-player-info">
                     <Icon name={match.status === 'complete' ? match.player1_score > match.player2_score ? 'trophy' : 'remove' : 'user circle'}
-                    color={match.props.status === 'complete' ? match.props.p1score > match.props.p2score ? 'green' : 'red' : null} />
+                    color={match.status === 'complete' ? match.player1_score > match.player2_score ? 'green' : 'red' : null} />
                     {match.player1 ? match.player1.name : 'TBA'}
                 </div>
                     <div className="match-player-score" style={match.player1_score ? formatScore(match.player1_score, match.player2_score) : scoreInactive}>
@@ -56,10 +56,10 @@ class MatchCard extends Component {
             <div className="match-player" onClick={match.toggleModal}>
                 <div className="match-player-info">
                     <Icon name={match.status === 'complete' ? match.player2_score > match.player1_score ? 'trophy' : 'remove' : 'user circle'}
-                    color={match.props.status === 'complete' ? match.props.p1score > match.props.p2score ? 'green' : 'red' : null} />
+                    color={match.status === 'complete' ? match.player2_score > match.player1_score ? 'green' : 'red' : null} />
                     {match.player2 ? match.player2.name : 'TBA'}
                 </div>
-                <div className="match-player-score" style={match.props.p2score ? formatScore(match.props.p2score, match.props.p1score) : scoreInactive}>
+                <div className="match-player-score" style={match.player2_score ? formatScore(match.player2_score, match.player1_score) : scoreInactive}>
                     {match.player2_score}
                 </div>
                 {match.status === 'complete' ? match.player2_score > match.player1_score ? winner : null : null}
