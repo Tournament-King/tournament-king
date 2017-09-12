@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {toggleMatchModal, updateMatch} from './../../redux/mainReducer.js';
+import {toggleMatchModal} from './../../redux/mainReducer.js';
 import AdminControls from './AdminControls';
-
-const io = require('socket.io-client');
-const socket = io();
 
 class MatchModal extends Component {
     constructor(props) {
@@ -19,18 +16,6 @@ class MatchModal extends Component {
             currentUser: null,
             lastRoom: 0
         }
-
-        // socket.on('score update', (data) => {
-        //     props.updateMatch(data);
-        //     console.log('update listener', data)
-        // })
-
-        socket.on('user authorized', () => {
-            this.setState({
-                currentUser: 'admin'
-            })
-            console.log('you are authorized')
-        })
 
         this.maxModal = this.maxModal.bind(this);
         this.minModal = this.minModal.bind(this);
@@ -57,13 +42,7 @@ class MatchModal extends Component {
     }
 
     closeModal() {
-        // socket.emit('leave room', {room: 'm' + this.props.activeMatch.id})
-        // this.setState({lastRoom: this.props.activeMatch.id});
         this.props.toggleMatchModal();
-    }
-
-    componentDidMount() {
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -72,34 +51,18 @@ class MatchModal extends Component {
                 matchType: this.props.tournamentData.type
             })
         }
-        // if (!this.props.activeMatch &&
-        //     nextProps.modalActive) {
-        //         if (nextProps.activeMatch.status === 'ready' || 
-        //             nextProps.activeMatch.status === 'active')
-        //         socket.emit('room', {room: 'm' + nextProps.activeMatch.id})
-        // }
-        // if (this.props.activeMatch) {
-        //     if (nextProps.modalActive &&
-        //         this.props.activeMatch.id !== nextProps.activeMatch.id) {
-        //         if (this.state.lastRoom !== this.props.activeMatch.id) {
-        //             socket.emit('leave room', {room: 'm' + this.props.activeMatch.id})
-        //         }
-        //         socket.emit('room', {room: 'm' + nextProps.activeMatch.id});
-        //         console.log('state ', this.state.lastRoom)
-        //     }
-        // }
         if (this.props.currentUser && nextProps.activeMatch) {
             if (nextProps.tournamentData.creator === this.props.currentUser.id) {
-                console.log('authorize emit')
-                socket.emit('authorize user', {id: nextProps.tournamentData.id})
+                this.setState({
+                  currentUser:'admin'
+                })
             }
             return;
         }
     }
-    
-    render() {
 
-        let match = matchData(this.props)
+    render() {
+        let match = this.props.activeMatch
 
         let hideDisplay = {
             "display":"none"
@@ -117,9 +80,9 @@ class MatchModal extends Component {
         }
 
         return (
-            <main className='matchModal' style={Object.assign({}, 
-                                                this.props.modalActive ? null : hideDisplay, 
-                                                this.state.modalHeight, 
+            <main className='matchModal' style={Object.assign({},
+                                                this.props.modalActive ? null : hideDisplay,
+                                                this.state.modalHeight,
                                                 this.state.modalWidth,
                                                 this.state.modalLeft,
                                                 this.state.modalTop)}>
@@ -150,7 +113,7 @@ class MatchModal extends Component {
 
                     </div>
                     <div className='match-modal-player1'>
-                        {this.props.activeMatch ? 
+                        {match ?
                         match.player1.name :
                         '--'}
                     </div>
@@ -160,8 +123,8 @@ class MatchModal extends Component {
                         '--'}
                     </div>
 
-                </div>  
-                {adminControls} 
+                </div>
+                {adminControls}
             </main>
         )
     }
@@ -172,18 +135,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps,
-    {toggleMatchModal, updateMatch}
+    {toggleMatchModal}
 )(MatchModal);
-
-
-const matchData = (props) => {
-    let match;
-    if(props.activeMatch) {
-        let matchID = props.activeMatch.id;
-        let round = props.activeMatch.round;
-        match = props.tournamentData.rounds[round].find(m => {
-            return m.id === matchID
-        })
-    }
-    return match;
-}
