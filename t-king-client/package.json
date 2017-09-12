@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3030",
   "dependencies": {
     "axios": "^0.16.2",
+    "debounce": "^1.0.2",
     "react": "^15.6.1",
     "react-autocomplete": "^1.7.1",
     "react-dom": "^15.6.1",
@@ -15,9 +16,9 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^4.4.1",
+    "redux-socket.io": "^1.4.0",
     "semantic-ui-react": "^0.72.0",
-    "socket.io": "^2.0.3",
-    "debounce": "^1.0.2"
+    "socket.io": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
