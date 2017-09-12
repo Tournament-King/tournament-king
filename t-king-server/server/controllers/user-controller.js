@@ -25,5 +25,10 @@ module.exports = {
       let db = req.app.get('db');
       db.users.findOne({id:req.params.id})
       .then(user => res.send(user));
+    },
+    getRecentActivity:(req, res) => {
+      let db = req.app.get('db');
+      db.queries.players.getRecentActivity([req.params.id])
+      .then(activity => res.send(activity))
     }
 }

@@ -104,6 +104,7 @@ app.get('/auth/logout', logout());
 
 app.get('/api/user', userCtrl.getUserOnSession);
 app.get('/api/user/stats/:id', userCtrl.getUserStats);
+app.get('/api/user/activity/:id', userCtrl.getRecentActivity);
 app.get('/api/user/:id', userCtrl.getUser);
 app.patch('/api/user', userCtrl.updateUser);
 
