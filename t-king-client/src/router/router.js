@@ -26,8 +26,8 @@ export default (
     <Switch>
         <Route path="/splash" component={Splash} />
         <RouteWithLayout exact path="/" component={Landing} />
-        <RouteWithLayout path="/user" component={Profile} />
         <RouteWithLayout path="/user/settings" component={AccountSettings} />
+        <RouteWithLayout path="/user" component={Profile} />
         <RouteWithLayout path="/newbracket" component={CreateTournament} />
         <RouteWithLayout path="/tournament/:id" component={TournamentView} />
         <Route path="*" component={PageNotFound} />
