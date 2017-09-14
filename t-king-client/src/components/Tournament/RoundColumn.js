@@ -6,6 +6,7 @@ function populate(data) {
         return <MatchCard key={i}
                             index={i}
                             match={match}
+                            round={data.round}
                 />
     })
 }

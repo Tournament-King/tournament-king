@@ -87,6 +87,7 @@ const makeTree = function(data) {
     for(let i = 0; i < columnCount; i++) {
             tree.push(<RoundColumn
                 key={i}
+                round={i+1}
                 matches={data.rounds[i]}
                 widthDivisor={columnCount}
                 height={columnHeight}/>

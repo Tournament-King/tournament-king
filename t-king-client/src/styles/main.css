@@ -803,6 +803,7 @@ main, div {
     width:70%;
     height: 1px;
     margin:auto;
+    margin-bottom:24px;
     background:#CFCFCF;
 }
 
@@ -822,6 +823,7 @@ main, div {
     min-width:1100px;
     min-height:80%;
     height:fit-content;
+    /* background:#E3E3E3; */
     margin:auto;
     display: flex;
     justify-content:space-between;
@@ -857,23 +859,30 @@ main, div {
     position:relative;
 }
 
-
+.match-wrapper span {
+    color:#111111;
+    margin-left:4px;
+    font-size:.75em;
+    font-weight:700;
+    margin-top:-3px;
+    margin-bottom:-3px;
+}
 
 .match-player {
     box-sizing:border-box;
     width:100%;
     height:44%;
-    color:#333333;
+    color:#D0D0D0;
     font-size:13px;
-    background:#F7F7F7;
-    border:1px solid #DEDEDE;
+    background:#373737;
+    border:1px solid #222222;
     border-radius:2px;
     position:relative;
 }
 
 .match-player:hover {
-    background:#f2f2f2;
-    color:#080808
+    background:#222222;
+    color:#F7F7F7
 }
 
 .match-player-info {
@@ -886,7 +895,9 @@ main, div {
 .match-player-score {
     width:22px;
     height:22px;
-    background:#E6ADAD;
+    color:#222222;
+    font-weight:700;
+    background:#DDDDDD;
     border-radius:4px;
     text-align:center;
     padding-top:2px;
@@ -899,16 +910,14 @@ main, div {
 .match-win-lose {
     height:20px;
     width:58px;
-    /* background:#06C440; */
+    /* color:#4286f4; */
     border-radius:5px;
-    /* border:1px solid #777777; */
     text-align:center;
     padding:0px 4px;
     display:inline-block;
     position: absolute;
     top:6px;
     right:52px;
-    /* transform:rotate(-7deg); */
 }
 
 .match-data {
@@ -928,7 +937,7 @@ main, div {
 .line-connector-column-left {
     width:50%;
     height:100%;
-    border-right:1px solid #DEDEDE;
+    border-right:1px solid #999999;
     display:flex;
     flex-direction:column;
     justify-content:space-between;
@@ -937,7 +946,7 @@ main, div {
 .line-connector-column-right {
     width:50%;
     height:100%;
-    border-left:1px solid #DEDEDE;
+    border-left:1px solid #999999;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -946,7 +955,7 @@ main, div {
 .line-connector-horizontal {
     width:100%;
     height: 2px;
-    background:#DEDEDE;
+    background:#999999;
 }
 
 /*---------CreateTournament-----------*/
