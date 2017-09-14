@@ -18,7 +18,7 @@ class CreateTournament extends Component {
             id:null,
             name:'',
             description:'',
-            type:'',
+            type:'basketball',
             player1Input: {
               user_id: null,
               name:''
@@ -218,7 +218,6 @@ class CreateTournament extends Component {
                     <div className="ct-match-matchNumber">Match {i+1}</div>
                     <h1 className='ct-match-player2'>{this.state.players[((i+1)*2)-1].name}</h1>
                     <button style={{"width":"30px"}} onClick={() => this.editPlayers(((i+1)*2)-2, ((i+1)*2)-1)}>Edit</button>
-                    {/*<h1>{this.state.player[((i+1)*2)-1].name}</h1>*/}
                 </div>
             )
         }
@@ -256,16 +255,10 @@ class CreateTournament extends Component {
                 </div>
                 <div className='ct-header'>
                     <h1 className="" style={{"fontSize":"50px"}}>Create Your Tournament</h1>
-                    <br/>
-                    <p>You're two quick and simple steps away from having your tournament</p>
-                    <p>live and updating in real time. Let everyone know the name of your tournament</p>
-                    <p>and the team/player names competing, then simply click and activate</p>
-                    <p>each match for the fans to see.</p>
                 </div>
                 <div className='ct-tournament-info'>
                     <div id="contact" action="" >
                         <h3>Tournament Info</h3>
-                        <h4 style={{"color":"white"}}>!!!Maybe some competition quote here?!!!</h4>
                         <br />
 
                         <input onChange={this.handleNameChange} placeholder="Tournament Name" type="text" required/>
@@ -274,9 +267,10 @@ class CreateTournament extends Component {
                           <option value={'basketball'}>Basketball</option>
                           <option value={'pool'}>Pool</option>
                           <option value={'tennis'}>Tennis</option>
+                          <option value={'bowling'}>Bowling</option>
                           <option value={'ping-pong'}>Ping-Pong</option>
                           <option value={'beer-pong'}>Beer-Pong</option>
-                          <option value={'soccer'}>Soccer</option>
+                          <option value={'golf'}>Golf</option>
                         </select>
 
                         <textarea onChange={this.handleDescChange} placeholder="Tournament Description (optional)"></textarea>

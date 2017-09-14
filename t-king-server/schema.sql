@@ -22,6 +22,7 @@ CREATE TABLE "matches" (
 	"winner" INTEGER,
 	"match_num" INTEGER NOT NULL,
 	"p_match_num" INTEGER,
+	"match_complete_timestamp" TIMESTAMPTZ,
 	CONSTRAINT matches_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
