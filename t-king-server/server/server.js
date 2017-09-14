@@ -22,11 +22,6 @@ const userCtrl = require('./controllers/user-controller');
 const matchCtrl = require('./controllers/match-controller');
 const tournamentCtrl = require('./controllers/tournament-controller');
 const searchCtrl = require('./controllers/search-controller');
-const commentCtrl = require('./controllers/comment-controller');
-
-//-------------------------MIDDLEWARE--------------------------//
-
-const authMiddleware = require('./middleware/authorization');
 
 //--------------------------APP SETUP---------------------------//
 
@@ -113,10 +108,6 @@ app.get('/api/tournament/:id', tournamentCtrl.getTournament);
 app.post('/api/tournament', tournamentCtrl.createTournament);
 
 app.get('/api/match/:id', matchCtrl.getMatch);
-app.post('/api/match/setwinner', matchCtrl.setWinner);
-
-app.get('/api/comments/:match_id', commentCtrl.getComments);
-app.post('/api/comment', commentCtrl.createComment);
 
 app.get('/api/search/users', searchCtrl.users);
 
