@@ -255,7 +255,6 @@ class CreateTournament extends Component {
                 </div>
                 <div className='ct-header'>
                     <h1 className="" style={{"fontSize":"50px"}}>Create Your Tournament</h1>
-                    <br/>
                 </div>
                 <div className='ct-tournament-info'>
                     <div id="contact" action="" >
