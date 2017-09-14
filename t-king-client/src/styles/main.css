@@ -156,9 +156,9 @@ main, div {
     cursor:pointer;
 }
 
-.header-user-wrapper:hover > 
-.header-userdrop > 
-.user-dropdown > 
+.header-user-wrapper:hover >
+.header-userdrop >
+.user-dropdown >
 .dropdown-items {
     display:block;
     top:30px;
@@ -237,7 +237,7 @@ main, div {
 
 .footer-wrapper {
     width:100%;
-    height:148px;
+    height:50px;
     color:#222222;
     /* background: linear-gradient(to right, #010101 0%,#1c1c1c 50%,#010101 100%); */
     background:#FFFFFF;
@@ -976,7 +976,7 @@ main, div {
 
 .ct-header {
     width: 100%;
-    height: 270px;
+    height: 150px;
     background: #2A67A4;
     display: flex;
     flex-direction: column;
@@ -1181,25 +1181,34 @@ main, div {
 }
 
 /*---------Profile-----------*/
+
 .profile-container {
   width: 100%;
   height: calc(100VH - 42PX);
   padding: 10px;
   margin-left: 10px;
   margin-top: 10px;
-}
-.profile-display {
-  margin-top: 10px;
-  margin-left: 10px;
-  width: 30%;
-  float: left;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border: 2px solid grey;
-  padding: 10px;
-  
+}
+
+.profile-container aside {
+    flex: 3;
+}
+
+.profile-container main {
+    flex: 7;
+}
+
+.profile-container footer {
+    flex: 1;
+    background-color: black;
+    height: 100px;
+}
+
+.profile-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .profile-display img {
@@ -1212,11 +1221,23 @@ main, div {
   font-size: 48px;
 }
 
+.profile-display div {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-display button {
+  background-color: #307FFF;
+  border-radius: 5px;
+  color: white;
+  width: 200px;
+  height: 50px;
+  margin: 5px;
+}
+
 .profile-info {
-  text-align: center;
-  width: 70%;
-  margin-left: 25%;
-  margin-bottom: 50px;
+    text-align: center;
+    margin-bottom: 50px;
 }
 
 .profile-info h1 {
@@ -1227,10 +1248,37 @@ main, div {
   text-align: center;
   display: flex;
   justify-content: space-around;
+  margin-bottom: 100px;
 }
 
 .profile-stat-display h1 {
-  font-size: 72px;
+  font-size: 128px;
+}
+
+.profile-activity {
+  text-align: center;
+}
+
+.profile-activity > div {
+  display: flex;
+}
+
+.profile-activity > div > div {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid black;
+}
+
+.profile-activity .green {
+  background-color: #3dff8d;
+}
+.profile-activity .red {
+  background-color: #ff0000;
+}
+
+.profile-activity > div > div img {
+  width: 100%;
 }
 
 /*.profile-display svg {

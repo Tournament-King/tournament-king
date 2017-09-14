@@ -17,5 +17,5 @@ on matches.player1 = players.id or matches.player2 = players.id
 inner join tournaments
 on matches.tournament_id = tournaments.id
 where players.user_id = $1 and matches.winner is not null
-order by match_complete_timestamp
+order by match_complete_timestamp desc
 limit 5;
