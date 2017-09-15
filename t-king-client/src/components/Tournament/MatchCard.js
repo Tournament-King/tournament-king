@@ -35,27 +35,62 @@ class MatchCard extends Component {
             "background":"#DEDEDE"
         }
 
-        let winner = (
+        const scoreActive = {
+            "background":"#FFFFFF",
+            "transition":"all .1s ease-in-out"
+        }
+
+        const scorePulse = () => {
+            setTimeout(() => {
+                return scoreInactive;
+            }, 100)
+        }
+
+        const playerIcon = (s1, s2, m, p) => {
+            return (
+                <div>
+                    <Icon 
+                        name={
+                            m.status === 'complete' ? 
+                            s1 > s2 ? 'trophy' : 'remove' : 'user'
+                        }
+                        color={
+                            m.status === 'complete' ? 
+                            s1 > s2 ? 'green' : 'red' :
+                            m.status === 'ready' ? 'yellow' :
+                            m.status === "active" ? 'green' :
+                            m.player1 ? 'blue' : null
+                        }
+                    />
+                    {p ? p.name.split(' ')[0] : 'TBA'}
+                </div>
+            )
+        }
+
+        const winner = (
             <div className="match-win-lose">
                 Winner!
             </div>
         )
 
+
+
         let statusProp = this.props.match.status;
-        let status = statusProp === 'waiting' ? 'Waiting' : statusProp  === 'ready' ? 'Players Ready' : statusProp === 'active' ? 'Match Active' : 'Match Complete';
+        let status = (
+            statusProp === 'waiting' ? 'Waiting' :
+            statusProp  === 'ready' ? 'Players Ready' :
+            statusProp === 'active' ? 'Match Active' : 'Match Complete'
+        );
         let match = this.props.match
 
         return (
         <main className="match-wrapper" onClick={this.toggleModal}>
             <div className="match-player">
                 <div className="match-player-info">
-                    <Icon name={match.status === 'complete' ? match.player1_score > match.player2_score ? 'trophy' : 'remove' : 'user'}
-                    color={match.status === 'complete' ? match.player1_score > match.player2_score ? 'green' : 'red' : match.status === 'ready' ? 'yellow' : match.status === "active" ? 'green' : match.player1 ? 'blue' : null}
-                    />
-                    {match.player1 ? match.player1.name : 'TBA'}
+                    {playerIcon(match.player1_score, match.player2_score, match, match.player1)}
                 </div>
                     <div className="match-player-score" 
-                    style={match.status === 'active' || match.status === 'complete' ? null : scoreInactive}
+                    style={match.status === 'active' || match.status === 'complete' ? scoreActive : scoreInactive}
                     >
                         {match.player1_score}
                     </div>
@@ -64,13 +99,10 @@ class MatchCard extends Component {
             <span>{"Round " + this.props.round + " - " + status}</span>
             <div className="match-player">
                 <div className="match-player-info">
-                    <Icon name={match.status === 'complete' ? match.player2_score > match.player1_score ? 'trophy' : 'remove' : 'user'}
-                    color={match.status === 'complete' ? match.player2_score > match.player1_score ? 'green' : 'red' : match.status === 'ready' ? 'yellow' : match.status === "active" ? 'green' : match.player2 ? 'blue' : null}
-                    />
-                    {match.player2 ? match.player2.name : 'TBA'}
+                    {playerIcon(match.player2_score, match.player1_score, match, match.player2)}
                 </div>
                 <div className="match-player-score" 
-                style={match.status === 'active' || match.status === 'complete' ? null : scoreInactive}
+                style={match.status === 'active' || match.status === 'complete' ? scoreActive : scoreInactive}
                 >
                     {match.player2_score}
                 </div>
