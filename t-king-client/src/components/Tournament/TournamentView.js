@@ -1,13 +1,30 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { getTournament, updateMatch, joinRoom, leaveRoom} from './../../redux/mainReducer';
+import {getTournament, updateMatch, joinRoom, leaveRoom} from './../../redux/mainReducer';
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 import {Progress} from 'semantic-ui-react';
+import { getStats, getUser } from '../../services/user';
 
 class TournamentView extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+          user: {},
+          stats: {}
+        }
+    }
+
+    getWinner() {
+        var userID = this.props.tournamentData.creator;
+        getUser(userID)
+        .then(user => {
+            getStats(userID)
+            .then(stats => {
+                this.setState({user,stats})
+                console.log(user, stats);
+            })
+        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -32,13 +49,24 @@ class TournamentView extends Component {
             <main>
                 <div className="tournament-top-section">
                     <div className="tournament-top-content">
-                        <h2>{this.props.tournamentData.name}</h2><br />
-                        {this.props.tournamentData.description}
+                        <div>
+                            <h2>{this.props.tournamentData.name}</h2><br />
+                            {this.props.tournamentData.description}<br />
+                            {this.props.tournamentData.type ? <img className="tournament-icon" alt="type" src={`/public/img/icons/${this.props.tournamentData.type}.png`}/> : null}
+                        </div>
+                        {this.props.tournamentData.id ? this.props.tournamentData.rounds[this.props.tournamentData.rounds.length - 1][0].winner ?
+                        <div className="tournament-win-banner">
+                            <h2>{this.props.tournamentData.id ? this.props.tournamentData.rounds[this.props.tournamentData.rounds.length - 1][0].winner.name : null}</h2>
+                            <h3>is the tournament king!</h3>
+                        </div> : null : null}
+
                     </div>
                 </div>
+                <p className="tournament-progress">Tournament Progress - {!progress ? 0 : progress}%</p>
                 <div className="tournament-divider">
                     <Progress percent={progress ? progress : 0} color="green" attached="top"/>
                 </div>
+                {/* <p className="tournament-progress">{this.props.tournamentData.type}</p> */}
                     <div className="tournament-wrapper">
                     <div className="bracket-container" style={setWidth}>
                         {tree}
