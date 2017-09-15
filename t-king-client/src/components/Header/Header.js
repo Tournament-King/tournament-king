@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {getCurrentUser} from './../../redux/mainReducer';
-import { baseURL } from '../../config';
+import {baseURL} from '../../config';
 
 const checkUser = function(props) {
     return props.userChecked ? null : props.getCurrentUser()
