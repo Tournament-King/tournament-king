@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Crown from './Crown';
-import { getStats, getUser } from '../../services/user';
+import { getStats, getUser, getRecentActivity } from '../../services/user';
 
 class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
       user: {},
-      stats: {}
+      stats: {},
+      activity: []
     }
   }
   componentDidMount() {
@@ -16,7 +17,10 @@ class Profile extends Component {
     .then(user => {
       getStats(userID)
       .then(stats => {
-        this.setState({user,stats})
+        getRecentActivity(userID)
+        .then(activity => {
+          this.setState({user,stats,activity})
+        })
       })
     })
   }
@@ -28,30 +32,38 @@ class Profile extends Component {
     } else {
       return (
         <div className="profile-container">
-          <Display
-            profile_img={ this.state.user.profile_pic }
-            ranking={ this.state.user.ranking }
-          />
-          <Info
-            name={ this.state.user.name }
-            location={ this.state.user.location }
-          />
-          <Stats
-            matches_completed={ this.state.stats.matches_completed }
-            matches_won={ this.state.stats.matches_won }
-            tournaments_won={ this.state.stats.tournaments_won }
-          />
+            <aside>
+                <Display
+                  profile_img={ this.state.user.profile_pic }
+                  rank={ this.state.user.rank }
+                />
+            </aside>
+            <main>
+                <Info
+                  name={ this.state.user.name }
+                  location={ this.state.user.location }
+                />
+                <Stats
+                  matches_completed={ this.state.stats.matches_completed }
+                  matches_won={ this.state.stats.matches_won }
+                  tournaments_won={ this.state.stats.tournaments_won }
+                />
+                <Activity
+                  activity={ this.state.activity }
+                />
+            </main>
         </div>
       )
     }
   }
 }
 
-const Display = ({ profile_img, ranking }) => (
+const Display = ({ profile_img, rank }) => (
   <div className="profile-display">
     <img alt="" src={ profile_img }/>
     <Crown/>
-    <h1>{ranking}</h1>
+    <h1>{`#${rank}`}</h1>
+    <Contact/>
   </div>
 )
 
@@ -74,6 +86,37 @@ const StatDisplay = ({ name, value }) => (
   <div className="profile-stat-display">
     <h1>{ value }</h1>
     <p>{ name }</p>
+  </div>
+)
+
+const Activity = ({ activity }) => {
+  const matches = activity.map(match => (
+    <MatchCard
+      type={ match.type }
+      match_won={ match.match_won }
+      final_match={ match.final_match }
+    />
+  ))
+  return (
+    <div className="profile-activity">
+      <h1>Recent Matches</h1>
+      <div>
+        { matches }
+      </div>
+    </div>
+  )
+}
+
+const MatchCard = ({ type, match_won, final_match }) => (
+  <div className={ match_won ? "green" : "red" }>
+    <img src={`/public/img/icons/${type}.png`}/>
+  </div>
+)
+
+const Contact = () => (
+  <div className="contact">
+    <button>Challenge</button>
+    <button>Message</button>
   </div>
 )
 

@@ -1,4 +1,4 @@
-UPDATE matches SET winner = $2 WHERE id = $1
+UPDATE matches SET winner = $2, match_complete_timestamp = CURRENT_TIMESTAMP WHERE id = $1
 RETURNING id;
 
 WITH m AS (
