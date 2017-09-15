@@ -210,6 +210,7 @@ export default function reducer(state=initialState, action) {
             return Object.assign(
                 {},
                 state,
+                {tournamentData: {name: 'loading', description: '--', id: null, rounds: [[],[],[]]}},
                 {tournamentList: action.payload.data}
             );
         case GET_TOURNAMENTS_REJECTED:

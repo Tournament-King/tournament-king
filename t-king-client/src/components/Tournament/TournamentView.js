@@ -7,25 +7,6 @@ import {Progress} from 'semantic-ui-react';
 import { getStats, getUser } from '../../services/user';
 
 class TournamentView extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-          user: {},
-          stats: {}
-        }
-    }
-
-    getWinner() {
-        var userID = this.props.tournamentData.creator;
-        getUser(userID)
-        .then(user => {
-            getStats(userID)
-            .then(stats => {
-                this.setState({user,stats})
-                console.log(user, stats);
-            })
-        })
-    }
 
     componentWillReceiveProps(nextProps) {
       if (nextProps.tournamentData.id !== this.props.tournamentData.id) {
@@ -38,13 +19,17 @@ class TournamentView extends Component {
     }
 
     render() {
+
         fetchData(this.props);
-        let width = this.props.tournamentData.rounds.length * 248;
+
+        const tree = makeTree(this.props.tournamentData)
+        let progress = calcProgress(this.props.tournamentData)
+
+        const width = this.props.tournamentData.rounds.length * 248;
         let setWidth = {
             "width":width
         }
-        let tree = makeTree(this.props.tournamentData)
-        let progress = calcProgress(this.props.tournamentData)
+
         return (
             <main>
                 <div className="tournament-top-section">
@@ -57,7 +42,7 @@ class TournamentView extends Component {
                         {this.props.tournamentData.id ? this.props.tournamentData.rounds[this.props.tournamentData.rounds.length - 1][0].winner ?
                         <div className="tournament-win-banner">
                             <h2>{this.props.tournamentData.id ? this.props.tournamentData.rounds[this.props.tournamentData.rounds.length - 1][0].winner.name : null}</h2>
-                            <h3>is the tournament king!</h3>
+                            <h3>wins!</h3>
                         </div> : null : null}
 
                     </div>
@@ -66,7 +51,6 @@ class TournamentView extends Component {
                 <div className="tournament-divider">
                     <Progress percent={progress ? progress : 0} color="green" attached="top"/>
                 </div>
-                {/* <p className="tournament-progress">{this.props.tournamentData.type}</p> */}
                     <div className="tournament-wrapper">
                     <div className="bracket-container" style={setWidth}>
                         {tree}
@@ -84,6 +68,14 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps,
     {getTournament, updateMatch, joinRoom, leaveRoom}
 )(TournamentView);
+
+
+
+
+
+
+
+
 
 
 const calcProgress = function(data) {
