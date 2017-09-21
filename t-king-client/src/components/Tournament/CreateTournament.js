@@ -309,9 +309,9 @@ class CreateTournament extends Component {
                             <div className='ct-matches-list'>
                                 {matches}
                             </div>
+                        <div onClick={ this.handleSubmit } className='ct-submit'>Finalize</div>
                         </div>
 
-                        <div onClick={ this.handleSubmit } className='ct-submit'>Finalize</div>
                    </div>
                 </div>
                 <div className='ct-player-info'>
