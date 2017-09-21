@@ -15,7 +15,7 @@ const RouteWithLayout = ({component, ...rest}) => {
                 <Header />
                 <div className="header-shim"></div>
                 <Route {...rest} render={() => React.createElement(component)} />
-                <Footer />
+                
         </main>
     )
 }
