@@ -77,6 +77,8 @@ passport.use(new Auth0Strategy({
     }
 ));
 
+let loginSource = '/';
+
 passport.serializeUser((userA, done) => {
     let userB = userA;
     done(null, userB);
@@ -90,7 +92,7 @@ passport.deserializeUser((userB, done) => {
 app.get('/auth', passport.authenticate('auth0'));
 
 app.get('/auth/callback',
-    passport.authenticate('auth0', {successRedirect: `${appURL}/`}));
+    passport.authenticate('auth0', {successRedirect: `${appURL}${loginSource}`}));
 
 app.get('/auth/logout', logout());
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {getCurrentUser} from './../../redux/mainReducer';
@@ -10,6 +11,7 @@ const checkUser = function(props) {
 
 const Header = function(props) {
     checkUser(props)
+
 
     let urlId = props.currentUser ? props.currentUser.id : 0;
 
