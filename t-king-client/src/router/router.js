@@ -1,21 +1,22 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, withRouter} from 'react-router-dom';
 import Splash from './../components/User/Splash';
 import Profile from '../components/User/Profile';
 import Header from './../components/Header/Header';
-import Footer from './../components/Footer/Footer';
 import Landing from './../components/Landing/Landing';
 import AccountSettings from './../components/User/AccountSettings';
 import TournamentView from './../components/Tournament/TournamentView';
 import CreateTournament from './../components/Tournament/CreateTournament';
 
+const RouteHeader = withRouter(props => <Header {...props}/>);
+
 const RouteWithLayout = ({component, ...rest}) => {
     return (
         <main className="view-wrapper">
-                <Header />
+                <RouteHeader />
                 <div className="header-shim"></div>
                 <Route {...rest} render={() => React.createElement(component)} />
-                
+
         </main>
     )
 }

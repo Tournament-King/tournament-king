@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {getCurrentUser} from './../../redux/mainReducer';
@@ -55,7 +54,7 @@ const Header = function(props) {
                         <img alt="" src={props.currentUser.profile_pic} />
                     </li>
                 </ul> :
-                <a href={`${baseURL}/auth`} className="header-login">
+                <a href={`${baseURL}/auth?source=${props.location.pathname}`} className="header-login">
                     <strong>LOGIN</strong>
                 </a>}
             </div>
