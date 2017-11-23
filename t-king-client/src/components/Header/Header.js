@@ -10,6 +10,7 @@ const checkUser = function(props) {
 
 const Header = function(props) {
     checkUser(props)
+    console.log(process.env.NODE_ENV);
 
 
     let urlId = props.currentUser ? props.currentUser.id : 0;

@@ -26,8 +26,6 @@ class TournamentSearch extends Component {
     }
 
     render() {
-        console.log(this.state.searchExpanded)
-
         const styleExpanded = {
             "height":"32px",
             "width":"100%"
