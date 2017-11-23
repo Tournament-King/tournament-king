@@ -11,6 +11,7 @@ const checkUser = function(props) {
 const Header = function(props) {
     checkUser(props)
 
+
     let urlId = props.currentUser ? props.currentUser.id : 0;
 
     return (
@@ -53,7 +54,7 @@ const Header = function(props) {
                         <img alt="" src={props.currentUser.profile_pic} />
                     </li>
                 </ul> :
-                <a href={`${baseURL}/auth`} className="header-login">
+                <a href={`${baseURL}/auth?source=${props.location.pathname}`} className="header-login">
                     <strong>LOGIN</strong>
                 </a>}
             </div>

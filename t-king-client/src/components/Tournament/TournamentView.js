@@ -4,7 +4,6 @@ import {getTournament, updateMatch, joinRoom, leaveRoom} from './../../redux/mai
 import RoundColumn from './RoundColumn';
 import LineColumn from './LineColumn';
 import {Progress} from 'semantic-ui-react';
-import { getStats, getUser } from '../../services/user';
 
 class TournamentView extends Component {
 

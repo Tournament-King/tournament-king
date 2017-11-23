@@ -77,6 +77,21 @@ passport.use(new Auth0Strategy({
     }
 ));
 
+const redirectMiddleware = (req, res, next) => {
+  if (req.query.source) {
+    req.session.loginRoot = req.query.source;
+    return next();
+  }
+  return next();
+}
+
+const successRedirect = (req, res) => {
+  if (req.session.loginRoot) {
+    return res.redirect(`${appURL}${req.session.loginRoot}`);
+  }
+  return res.redirect(appURL);
+}
+
 passport.serializeUser((userA, done) => {
     let userB = userA;
     done(null, userB);
@@ -87,10 +102,9 @@ passport.deserializeUser((userB, done) => {
     done(null, userC);
 });
 
-app.get('/auth', passport.authenticate('auth0'));
+app.get('/auth', redirectMiddleware, passport.authenticate('auth0'));
 
-app.get('/auth/callback',
-    passport.authenticate('auth0', {successRedirect: `${appURL}/`}));
+app.get('/auth/callback', passport.authenticate('auth0', {failureRedirect: `${appURL}`}), successRedirect);
 
 app.get('/auth/logout', logout());
 

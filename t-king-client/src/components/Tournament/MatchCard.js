@@ -30,7 +30,7 @@ class MatchCard extends Component {
 
 
     render() {
-        
+
         const scoreInactive = {
             "background":"#DEDEDE"
         }
@@ -40,22 +40,16 @@ class MatchCard extends Component {
             "transition":"all .1s ease-in-out"
         }
 
-        const scorePulse = () => {
-            setTimeout(() => {
-                return scoreInactive;
-            }, 100)
-        }
-
         const playerIcon = (s1, s2, m, p) => {
             return (
                 <div>
-                    <Icon 
+                    <Icon
                         name={
-                            m.status === 'complete' ? 
+                            m.status === 'complete' ?
                             s1 > s2 ? 'trophy' : 'remove' : 'user'
                         }
                         color={
-                            m.status === 'complete' ? 
+                            m.status === 'complete' ?
                             s1 > s2 ? 'green' : 'red' :
                             m.status === 'ready' ? 'yellow' :
                             m.status === "active" ? 'green' :
@@ -89,7 +83,7 @@ class MatchCard extends Component {
                 <div className="match-player-info">
                     {playerIcon(match.player1_score, match.player2_score, match, match.player1)}
                 </div>
-                    <div className="match-player-score" 
+                    <div className="match-player-score"
                     style={match.status === 'active' || match.status === 'complete' ? scoreActive : scoreInactive}
                     >
                         {match.player1_score}
@@ -101,7 +95,7 @@ class MatchCard extends Component {
                 <div className="match-player-info">
                     {playerIcon(match.player2_score, match.player1_score, match, match.player2)}
                 </div>
-                <div className="match-player-score" 
+                <div className="match-player-score"
                 style={match.status === 'active' || match.status === 'complete' ? scoreActive : scoreInactive}
                 >
                     {match.player2_score}

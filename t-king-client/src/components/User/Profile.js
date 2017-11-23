@@ -109,7 +109,7 @@ const Activity = ({ activity }) => {
 
 const MatchCard = ({ type, match_won, final_match }) => (
   <div className={ match_won ? "green" : "red" }>
-    <img src={`/public/img/icons/${type}.png`}/>
+    <img alt="" src={`/public/img/icons/${type}.png`}/>
   </div>
 )
 
