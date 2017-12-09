@@ -67,3 +67,5 @@ function mapStateToProps(state) {
     return state;
 }
 export default connect(mapStateToProps, {getCurrentUser})(Header)
+
+//here's a comment
