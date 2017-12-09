@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+const dotenv = require('dotenv').config({ path: path.join(__dirname, "../.env") });
 const express = require('express')
 , bodyParser = require('body-parser')
 , cors = require('cors')
@@ -12,7 +13,6 @@ const express = require('express')
 , authConfig = require('./../config/auth-config')
 , dbConfig = require('./../config/db-config')
 , app = express()
-, path = require('path')
 , port = process.env.PORT
 , appURL = process.env.REACT_APP_BASEURL;
 
@@ -36,8 +36,8 @@ app.use(cors());
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/public', express.static('./public'));
-app.use(express.static('./public'));
+app.use('/public', express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 //--------------------------AUTH0-------------------------------//
 
@@ -142,7 +142,6 @@ const applyMiddleware = (io) => {
 
 const addListeners = (io, db) => {
     io.on('connect', (socket) => {
-        console.log(socket.id + ' connected');
         socket.on('action', (action) => {
           switch (action.type) {
             case 'server/room':
@@ -185,15 +184,11 @@ const addListeners = (io, db) => {
                 break;
           }
         })
-
-        socket.on('disconnect', () => {
-            console.log(socket.id + ' disconnected')
-        });
     });
 }
 //----------------------------FALLBACK----------------------------//
 
-app.use(fallback('index.html', { root: './public' }));
+app.use(fallback('index.html', { root: path.join(__dirname,'../public') }));
 
 //----------------------------DB/LISTEN---------------------------//
 

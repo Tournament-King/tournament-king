@@ -9,10 +9,23 @@ const socket = io();
 
 const socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
-export default createStore(reducer,
-    applyMiddleware(
-        promiseMiddleware(),
-        socketIoMiddleware,
-        logger
+var store;
+
+if (process.env.NODE_ENV === "development") {
+    store = createStore(reducer,
+        applyMiddleware(
+            promiseMiddleware(),
+            socketIoMiddleware,
+            logger
+        )
     )
-)
+} else {
+    store = createStore(reducer,
+        applyMiddleware(
+            promiseMiddleware(),
+            socketIoMiddleware
+        )
+    )
+}
+
+export default store;
