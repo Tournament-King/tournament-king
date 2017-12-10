@@ -191,11 +191,16 @@ const addListeners = (io, db) => {
 app.use(fallback('index.html', { root: path.join(__dirname,'../public') }));
 
 //----------------------------DB/LISTEN---------------------------//
-
-massive(dbConfig.connectionString)
-    .then(db => {
-        app.set('db', db);
-        const io = socket(app.listen(port, () => {console.log('listening on port ', port)}));
-        applyMiddleware(io);
-        addListeners(io, db)
-    })
+massive({
+    host: dbConfig.host,
+    port: dbConfig.port,
+    user: dbConfig.user,
+    password: dbConfig.password,
+    database: dbConfig.database
+},{scripts: path.join(__dirname,'../db')})
+.then(db => {
+    app.set('db', db);
+    const io = socket(app.listen(port, () => {console.log('Listening on port ', port)}));
+    applyMiddleware(io);
+    addListeners(io, db)
+})
