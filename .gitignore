@@ -10,9 +10,11 @@
 
 # production
 /build
+t-king-client/build/
 
 #data
 /config
+t-king-server/config/
 
 # misc
 .DS_Store
